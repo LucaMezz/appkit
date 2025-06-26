@@ -57,14 +57,14 @@ The app will open automatically with hot reload enabled!
 
 ## 📋 Available Scripts
 
-| Command           | Description                      |
-| ----------------- | -------------------------------- |
-| `npm start`       | Start development server         |
-| `npm run package` | Package app for current platform |
-| `npm run make`    | Create distributables            |
-| `npm run lint`    | Run ESLint and type checking     |
-| `npm test`        | Run tests with Vitest            |
-| `npm run rebuild` | Rebuild native dependencies      |
+| Command           | Description                               |
+| ----------------- | ----------------------------------------- |
+| `npm start`       | Start development server                  |
+| `npm run package` | Package app for current platform          |
+| `npm run make`    | Create distributables                     |
+| `npm run check`   | Run type checking, linting and formatting |
+| `npm test`        | Run tests with Vitest                     |
+| `npm run rebuild` | Rebuild native dependencies               |
 
 ## 📁 Project Structure
 
