@@ -1,11 +1,11 @@
-import path from "path";
-import { existsSync, mkdirSync } from "fs";
-import { app } from "electron";
+import { existsSync, mkdirSync } from "node:fs";
+import path from "node:path";
 import Database, { type Database as DatabaseType } from "better-sqlite3";
 import {
-  drizzle,
   type BetterSQLite3Database,
+  drizzle,
 } from "drizzle-orm/better-sqlite3";
+import { app } from "electron";
 import { getErrorMessage } from "./get-error-message";
 
 const isProduction = app.isPackaged;

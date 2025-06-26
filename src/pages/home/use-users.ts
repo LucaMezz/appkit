@@ -1,6 +1,6 @@
-import { useState, useCallback, startTransition } from "react";
-import type { users } from "@/schema";
+import { startTransition, useCallback, useState } from "react";
 import type { AllowedChannel } from "@/preload";
+import type { users } from "@/schema";
 
 type User = typeof users.$inferSelect;
 

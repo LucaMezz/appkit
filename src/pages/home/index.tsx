@@ -1,10 +1,10 @@
-import { Suspense, useActionState, useEffect, useRef } from "react";
+import { Suspense, useActionState, useEffect, useId, useRef } from "react";
 import { Link } from "react-router-dom";
-import { UserList } from "./user-list";
-import { useUsers } from "./use-users";
 import { Button } from "@/components/shadcn-ui/button";
 import { Input } from "@/components/shadcn-ui/input";
 import { getErrorMessage } from "@/utils/get-error-message";
+import { useUsers } from "./use-users";
+import { UserList } from "./user-list";
 
 interface RegisterUserState {
   error: string | null;
@@ -19,6 +19,7 @@ interface DeleteUsersState {
 export function Home(): React.JSX.Element {
   const { usersPromise, registerUser, deleteAllUsers } = useUsers();
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const inputId = useId();
 
   const [registerState, registerAction, isRegisterPending] = useActionState(
     async function handleRegisterUser(
@@ -83,7 +84,7 @@ export function Home(): React.JSX.Element {
         <Input
           name="name"
           type="text"
-          id="name"
+          id={inputId}
           disabled={isPending}
           ref={nameInputRef}
         />

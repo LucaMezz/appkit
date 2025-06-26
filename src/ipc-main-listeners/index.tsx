@@ -1,7 +1,7 @@
 import type { ipcMain } from "electron";
+import { deleteUsers } from "./delete-users";
 import { fetchUsers } from "./fetch-users";
 import { registerUser } from "./register-user";
-import { deleteUsers } from "./delete-users";
 
 export const ipcMainListeners = {
   fetchUsers,
