@@ -1,13 +1,13 @@
-import { app, BrowserWindow, ipcMain } from "electron";
-import path from "path";
-import { readFileSync } from "fs";
-import { migrate } from "drizzle-orm/better-sqlite3/migrator";
-import { Hono } from "hono";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
+import { migrate } from "drizzle-orm/better-sqlite3/migrator";
+import { app, BrowserWindow, ipcMain } from "electron";
 import started from "electron-squirrel-startup";
-import { db } from "./utils/db";
+import { Hono } from "hono";
 import { ipcMainListeners } from "./ipc-main-listeners";
+import { db } from "./utils/db";
 
 const HONO_PORT = 3000;
 

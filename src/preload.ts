@@ -1,4 +1,4 @@
-import { ipcRenderer, contextBridge } from "electron";
+import { contextBridge, ipcRenderer } from "electron";
 import type { ipcMainListeners } from "./ipc-main-listeners";
 
 export type AllowedChannel = keyof typeof ipcMainListeners;

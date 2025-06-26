@@ -1,6 +1,6 @@
-import type { IpcMainListener } from ".";
 import { users } from "@/schema";
 import { db } from "@/utils/db";
+import type { IpcMainListener } from ".";
 
 export const registerUser = (async (
   _: unknown,

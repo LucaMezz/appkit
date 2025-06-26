@@ -1,11 +1,13 @@
+import { useId } from "react";
 import { useRouteError } from "react-router-dom";
 
 export function ErrorBoundary(): React.JSX.Element {
+  const id = useId();
   const error = useRouteError();
   console.error(error);
 
   return (
-    <div id="error-page">
+    <div id={id}>
       <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
       <p>

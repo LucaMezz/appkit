@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import { createHashRouter, RouterProvider } from "react-router-dom";
-import { Home } from "./home";
-import { ErrorBoundary } from "./error-boundary";
 import { About } from "./about";
+import { ErrorBoundary } from "./error-boundary";
+import { Home } from "./home";
 import { Layout } from "./layout";
 
 // Since this is a client-only application, use `createHashRouter`

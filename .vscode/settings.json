@@ -1,3 +1,9 @@
 {
-  "eslint.useFlatConfig": true
+  "eslint.enable": false,
+  "prettier.enable": true,
+  "biome.enabled": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit"
+  }
 }
