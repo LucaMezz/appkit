@@ -8,7 +8,7 @@ Build cross-platform desktop applications with the power of web technologies. Th
 
 | Category          | Technology                                                                       |
 | ----------------- | -------------------------------------------------------------------------------- |
-| **Framework**     | [Electron](https://electronjs.org/) v36                                          |
+| **Framework**     | [Electron](https://electronjs.org/) v37                                          |
 | **Frontend**      | [React](https://reactjs.org/) 19 + [TypeScript](https://www.typescriptlang.org/) |
 | **Build Tool**    | [Vite](https://vitejs.dev/)                                                      |
 | **Database**      | [SQLite](https://sqlite.org/) + [Drizzle ORM](https://orm.drizzle.team/)         |
