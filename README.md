@@ -15,6 +15,7 @@ Build cross-platform desktop applications with the power of web technologies. Th
 | **UI Components** | [shadcn/ui](https://ui.shadcn.com/) + [Tailwind CSS](https://tailwindcss.com/)   |
 | **Routing**       | [React Router](https://reactrouter.com/en/main)                                  |
 | **Testing**       | [Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/)  |
+| **Code Quality**  | [Biome](https://biomejs.dev/) + [Prettier](https://prettier.io/)                 |
 
 ## 🚀 Quick Start
 
