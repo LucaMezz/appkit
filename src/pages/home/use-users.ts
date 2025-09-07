@@ -1,4 +1,4 @@
-import { startTransition, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import type { AllowedChannel } from "@/preload";
 import type { users } from "@/schema";
 
@@ -15,7 +15,7 @@ export function useUsers(): UseUsersReturn {
     window.ipcRenderer.invoke("fetchUsers"),
   );
 
-  const handleRegisterUser = useCallback(
+  const registerUser = useCallback(
     async (name: string): Promise<void> => {
       const newUsersPromise = (async (): Promise<User[]> => {
         const [currentUsers, newUser] = await Promise.all([
@@ -25,50 +25,27 @@ export function useUsers(): UseUsersReturn {
         return [...currentUsers, newUser];
       })();
 
-      // Use React 19's startTransition to handle non-urgent updates
-      startTransition(() => {
-        setUsersPromise(newUsersPromise);
-      });
-
-      // Wait for the new users promise to resolve
+      setUsersPromise(newUsersPromise);
       await newUsersPromise;
     },
     [usersPromise],
   );
 
-  const handleDeleteAllUsers = useCallback(async (): Promise<void> => {
+  const deleteAllUsers = useCallback(async (): Promise<void> => {
     await window.ipcRenderer.invoke("deleteUsers");
-
-    const emptyUsersPromise = Promise.resolve([]);
-
-    startTransition(() => {
-      setUsersPromise(emptyUsersPromise);
-    });
-
-    await emptyUsersPromise;
+    setUsersPromise(Promise.resolve([]));
   }, []);
 
   return {
     usersPromise,
-    registerUser: handleRegisterUser,
-    deleteAllUsers: handleDeleteAllUsers,
+    registerUser,
+    deleteAllUsers,
   };
 }
 
 if (import.meta.vitest) {
   const { describe, it, expect, vi, beforeEach, beforeAll } = import.meta
     .vitest;
-
-  // Mock React module
-  vi.mock("react", async () => {
-    const actual = await vi.importActual("react");
-    return {
-      ...actual,
-      startTransition: vi.fn((callback: () => void) => {
-        callback();
-      }),
-    };
-  });
 
   describe("useUsers", async () => {
     const { renderHook, act } = await import("@testing-library/react");
