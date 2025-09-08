@@ -32,7 +32,7 @@ export function useUsers(): UseUsersReturn {
   );
 
   const deleteAllUsers = useCallback(async (): Promise<void> => {
-    await window.ipcRenderer.invoke("deleteUsers");
+    await window.ipcRenderer.invoke("deleteAllUsers");
     setUsersPromise(Promise.resolve([]));
   }, []);
 
@@ -81,7 +81,7 @@ if (import.meta.vitest) {
             return Promise.resolve(mockUsers);
           case "registerUser":
             return Promise.resolve(mockNewUser);
-          case "deleteUsers":
+          case "deleteAllUsers":
             return Promise.resolve();
           default:
             throw new Error(`Unknown channel: ${channel satisfies never}`);
@@ -132,7 +132,7 @@ if (import.meta.vitest) {
         await result.current.deleteAllUsers();
       });
 
-      expect(mockIpcRenderer.invoke).toHaveBeenCalledWith("deleteUsers");
+      expect(mockIpcRenderer.invoke).toHaveBeenCalledWith("deleteAllUsers");
 
       const users = await result.current.usersPromise;
       expect(users).toEqual([]);
@@ -165,7 +165,7 @@ if (import.meta.vitest) {
         if (channel === "fetchUsers") {
           return Promise.resolve(mockUsers);
         }
-        if (channel === "deleteUsers") {
+        if (channel === "deleteAllUsers") {
           return Promise.reject(error);
         }
         return Promise.resolve();
