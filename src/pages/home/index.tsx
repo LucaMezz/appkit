@@ -18,7 +18,7 @@ interface RegisterUserState {
   success: boolean;
 }
 
-interface DeleteUsersState {
+interface DeleteAllUsersState {
   error: string | null;
   success: boolean;
 }
@@ -60,7 +60,7 @@ export function Home(): React.JSX.Element {
   );
 
   const handleDeleteAllUsers = useCallback(
-    async (_: DeleteUsersState): Promise<DeleteUsersState> => {
+    async (_: DeleteAllUsersState): Promise<DeleteAllUsersState> => {
       try {
         await deleteAllUsers();
         return { error: null, success: true };
