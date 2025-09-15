@@ -138,6 +138,7 @@ export function Home(): React.JSX.Element {
         </section>
 
         <section>
+          <h2>Users:</h2>
           <Suspense fallback={<p>Loading users...</p>}>
             <UserList usersPromise={usersPromise} />
           </Suspense>

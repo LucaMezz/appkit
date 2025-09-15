@@ -10,7 +10,6 @@ export function UserList({ usersPromise }: Props): React.JSX.Element {
 
   return (
     <div>
-      <h2>Users:</h2>
       {users.map((user) => (
         <p key={user.id}>{user.name}</p>
       ))}
