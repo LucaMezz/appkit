@@ -1,12 +1,12 @@
 import type { ipcMain } from "electron";
-import { deleteAllUsers } from "./delete-all-users";
+import { deleteUsers } from "./delete-users";
 import { fetchUsers } from "./fetch-users";
 import { registerUser } from "./register-user";
 
 export const ipcMainListeners = {
   fetchUsers,
   registerUser,
-  deleteAllUsers,
+  deleteUsers,
 };
 
 export type IpcMainListener = Parameters<typeof ipcMain.handle>[1];
