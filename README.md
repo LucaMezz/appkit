@@ -1,8 +1,6 @@
 # ⚡ Modern Electron Boilerplate
 
-> A production-ready Electron boilerplate with React, TypeScript, and modern tooling
-
-Build cross-platform desktop applications with the power of web technologies. This boilerplate provides everything you need to get started quickly with a modern development experience.
+Electron boilerplate with React, TypeScript, and modern tooling
 
 ## 🛠️ Tech Stack
 
