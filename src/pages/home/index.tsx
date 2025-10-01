@@ -24,7 +24,7 @@ interface DeleteAllUsersState {
 }
 
 export function Home(): React.JSX.Element {
-  const { usersPromise, registerUser, deleteAllUsers } = useUsers();
+  const { usersPromise, registerUser, deleteUsers } = useUsers();
   const nameInputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
 
@@ -62,14 +62,16 @@ export function Home(): React.JSX.Element {
   const handleDeleteAllUsers = useCallback(
     async (_: DeleteAllUsersState): Promise<DeleteAllUsersState> => {
       try {
-        await deleteAllUsers();
+        const users = await usersPromise;
+        const allUserIds = users.map((user) => user.id);
+        await deleteUsers(allUserIds);
         return { error: null, success: true };
       } catch (error) {
         const errorMessage = getErrorMessage(error);
         return { error: errorMessage, success: false };
       }
     },
-    [deleteAllUsers],
+    [usersPromise, deleteUsers],
   );
 
   const [deleteState, deleteAction, isDeletePending] = useActionState(
@@ -136,6 +138,7 @@ export function Home(): React.JSX.Element {
         </section>
 
         <section>
+          <h2>Users:</h2>
           <Suspense fallback={<p>Loading users...</p>}>
             <UserList usersPromise={usersPromise} />
           </Suspense>

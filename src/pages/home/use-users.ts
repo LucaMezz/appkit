@@ -7,7 +7,7 @@ type User = typeof users.$inferSelect;
 interface UseUsersReturn {
   usersPromise: Promise<User[]>;
   registerUser: (name: string) => Promise<void>;
-  deleteAllUsers: () => Promise<void>;
+  deleteUsers: (userIds: number[]) => Promise<void>;
 }
 
 export function useUsers(): UseUsersReturn {
@@ -31,15 +31,28 @@ export function useUsers(): UseUsersReturn {
     [usersPromise],
   );
 
-  const deleteAllUsers = useCallback(async (): Promise<void> => {
-    await window.ipcRenderer.invoke("deleteAllUsers");
-    setUsersPromise(Promise.resolve([]));
-  }, []);
+  const deleteUsers = useCallback(
+    async (userIds: number[]): Promise<void> => {
+      if (userIds.length === 0) {
+        return;
+      }
+
+      const newUsersPromise = (async (): Promise<User[]> => {
+        const currentUsers = await usersPromise;
+        await window.ipcRenderer.invoke("deleteUsers", userIds);
+        return currentUsers.filter((user) => !userIds.includes(user.id));
+      })();
+
+      setUsersPromise(newUsersPromise);
+      await newUsersPromise;
+    },
+    [usersPromise],
+  );
 
   return {
     usersPromise,
     registerUser,
-    deleteAllUsers,
+    deleteUsers,
   };
 }
 
@@ -81,7 +94,7 @@ if (import.meta.vitest) {
             return Promise.resolve(mockUsers);
           case "registerUser":
             return Promise.resolve(mockNewUser);
-          case "deleteAllUsers":
+          case "deleteUsers":
             return Promise.resolve();
           default:
             throw new Error(`Unknown channel: ${channel satisfies never}`);
@@ -95,11 +108,11 @@ if (import.meta.vitest) {
       // Check if required properties exist
       expect(result.current).toHaveProperty("usersPromise");
       expect(result.current).toHaveProperty("registerUser");
-      expect(result.current).toHaveProperty("deleteAllUsers");
+      expect(result.current).toHaveProperty("deleteUsers");
 
       // Check if functions are properly defined
       expect(typeof result.current.registerUser).toBe("function");
-      expect(typeof result.current.deleteAllUsers).toBe("function");
+      expect(typeof result.current.deleteUsers).toBe("function");
     });
 
     it("should call fetchUsers on initialization", () => {
@@ -125,17 +138,17 @@ if (import.meta.vitest) {
       expect(updatedUsers).toEqual([...mockUsers, mockNewUser]);
     });
 
-    it("should set empty array Promise when deleteAllUsers succeeds", async () => {
+    it("should delete specific users when deleteUsers succeeds", async () => {
       const { result } = renderHook(() => useUsers());
 
       await act(async () => {
-        await result.current.deleteAllUsers();
+        await result.current.deleteUsers([1]);
       });
 
-      expect(mockIpcRenderer.invoke).toHaveBeenCalledWith("deleteAllUsers");
+      expect(mockIpcRenderer.invoke).toHaveBeenCalledWith("deleteUsers", [1]);
 
       const users = await result.current.usersPromise;
-      expect(users).toEqual([]);
+      expect(users).toEqual([{ id: 2, name: "Bob" }]);
     });
 
     it("should reject Promise when registerUser fails", async () => {
@@ -159,13 +172,13 @@ if (import.meta.vitest) {
       ).rejects.toThrow("Registration failed");
     });
 
-    it("should reject Promise when deleteAllUsers fails", async () => {
+    it("should reject Promise when deleteUsers fails", async () => {
       const error = new Error("Delete failed");
       mockIpcRenderer.invoke.mockImplementation((channel: AllowedChannel) => {
         if (channel === "fetchUsers") {
           return Promise.resolve(mockUsers);
         }
-        if (channel === "deleteAllUsers") {
+        if (channel === "deleteUsers") {
           return Promise.reject(error);
         }
         return Promise.resolve();
@@ -175,7 +188,7 @@ if (import.meta.vitest) {
 
       await expect(
         act(async () => {
-          await result.current.deleteAllUsers();
+          await result.current.deleteUsers([1]);
         }),
       ).rejects.toThrow("Delete failed");
     });
