@@ -6,7 +6,7 @@ Electron boilerplate with React, TypeScript, and modern tooling
 
 | Category          | Technology                                                                       |
 | ----------------- | -------------------------------------------------------------------------------- |
-| **Framework**     | [Electron](https://electronjs.org/) v37                                          |
+| **Framework**     | [Electron](https://electronjs.org/) v38                                          |
 | **Frontend**      | [React](https://reactjs.org/) 19 + [TypeScript](https://www.typescriptlang.org/) |
 | **Build Tool**    | [Vite](https://vitejs.dev/)                                                      |
 | **Database**      | [SQLite](https://sqlite.org/) + [Drizzle ORM](https://orm.drizzle.team/)         |
