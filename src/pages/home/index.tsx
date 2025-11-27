@@ -98,12 +98,16 @@ export function Home(): React.JSX.Element {
       <h1>Home</h1>
       <p>Welcome to the Electron Boilerplate app!</p>
       <section>
-        <h2>New User</h2>
+        <h2 id={`${inputId}-heading`}>New User</h2>
         <form action={registerAction} className="space-y-2">
           <Input
             name="name"
             type="text"
-            id={inputId}
+            aria-labelledby={`${inputId}-heading`}
+            aria-describedby={
+              registerState.error ? `${inputId}-error` : undefined
+            }
+            aria-invalid={registerState.error ? true : undefined}
             disabled={isPending}
             ref={nameInputRef}
           />
@@ -115,7 +119,12 @@ export function Home(): React.JSX.Element {
         </form>
 
         {registerState.error && (
-          <p className="text-red-500">{registerState.error}</p>
+          <p id={`${inputId}-error`} role="alert" className="text-red-500">
+            {registerState.error}
+          </p>
+        )}
+        {registerState.success && (
+          <output className="sr-only">User registered successfully</output>
         )}
       </section>
 
@@ -128,7 +137,12 @@ export function Home(): React.JSX.Element {
         </form>
 
         {deleteState.error && (
-          <p className="text-red-500">{deleteState.error}</p>
+          <p role="alert" className="text-red-500">
+            {deleteState.error}
+          </p>
+        )}
+        {deleteState.success && (
+          <output className="sr-only">All users deleted successfully</output>
         )}
 
         <Suspense fallback={<p>Loading users...</p>}>
