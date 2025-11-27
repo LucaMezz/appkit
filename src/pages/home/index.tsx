@@ -6,7 +6,6 @@ import {
   useId,
   useRef,
 } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/shadcn-ui/button";
 import { Input } from "@/components/shadcn-ui/input";
 import { getErrorMessage } from "@/utils/get-error-message";
@@ -95,55 +94,47 @@ export function Home(): React.JSX.Element {
   const isPending = isRegisterPending || isDeletePending;
 
   return (
-    <div>
-      <header>
-        <img alt="logo" src="vite.svg" />
-        <h1>Hello, world!</h1>
-        <nav>
-          <Link to="/about">Go to about page</Link>
-        </nav>
-      </header>
-
-      <main>
-        <section>
-          <form action={registerAction}>
-            <label htmlFor={inputId}>Name:</label>
-            <Input
-              name="name"
-              type="text"
-              id={inputId}
-              disabled={isPending}
-              ref={nameInputRef}
-            />
+    <>
+      <h1>Home</h1>
+      <p>Welcome to the Electron Boilerplate app!</p>
+      <section>
+        <h2>New User</h2>
+        <form action={registerAction} className="space-y-2">
+          <Input
+            name="name"
+            type="text"
+            id={inputId}
+            disabled={isPending}
+            ref={nameInputRef}
+          />
+          <div className="flex justify-end">
             <Button type="submit" disabled={isPending}>
               {isRegisterPending ? "Adding..." : "Submit"}
             </Button>
-          </form>
+          </div>
+        </form>
 
-          {registerState.error && (
-            <p className="text-red-500">{registerState.error}</p>
-          )}
-        </section>
+        {registerState.error && (
+          <p className="text-red-500">{registerState.error}</p>
+        )}
+      </section>
 
-        <section>
-          <form action={deleteAction}>
-            <Button type="submit" disabled={isPending}>
-              {isDeletePending ? "Deleting..." : "Delete all users"}
-            </Button>
-          </form>
+      <section>
+        <h2>Users</h2>
+        <form action={deleteAction} className="flex justify-end">
+          <Button type="submit" disabled={isPending} variant="destructive">
+            {isDeletePending ? "Deleting..." : "Delete all users"}
+          </Button>
+        </form>
 
-          {deleteState.error && (
-            <p className="text-red-500">{deleteState.error}</p>
-          )}
-        </section>
+        {deleteState.error && (
+          <p className="text-red-500">{deleteState.error}</p>
+        )}
 
-        <section>
-          <h2>Users:</h2>
-          <Suspense fallback={<p>Loading users...</p>}>
-            <UserList usersPromise={usersPromise} />
-          </Suspense>
-        </section>
-      </main>
-    </div>
+        <Suspense fallback={<p>Loading users...</p>}>
+          <UserList usersPromise={usersPromise} />
+        </Suspense>
+      </section>
+    </>
   );
 }
