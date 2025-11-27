@@ -9,10 +9,10 @@ export function UserList({ usersPromise }: Props): React.JSX.Element {
   const users = use(usersPromise);
 
   return (
-    <div>
+    <ul>
       {users.map((user) => (
-        <p key={user.id}>{user.name}</p>
+        <li key={user.id}>{user.name}</li>
       ))}
-    </div>
+    </ul>
   );
 }
