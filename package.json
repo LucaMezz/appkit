@@ -66,6 +66,7 @@
     "vitest": "^4.0.8"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "better-sqlite3": "^12.4.1",
     "electron-squirrel-startup": "^1.0.1",
     "vite-plugin-native": "^2.2.2"
