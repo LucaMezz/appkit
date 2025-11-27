@@ -4,16 +4,16 @@ Electron boilerplate with React, TypeScript, and modern tooling
 
 ## 🛠️ Tech Stack
 
-| Category          | Technology                                                                       |
-| ----------------- | -------------------------------------------------------------------------------- |
-| **Framework**     | [Electron](https://electronjs.org/) v38                                          |
-| **Frontend**      | [React](https://reactjs.org/) 19 + [TypeScript](https://www.typescriptlang.org/) |
-| **Toolchain**     | [Electron Forge](https://www.electronforge.io/) + [Vite](https://vitejs.dev/)    |
-| **Database**      | [SQLite](https://sqlite.org/) + [Drizzle ORM](https://orm.drizzle.team/)         |
-| **Styling**       | [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)   |
-| **Routing**       | [React Router](https://reactrouter.com/en/main)                                  |
-| **Testing**       | [Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/)  |
-| **Code Quality**  | [Biome](https://biomejs.dev/) + [Prettier](https://prettier.io/)                 |
+| Category         | Technology                                                                       |
+| ---------------- | -------------------------------------------------------------------------------- |
+| **Framework**    | [Electron](https://electronjs.org/) v38                                          |
+| **Frontend**     | [React](https://reactjs.org/) 19 + [TypeScript](https://www.typescriptlang.org/) |
+| **Toolchain**    | [Electron Forge](https://www.electronforge.io/) + [Vite](https://vitejs.dev/)    |
+| **Database**     | [SQLite](https://sqlite.org/) + [Drizzle ORM](https://orm.drizzle.team/)         |
+| **Styling**      | [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)   |
+| **Routing**      | [React Router](https://reactrouter.com/en/main)                                  |
+| **Testing**      | [Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/)  |
+| **Code Quality** | [Biome](https://biomejs.dev/) + [Prettier](https://prettier.io/)                 |
 
 ## 🚀 Quick Start
 
