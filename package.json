@@ -11,7 +11,9 @@
     "make": "npm run rebuild && npm exec electron-forge make",
     "rebuild": "electron-rebuild -f -w better-sqlite3",
     "publish": "electron-forge publish",
-    "check": "npm run typecheck && npx biome check --write . && npx prettier --write .",
+    "check": "npm run typecheck && npm run lint && npm run format",
+    "lint": "npx biome check --write .",
+    "format": "npx prettier --write .",
     "typecheck": "tsc --noEmit --project tsconfig.app.json && tsc --noEmit --project tsconfig.node.json",
     "test": "vitest"
   },
