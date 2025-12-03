@@ -15,7 +15,7 @@
     "lint": "npx biome check --write .",
     "format": "npx prettier --write .",
     "typecheck": "tsc --noEmit --project tsconfig.app.json && tsc --noEmit --project tsconfig.node.json",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",

@@ -2,3 +2,7 @@ pre-commit:
   jobs:
     - run: npm run check
       stage_fixed: true
+pre-push:
+  jobs:
+    - run: npm test
+    - run: npm run package
