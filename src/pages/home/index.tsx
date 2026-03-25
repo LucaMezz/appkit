@@ -1,14 +1,9 @@
-import {
-  Suspense,
-  useActionState,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-} from "react";
+import { Suspense, useActionState, useCallback, useEffect, useId, useRef } from "react";
+
 import { Button } from "@/components/shadcn-ui/button";
 import { Input } from "@/components/shadcn-ui/input";
 import { getErrorMessage } from "@/utils/get-error-message";
+
 import { useUsers } from "./use-users";
 import { UserList } from "./user-list";
 
@@ -28,10 +23,7 @@ export function Home(): React.JSX.Element {
   const inputId = useId();
 
   const handleRegisterUser = useCallback(
-    async (
-      _: RegisterUserState,
-      formData: FormData,
-    ): Promise<RegisterUserState> => {
+    async (_: RegisterUserState, formData: FormData): Promise<RegisterUserState> => {
       try {
         const name = formData.get("name");
 
@@ -53,10 +45,10 @@ export function Home(): React.JSX.Element {
     [registerUser],
   );
 
-  const [registerState, registerAction, isRegisterPending] = useActionState(
-    handleRegisterUser,
-    { error: null, success: false },
-  );
+  const [registerState, registerAction, isRegisterPending] = useActionState(handleRegisterUser, {
+    error: null,
+    success: false,
+  });
 
   const handleDeleteAllUsers = useCallback(
     async (_: DeleteAllUsersState): Promise<DeleteAllUsersState> => {
@@ -73,10 +65,10 @@ export function Home(): React.JSX.Element {
     [usersPromise, deleteUsers],
   );
 
-  const [deleteState, deleteAction, isDeletePending] = useActionState(
-    handleDeleteAllUsers,
-    { error: null, success: false },
-  );
+  const [deleteState, deleteAction, isDeletePending] = useActionState(handleDeleteAllUsers, {
+    error: null,
+    success: false,
+  });
 
   useEffect(function focusOnMount() {
     nameInputRef.current?.focus();
@@ -104,9 +96,7 @@ export function Home(): React.JSX.Element {
             name="name"
             type="text"
             aria-labelledby={`${inputId}-heading`}
-            aria-describedby={
-              registerState.error ? `${inputId}-error` : undefined
-            }
+            aria-describedby={registerState.error ? `${inputId}-error` : undefined}
             aria-invalid={registerState.error ? true : undefined}
             disabled={isPending}
             ref={nameInputRef}
@@ -123,9 +113,7 @@ export function Home(): React.JSX.Element {
             {registerState.error}
           </p>
         )}
-        {registerState.success && (
-          <output className="sr-only">User registered successfully</output>
-        )}
+        {registerState.success && <output className="sr-only">User registered successfully</output>}
       </section>
 
       <section>
@@ -141,9 +129,7 @@ export function Home(): React.JSX.Element {
             {deleteState.error}
           </p>
         )}
-        {deleteState.success && (
-          <output className="sr-only">All users deleted successfully</output>
-        )}
+        {deleteState.success && <output className="sr-only">All users deleted successfully</output>}
 
         <Suspense fallback={<p>Loading users...</p>}>
           <UserList usersPromise={usersPromise} />
