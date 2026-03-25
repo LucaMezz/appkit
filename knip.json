@@ -1,0 +1,19 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "entry": [
+    "src/main.ts",
+    "src/preload.ts",
+    "forge.config.ts",
+    "vite.main.config.ts",
+    "vite.preload.config.ts",
+    "vite.renderer.config.ts"
+  ],
+  "ignore": ["forge.env.d.ts", "global.d.ts", "reset.d.ts"],
+  "ignoreDependencies": [
+    "@electron-forge/plugin-auto-unpack-natives",
+    "@total-typescript/ts-reset",
+    "node-abi",
+    "ts-node"
+  ],
+  "ignoreExportsUsedInFile": true
+}

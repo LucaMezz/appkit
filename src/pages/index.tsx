@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { createHashRouter, RouterProvider } from "react-router-dom";
+
 import { About } from "./about";
 import { ErrorBoundary } from "./error-boundary";
 import { Home } from "./home";

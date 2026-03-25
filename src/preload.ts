@@ -1,13 +1,12 @@
 import { contextBridge, ipcRenderer } from "electron";
+
 import type { ipcMainListeners } from "./ipc-main-listeners";
 
 export type AllowedChannel = keyof typeof ipcMainListeners;
 
 // Extract all arguments except the first one (event argument)
 type InvokeArgs<K extends AllowedChannel> =
-  Parameters<(typeof ipcMainListeners)[K]> extends [unknown, ...infer Args]
-    ? Args
-    : never;
+  Parameters<(typeof ipcMainListeners)[K]> extends [unknown, ...infer Args] ? Args : never;
 
 const api = {
   invoke: <K extends AllowedChannel>(

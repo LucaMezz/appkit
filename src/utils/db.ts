@@ -1,11 +1,10 @@
 import { existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
+
 import Database, { type Database as DatabaseType } from "better-sqlite3";
-import {
-  type BetterSQLite3Database,
-  drizzle,
-} from "drizzle-orm/better-sqlite3";
+import { type BetterSQLite3Database, drizzle } from "drizzle-orm/better-sqlite3";
 import { app } from "electron";
+
 import { getErrorMessage } from "./get-error-message";
 
 const isProduction = app.isPackaged;
@@ -43,9 +42,7 @@ function initializeDatabase(): BetterSQLite3Database {
       console.error("[Database] Initialization failed:", error);
     }
 
-    throw new Error(
-      `Database initialization failed: ${getErrorMessage(error) || "Unknown error"}`,
-    );
+    throw new Error(`Database initialization failed: ${getErrorMessage(error) || "Unknown error"}`);
   }
 }
 

@@ -12,8 +12,7 @@ export function ErrorBoundary(): React.JSX.Element {
       <p>Sorry, an unexpected error has occurred.</p>
       <p>
         <i>
-          {(error as { statusText?: string }).statusText ||
-            (error as { message?: string }).message}
+          {(error as { statusText?: string }).statusText || (error as { message?: string }).message}
         </i>
       </p>
     </div>

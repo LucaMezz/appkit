@@ -1,11 +1,13 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
+
 import { type ServerType, serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import { app, BrowserWindow, dialog, ipcMain } from "electron";
 import started from "electron-squirrel-startup";
 import { Hono } from "hono";
+
 import { ipcMainListeners } from "./ipc-main-listeners";
 import { db } from "./utils/db";
 
@@ -117,10 +119,7 @@ function loadApplication(window: BrowserWindow): void {
 
   window.loadURL(appUrl).catch((error) => {
     console.error("Failed to load application:", error);
-    dialog.showErrorBox(
-      "Loading Error",
-      "Failed to load the application. Please try restarting.",
-    );
+    dialog.showErrorBox("Loading Error", "Failed to load the application. Please try restarting.");
   });
 }
 
@@ -130,9 +129,9 @@ function migrateDatabase(): void {
     const baseResourcePath = isProduction ? process.resourcesPath : ".";
     const migrationsFolder = path.resolve(baseResourcePath, "drizzle");
 
-    console.log("Running database migrations from:", migrationsFolder);
+    console.info("Running database migrations from:", migrationsFolder);
     migrate(db, { migrationsFolder });
-    console.log("Database migrations completed successfully");
+    console.info("Database migrations completed successfully");
   } catch (error) {
     console.error("Database migration failed:", error);
     throw new Error(
@@ -146,10 +145,7 @@ function setupStaticFileServer(): void {
     try {
       const hono = new Hono();
 
-      const distPath = path.join(
-        __dirname,
-        `../renderer/${MAIN_WINDOW_VITE_NAME}`,
-      );
+      const distPath = path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}`);
 
       hono.use("/*", serveStatic({ root: distPath }));
 
@@ -169,7 +165,7 @@ function setupStaticFileServer(): void {
           port: CONFIG.HONO_PORT,
         },
         () => {
-          console.log(`Hono server started on port ${CONFIG.HONO_PORT}`);
+          console.info(`Hono server started on port ${CONFIG.HONO_PORT}`);
           createWindow();
         },
       );
@@ -200,9 +196,7 @@ function registerIpcMainListeners(): void {
     for (const [channel, listener] of Object.entries(ipcMainListeners)) {
       ipcMain.handle(channel, listener);
     }
-    console.log(
-      `Registered ${Object.keys(ipcMainListeners).length} IPC listeners`,
-    );
+    console.info(`Registered ${Object.keys(ipcMainListeners).length} IPC listeners`);
   } catch (error) {
     console.error("Failed to register IPC listeners:", error);
     throw new Error(

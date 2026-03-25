@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+
 import type { AllowedChannel } from "@/preload";
 import type { users } from "@/schema";
 
@@ -57,8 +58,7 @@ export function useUsers(): UseUsersReturn {
 }
 
 if (import.meta.vitest) {
-  const { describe, it, expect, vi, beforeEach, beforeAll } = import.meta
-    .vitest;
+  const { describe, it, expect, vi, beforeEach, beforeAll } = import.meta.vitest;
 
   describe("useUsers", async () => {
     const { renderHook, act } = await import("@testing-library/react");
@@ -129,10 +129,7 @@ if (import.meta.vitest) {
         await result.current.registerUser("Charlie");
       });
 
-      expect(mockIpcRenderer.invoke).toHaveBeenCalledWith(
-        "registerUser",
-        "Charlie",
-      );
+      expect(mockIpcRenderer.invoke).toHaveBeenCalledWith("registerUser", "Charlie");
 
       const updatedUsers = await result.current.usersPromise;
       expect(updatedUsers).toEqual([...mockUsers, mockNewUser]);
