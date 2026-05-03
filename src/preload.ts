@@ -26,10 +26,12 @@ const api = {
   },
 };
 
+export type DesktopApi = typeof api;
+
 contextBridge.exposeInMainWorld("desktopApi", api);
 
 declare global {
   interface Window {
-    desktopApi: typeof api;
+    desktopApi: DesktopApi;
   }
 }

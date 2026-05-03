@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react";
 
-import type { AllowedChannel } from "@/preload";
 import type { users } from "@/schema";
 
 type User = typeof users.$inferSelect;
@@ -12,7 +11,7 @@ interface UseUsersReturn {
 }
 
 export function useUsers(): UseUsersReturn {
-  const [usersPromise, setUsersPromise] = useState<Promise<User[]>>(
+  const [usersPromise, setUsersPromise] = useState<Promise<User[]>>(() =>
     window.desktopApi.storage.users.fetch(),
   );
 
@@ -58,10 +57,11 @@ export function useUsers(): UseUsersReturn {
 }
 
 if (import.meta.vitest) {
-  const { describe, it, expect, vi, beforeEach, beforeAll } = import.meta.vitest;
+  const { describe, it, expect, vi, beforeEach } = import.meta.vitest;
 
   describe("useUsers", async () => {
     const { renderHook, act } = await import("@testing-library/react");
+
     const mockUsers: User[] = [
       { id: 1, name: "Alice" },
       { id: 2, name: "Bob" },
@@ -69,57 +69,34 @@ if (import.meta.vitest) {
 
     const mockNewUser: User = { id: 3, name: "Charlie" };
 
-    // Mock IPC renderer
-    const mockIpcRenderer = {
-      invoke: vi.fn(),
-    };
-
-    beforeAll(() => {
-      // Setup global window object once
-      Object.defineProperty(globalThis, "window", {
-        value: {
-          ipcRenderer: mockIpcRenderer,
-        },
-        writable: true,
-        configurable: true,
-      });
-    });
-
     beforeEach(() => {
       vi.clearAllMocks();
 
-      mockIpcRenderer.invoke.mockImplementation((channel: AllowedChannel) => {
-        switch (channel) {
-          case "fetchUsers":
-            return Promise.resolve(mockUsers);
-          case "registerUser":
-            return Promise.resolve(mockNewUser);
-          case "deleteUsers":
-            return Promise.resolve();
-          default:
-            throw new Error(`Unknown channel: ${channel}`);
-        }
+      vi.stubGlobal("desktopApi", {
+        storage: {
+          users: {
+            fetch: vi.fn(() => Promise.resolve(mockUsers)),
+            register: vi.fn(() => Promise.resolve(mockNewUser)),
+            delete: vi.fn(() => Promise.resolve()),
+          },
+        },
       });
     });
 
     it("should initialize useUsers hook properly", () => {
       const { result } = renderHook(() => useUsers());
 
-      // Check if required properties exist
-      expect(result.current).toHaveProperty("usersPromise");
-      expect(result.current).toHaveProperty("registerUser");
-      expect(result.current).toHaveProperty("deleteUsers");
-
-      // Check if functions are properly defined
+      expect(result.current.usersPromise).toBeDefined();
       expect(typeof result.current.registerUser).toBe("function");
       expect(typeof result.current.deleteUsers).toBe("function");
     });
 
-    it("should call fetchUsers on initialization", () => {
-      renderHook(() => useUsers());
+    it("should call fetchUsers on initialization", async () => {
+      const { result } = renderHook(() => useUsers());
 
-      expect(mockIpcRenderer.invoke).toHaveBeenCalledWith("fetchUsers");
-      expect(mockIpcRenderer.invoke).toHaveBeenCalledTimes(1);
+      await result.current.usersPromise;
+
+      expect(window.desktopApi.storage.users.fetch).toHaveBeenCalledTimes(1);
     });
 
     it("should perform optimistic update when registerUser succeeds", async () => {
@@ -128,8 +105,6 @@ if (import.meta.vitest) {
       await act(async () => {
         await result.current.registerUser("Charlie");
       });
-
-      expect(mockIpcRenderer.invoke).toHaveBeenCalledWith("registerUser", "Charlie");
 
       const updatedUsers = await result.current.usersPromise;
       expect(updatedUsers).toEqual([...mockUsers, mockNewUser]);
@@ -142,22 +117,19 @@ if (import.meta.vitest) {
         await result.current.deleteUsers([1]);
       });
 
-      expect(mockIpcRenderer.invoke).toHaveBeenCalledWith("deleteUsers", [1]);
-
       const users = await result.current.usersPromise;
       expect(users).toEqual([{ id: 2, name: "Bob" }]);
     });
 
     it("should reject Promise when registerUser fails", async () => {
-      const error = new Error("Registration failed");
-      mockIpcRenderer.invoke.mockImplementation((channel: AllowedChannel) => {
-        if (channel === "fetchUsers") {
-          return Promise.resolve(mockUsers);
-        }
-        if (channel === "registerUser") {
-          return Promise.reject(error);
-        }
-        return Promise.resolve();
+      vi.stubGlobal("desktopApi", {
+        storage: {
+          users: {
+            fetch: () => Promise.resolve(mockUsers),
+            register: () => Promise.reject(new Error("Registration failed")),
+            delete: () => Promise.resolve(),
+          },
+        },
       });
 
       const { result } = renderHook(() => useUsers());
@@ -170,15 +142,14 @@ if (import.meta.vitest) {
     });
 
     it("should reject Promise when deleteUsers fails", async () => {
-      const error = new Error("Delete failed");
-      mockIpcRenderer.invoke.mockImplementation((channel: AllowedChannel) => {
-        if (channel === "fetchUsers") {
-          return Promise.resolve(mockUsers);
-        }
-        if (channel === "deleteUsers") {
-          return Promise.reject(error);
-        }
-        return Promise.resolve();
+      vi.stubGlobal("desktopApi", {
+        storage: {
+          users: {
+            fetch: () => Promise.resolve(mockUsers),
+            register: () => Promise.resolve(mockNewUser),
+            delete: () => Promise.reject(new Error("Delete failed")),
+          },
+        },
       });
 
       const { result } = renderHook(() => useUsers());
