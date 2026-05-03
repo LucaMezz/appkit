@@ -23,6 +23,8 @@
     "@tailwindcss/typography": "^0.5.19",
     "better-sqlite3": "^12.8.0",
     "electron-squirrel-startup": "^1.0.1",
+    "lucide-react": "^1.14.0",
+    "radix-ui": "^1.4.3",
     "vite-plugin-native": "^2.2.2"
   },
   "devDependencies": {

@@ -2,6 +2,8 @@ import "@/styles/globals.css";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
 import { About } from "./about";
+import { Dashboard } from "./dashboard";
+import { DashboardLayout } from "./dashboard/layout";
 import { ErrorBoundary } from "./error-boundary";
 import { Home } from "./home";
 import { Layout } from "./layout";
@@ -20,6 +22,16 @@ const router = createHashRouter([
       {
         path: "about",
         element: <About />,
+      },
+      {
+        path: "dashboard",
+        element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+        ],
       },
     ],
   },
