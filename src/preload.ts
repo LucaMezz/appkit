@@ -19,7 +19,7 @@ const api = {
     users: {
       fetch: () => ipcRenderer.invoke(IPC_CHANNELS.FETCH_USERS),
 
-      register: (name: string) => ipcRenderer.invoke(IPC_CHANNELS.REGISTER_USER, { name }),
+      register: (name: string) => ipcRenderer.invoke(IPC_CHANNELS.REGISTER_USER, name),
 
       delete: (userIds: number[]) => ipcRenderer.invoke(IPC_CHANNELS.DELETE_USERS, userIds),
     },
