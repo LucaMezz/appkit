@@ -20,4 +20,4 @@ pre-push:
       run: npm run package
     similarity:
       glob: "*.{ts,tsx}"
-      run: /Users/kimizuy/.cargo/bin/similarity-ts ./src --threshold 0.9 --no-types --fail-on-duplicates && /Users/kimizuy/.cargo/bin/similarity-ts ./src --types-only --threshold 0.97 --fail-on-duplicates
+      run: C:/Users/mezza/.cargo/bin/similarity-ts ./src --threshold 0.9 --no-types --fail-on-duplicates && C:/Users/mezza/.cargo/bin/similarity-ts ./src --types-only --threshold 0.97 --fail-on-duplicates
