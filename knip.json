@@ -8,7 +8,13 @@
     "vite.preload.config.ts",
     "vite.renderer.config.ts"
   ],
-  "ignore": ["forge.env.d.ts", "global.d.ts", "reset.d.ts", "src/components/shadcn-ui/**"],
+  "ignore": [
+    "forge.env.d.ts",
+    "global.d.ts",
+    "reset.d.ts",
+    "src/components/shadcn-ui/**",
+    "src/types/**/*.d.ts"
+  ],
   "ignoreDependencies": [
     "@electron-forge/plugin-auto-unpack-natives",
     "@total-typescript/ts-reset",

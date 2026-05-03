@@ -3,6 +3,7 @@
   "prettier.enable": true,
   "biome.enabled": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "explicit"
   }

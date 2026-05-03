@@ -1,26 +1,35 @@
 import { contextBridge, ipcRenderer } from "electron";
 
-import type { ipcMainListeners } from "./ipc-main-listeners";
+import { IPC_CHANNELS, IpcChannel } from "./types/ipc";
 
-export type AllowedChannel = keyof typeof ipcMainListeners;
-
-// Extract all arguments except the first one (event argument)
-type InvokeArgs<K extends AllowedChannel> =
-  Parameters<(typeof ipcMainListeners)[K]> extends [unknown, ...infer Args] ? Args : never;
+export type AllowedChannel = IpcChannel;
 
 const api = {
-  invoke: <K extends AllowedChannel>(
-    channel: K,
-    ...args: InvokeArgs<K> extends [] ? [] : InvokeArgs<K>
-  ): Promise<Awaited<ReturnType<(typeof ipcMainListeners)[K]>>> => {
-    return ipcRenderer.invoke(channel, ...args);
+  platform: process.platform,
+
+  window: {
+    minimize: () => ipcRenderer.invoke(IPC_CHANNELS.WINDOW_MINIMIZE),
+
+    maximize: () => ipcRenderer.invoke(IPC_CHANNELS.WINDOW_MAXIMIZE),
+
+    close: () => ipcRenderer.invoke(IPC_CHANNELS.WINDOW_CLOSE),
+  },
+
+  storage: {
+    users: {
+      fetch: () => ipcRenderer.invoke(IPC_CHANNELS.FETCH_USERS),
+
+      register: (name: string) => ipcRenderer.invoke(IPC_CHANNELS.REGISTER_USER, { name }),
+
+      delete: (userIds: number[]) => ipcRenderer.invoke(IPC_CHANNELS.DELETE_USERS, userIds),
+    },
   },
 };
 
-contextBridge.exposeInMainWorld("ipcRenderer", api);
+contextBridge.exposeInMainWorld("desktopApi", api);
 
 declare global {
   interface Window {
-    ipcRenderer: typeof api;
+    desktopApi: typeof api;
   }
 }

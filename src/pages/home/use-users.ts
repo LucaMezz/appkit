@@ -13,7 +13,7 @@ interface UseUsersReturn {
 
 export function useUsers(): UseUsersReturn {
   const [usersPromise, setUsersPromise] = useState<Promise<User[]>>(
-    window.ipcRenderer.invoke("fetchUsers"),
+    window.desktopApi.storage.users.fetch(),
   );
 
   const registerUser = useCallback(
@@ -21,7 +21,7 @@ export function useUsers(): UseUsersReturn {
       const newUsersPromise = (async (): Promise<User[]> => {
         const [currentUsers, newUser] = await Promise.all([
           usersPromise,
-          window.ipcRenderer.invoke("registerUser", name),
+          window.desktopApi.storage.users.register(name),
         ]);
         return [...currentUsers, newUser];
       })();
@@ -40,7 +40,7 @@ export function useUsers(): UseUsersReturn {
 
       const newUsersPromise = (async (): Promise<User[]> => {
         const currentUsers = await usersPromise;
-        await window.ipcRenderer.invoke("deleteUsers", userIds);
+        await window.desktopApi.storage.users.delete(userIds);
         return currentUsers.filter((user) => !userIds.includes(user.id));
       })();
 
@@ -97,7 +97,7 @@ if (import.meta.vitest) {
           case "deleteUsers":
             return Promise.resolve();
           default:
-            throw new Error(`Unknown channel: ${channel satisfies never}`);
+            throw new Error(`Unknown channel: ${channel}`);
         }
       });
     });

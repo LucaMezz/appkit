@@ -1,4 +1,5 @@
 import { Suspense, useActionState, useCallback, useEffect, useId, useRef } from "react";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/shadcn-ui/button";
 import { Input } from "@/components/shadcn-ui/input";
@@ -134,6 +135,11 @@ export function Home(): React.JSX.Element {
         <Suspense fallback={<p>Loading users...</p>}>
           <UserList usersPromise={usersPromise} />
         </Suspense>
+      </section>
+      <section>
+        <Button asChild>
+          <Link to="/dashboard">Dashboard</Link>
+        </Button>
       </section>
     </>
   );

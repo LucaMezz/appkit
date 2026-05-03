@@ -4,11 +4,11 @@ import path from "node:path";
 import { type ServerType, serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
-import { app, BrowserWindow, dialog, ipcMain } from "electron";
+import { app, BrowserWindow, dialog, ipcMain, Menu } from "electron";
 import started from "electron-squirrel-startup";
 import { Hono } from "hono";
 
-import { ipcMainListeners } from "./ipc-main-listeners";
+import { ipcMainListeners } from "./ipc";
 import { db } from "./utils/db";
 
 const CONFIG = {
@@ -16,6 +16,8 @@ const CONFIG = {
   WINDOW: {
     WIDTH: 800,
     HEIGHT: 600,
+    MIN_WIDTH: 800,
+    MIN_HEIGHT: 500,
   },
 } as const;
 
@@ -90,16 +92,23 @@ function cleanup(): void {
   mainWindow = null;
 }
 
-function createWindow(): void {
+function createWindow() {
   mainWindow = new BrowserWindow({
     width: CONFIG.WINDOW.WIDTH,
     height: CONFIG.WINDOW.HEIGHT,
+    minWidth: CONFIG.WINDOW.MIN_WIDTH,
+    minHeight: CONFIG.WINDOW.MIN_HEIGHT,
+    autoHideMenuBar: true,
+    titleBarStyle: "hidden",
+    frame: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
       nodeIntegration: false,
     },
   });
+
+  Menu.setApplicationMenu(null);
 
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -108,7 +117,7 @@ function createWindow(): void {
   loadApplication(mainWindow);
 
   if (process.env.NODE_ENV === "development") {
-    mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools({ mode: "detach" });
   }
 }
 
@@ -196,7 +205,8 @@ function registerIpcMainListeners(): void {
     for (const [channel, listener] of Object.entries(ipcMainListeners)) {
       ipcMain.handle(channel, listener);
     }
-    console.info(`Registered ${Object.keys(ipcMainListeners).length} IPC listeners`);
+
+    console.info(`Registered ${Object.keys(ipcMainListeners).length} IPC handlers`);
   } catch (error) {
     console.error("Failed to register IPC listeners:", error);
     throw new Error(
