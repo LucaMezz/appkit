@@ -1,0 +1,31 @@
+{
+  "$schema": "../../node_modules/knip/schema.json",
+  "entry": [
+    "main/index.ts",
+    "preload/index.ts",
+    "renderer/src/renderer.tsx",
+    "forge.config.ts",
+    "vite.main.config.ts",
+    "vite.preload.config.ts",
+    "vite.renderer.config.ts"
+  ],
+  "ignore": [
+    "forge.env.d.ts",
+    "global.d.ts",
+    "reset.d.ts",
+    "renderer/src/components/shadcn-ui/**",
+    "renderer/src/types/**/*.d.ts",
+    "renderer/src/utils/get-error-message.ts"
+  ],
+  "ignoreDependencies": [
+    "@electron-forge/plugin-auto-unpack-natives",
+    "@total-typescript/ts-reset",
+    "node-abi",
+    "ts-node",
+    "@tailwindcss/postcss",
+    "postcss",
+    "@typescript/native-preview",
+    "@testing-library/react"
+  ],
+  "ignoreExportsUsedInFile": true
+}

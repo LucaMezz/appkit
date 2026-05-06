@@ -1,0 +1,108 @@
+name: Build & Package Electron + Web Apps
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to build"
+        required: true
+        type: string
+        default: "main"
+
+jobs:
+  check_branch:
+    runs-on: ubuntu-latest
+    outputs:
+      branch_exists: ${{ steps.check.outputs.exists }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if branch exists
+        id: check
+        run: |
+          if git rev-parse --verify ${{ github.event.inputs.branch }} >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+  build:
+    needs: check_branch
+    if: needs.check_branch.outputs.branch_exists == 'true'
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+        node-version: [22.x]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      # 🟢 Ensure repository uses pnpm exclusively (no npm lockfile allowed)
+      - name: Enforce pnpm lockfile only
+        run: |
+          if [ -f package-lock.json ]; then
+            echo "❌ package-lock.json detected. This repo uses pnpm only."
+            exit 1
+          fi
+
+      # 🟢 Setup pnpm (IMPORTANT)
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      # 🟢 Install dependencies (monorepo-aware)
+      - name: Install Dependencies
+        run: pnpm install
+
+      # 🟢 Build Web App (Next.js)
+      - name: Build Web App
+        run: pnpm --filter web build
+
+      # 🟢 Build Desktop App (Electron Forge)
+      - name: Build Desktop App
+        run: pnpm --filter desktop make
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 🟢 Upload Desktop Artifacts
+      - name: Upload Desktop Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: electron-${{ matrix.os }}
+          path: |
+            apps/desktop/out/make/**/*.dmg
+            apps/desktop/out/make/**/*.exe
+            apps/desktop/out/make/**/*.zip
+          retention-days: 5
+
+      # 🟢 Upload Web Build (optional)
+      - name: Upload Web Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-${{ matrix.os }}
+          path: apps/web/.next
+          retention-days: 5
+
+  error_if_branch_not_found:
+    needs: check_branch
+    if: needs.check_branch.outputs.branch_exists != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Error on non-existent branch
+        run: |
+          echo "Branch '${{ github.event.inputs.branch }}' does not exist"
+          exit 1

@@ -1,0 +1,9 @@
+# Next.js
+.next/
+out/
+
+# Build artifacts
+dist/
+
+# Vercel (if used later)
+.vercel

@@ -8,5 +8,13 @@
     "typescript/no-namespace": "off",
     "import/no-cycle": "error",
     "import/no-default-export": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.config.ts", "vite.*.ts"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    }
+  ]
 }
