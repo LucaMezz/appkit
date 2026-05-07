@@ -1,6 +1,5 @@
+import { cn } from "@appkit/ui";
 import type { HTMLAttributes, ReactNode } from "react";
-
-import { cn } from "@/utils/cn";
 
 type TitleBarProps = HTMLAttributes<HTMLDivElement> & {
   children: ReactNode;

@@ -3,13 +3,15 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "composite": true,
-    "outDir": "dist",
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "strict": true
+    "rootDir": "./src",
+    "outDir": "./dist"
   },
   "include": ["src"]
 }

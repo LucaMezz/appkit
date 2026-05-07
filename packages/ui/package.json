@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build:js": "tsup src/index.ts --format esm,cjs",
-    "build:types": "tsc -p tsconfig.build.json",
+    "build:types": "tsc -p tsconfig.json",
     "build": "pnpm build:js && pnpm build:types",
     "dev": "tsup src/index.ts --format esm,cjs --watch",
     "clean": "rm -rf dist",

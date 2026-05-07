@@ -9,13 +9,4 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
 
   root: path.resolve(__dirname, "renderer"),
-
-  resolve: {
-    preserveSymlinks: true,
-    dedupe: ["react", "react-dom"],
-  },
-
-  optimizeDeps: {
-    include: ["@appkit/ui"],
-  },
 });

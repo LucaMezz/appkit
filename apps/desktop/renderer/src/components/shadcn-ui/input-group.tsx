@@ -1,10 +1,10 @@
+import { cn } from "@appkit/ui";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 import { Button } from "@/components/shadcn-ui/button";
 import { Input } from "@/components/shadcn-ui/input";
 import { Textarea } from "@/components/shadcn-ui/textarea";
-import { cn } from "@/utils/cn";
 
 function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
