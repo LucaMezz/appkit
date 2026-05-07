@@ -1,42 +1,36 @@
+import { signInWithCredentials } from "@appkit/api-client";
+import { loginSchema } from "@appkit/core";
 import { Button } from "@appkit/ui";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@appkit/ui";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@appkit/ui";
 import { Input } from "@appkit/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 
-const formSchema = z.object({
-  email: z.string().email("Please enter a valid email address."),
-  password: z.string().min(6, "Password must be at least 6 characters."),
-});
-
 export function LoginForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const navigate = useNavigate();
+
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    toast("You submitted the following values:", {
-      description: (
-        <pre className="mt-2 w-[320px] overflow-x-auto rounded-md bg-code p-4 text-code-foreground">
-          <code>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-      position: "bottom-right",
-      classNames: {
-        content: "flex flex-col gap-2",
-      },
-      style: {
-        "--border-radius": "calc(var(--radius)  + 4px)",
-      } as React.CSSProperties,
+  async function onSubmit(data: z.infer<typeof loginSchema>) {
+    const result = await signInWithCredentials(data.email, data.password, {
+      callbackUrl: "http://localhost:5173/dashboard",
     });
+
+    if (!result.success) {
+      console.error(result.message);
+      return;
+    }
+
+    await navigate(result.redirectTo);
   }
 
   return (

@@ -37,3 +37,6 @@ build/Release
 # Database (if shared or local dev artifact)
 database/
 .temp
+
+# pnpm local store
+.pnpm-store/

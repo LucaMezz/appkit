@@ -19,6 +19,8 @@
     "knip": "knip"
   },
   "dependencies": {
+    "@appkit/api-client": "workspace:*",
+    "@appkit/core": "workspace:*",
     "@appkit/ui": "workspace:*",
     "@hookform/resolvers": "^5.2.2",
     "@tailwindcss/typography": "^0.5.19",

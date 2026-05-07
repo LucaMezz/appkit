@@ -1,0 +1,29 @@
+{
+  "name": "@appkit/core",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Shared framework-agnostic types, schemas, and utilities for AppKit.",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "pnpm clean && pnpm build:js && pnpm build:types",
+    "build:js": "tsup src/index.ts --format esm,cjs",
+    "build:types": "tsc -p tsconfig.build.json",
+    "dev": "tsup src/index.ts --format esm,cjs --watch",
+    "typecheck": "tsgo --noEmit",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
