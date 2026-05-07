@@ -15,7 +15,8 @@
     "reset.d.ts",
     "renderer/src/components/shadcn-ui/**",
     "renderer/src/types/**/*.d.ts",
-    "renderer/src/utils/get-error-message.ts"
+    "renderer/src/utils/get-error-message.ts",
+    "renderer/postcss.config.js"
   ],
   "ignoreDependencies": [
     "@electron-forge/plugin-auto-unpack-natives",
@@ -25,7 +26,9 @@
     "@tailwindcss/postcss",
     "postcss",
     "@typescript/native-preview",
-    "@testing-library/react"
+    "@testing-library/react",
+    "clsx",
+    "tailwind-merge"
   ],
   "ignoreExportsUsedInFile": true
 }

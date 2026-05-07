@@ -1,6 +1,8 @@
 {
-  "name": "electron-boilerplate",
+  "name": "appkit",
+  "version": "1.0.0",
   "private": true,
+  "description": "A scalable full-stack monorepo starter kit for building multi-app systems with shared UI, backend APIs, and cross-platform frontends.",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -12,14 +14,15 @@
     "check": "pnpm run format && pnpm run lint && pnpm run typecheck",
     "lint": "oxlint --type-aware --type-check --ignore-pattern '**/*.config.ts'",
     "format": "oxfmt",
-    "typecheck": "tsgo --noEmit",
+    "typecheck": "pnpm -r typecheck",
     "knip:desktop": "pnpm --filter desktop knip",
     "knip": "pnpm -r knip"
   },
   "devDependencies": {
     "lefthook": "^2.1.4",
-    "oxfmt": "^0.42.0",
+    "oxfmt": "^0.48.0",
     "oxlint": "^1.57.0",
-    "oxlint-tsgolint": "^0.17.3"
+    "oxlint-tsgolint": "^0.22.1",
+    "typescript": "^6.0.3"
   }
 }

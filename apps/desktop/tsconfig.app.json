@@ -5,7 +5,8 @@
     "verbatimModuleSyntax": false,
     "paths": {
       "@/*": ["./renderer/src/*"]
-    }
+    },
+    "moduleResolution": "bundler"
   },
   "exclude": ["forge.config.ts"]
 }

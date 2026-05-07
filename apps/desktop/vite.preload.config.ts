@@ -1,13 +1,10 @@
 import { resolve } from "path";
 
 import { defineConfig } from "vite";
-
-import { alias } from "./vite.alias";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  resolve: {
-    alias,
-  },
+  plugins: [tsconfigPaths()],
   build: {
     outDir: ".vite/build",
     emptyOutDir: false,
