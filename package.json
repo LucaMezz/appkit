@@ -20,6 +20,9 @@
     "test:run": "pnpm -r test:run",
     "package": "pnpm -r package"
   },
+  "dependencies": {
+    "tslib": "^2.8.1"
+  },
   "devDependencies": {
     "lefthook": "^2.1.4",
     "oxfmt": "^0.48.0",
