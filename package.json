@@ -16,7 +16,9 @@
     "format": "oxfmt",
     "typecheck": "pnpm -r typecheck",
     "knip:desktop": "pnpm --filter desktop knip",
-    "knip": "pnpm -r knip"
+    "knip": "pnpm -r knip",
+    "test:run": "pnpm -r test:run",
+    "package": "pnpm -r package"
   },
   "devDependencies": {
     "lefthook": "^2.1.4",
