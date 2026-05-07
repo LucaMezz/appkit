@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: appkit-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: appkit
+      POSTGRES_USER: appkit
+      POSTGRES_PASSWORD: appkit
+    volumes:
+      - appkit-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appkit -d appkit"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    container_name: appkit-api
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgres://appkit:appkit@postgres:5432/appkit
+      CORS_ORIGIN: http://localhost:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api-dev:
+    container_name: appkit-api-dev
+    image: node:22-alpine
+    working_dir: /app
+    command: sh -c "corepack enable && pnpm install && pnpm --filter @appkit/api dev"
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      DATABASE_URL: postgres://appkit:appkit@postgres:5432/appkit
+      CORS_ORIGIN: http://localhost:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/apps/api/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  appkit-postgres-data:

@@ -26,7 +26,10 @@
     "postcss",
     "@testing-library/react",
     "clsx",
-    "tailwind-merge"
+    "tailwind-merge",
+    "@tailwindcss/typography",
+    "tailwindcss",
+    "tw-animate-css"
   ],
   "ignoreExportsUsedInFile": true
 }
