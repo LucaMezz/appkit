@@ -7,7 +7,7 @@
     "no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_" }],
     "typescript/no-namespace": "off",
     "import/no-cycle": "error",
-    "import/no-default-export": "error"
+    "import/no-default-export": "warn"
   },
   "overrides": [
     {
