@@ -1,6 +1,4 @@
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn-ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@appkit/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,13 +7,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/shadcn-ui/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/shadcn-ui/sidebar";
+} from "@appkit/ui";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@appkit/ui";
+import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
 
 export function NavUser({
   user,

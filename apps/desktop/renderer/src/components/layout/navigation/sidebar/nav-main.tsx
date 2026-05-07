@@ -1,10 +1,4 @@
-import { ChevronRight, type LucideIcon } from "lucide-react";
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/shadcn-ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@appkit/ui";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -14,7 +8,8 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/shadcn-ui/sidebar";
+} from "@appkit/ui";
+import { ChevronRight, type LucideIcon } from "lucide-react";
 
 export function NavMain({
   items,

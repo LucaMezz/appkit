@@ -1,6 +1,5 @@
+import { Button } from "@appkit/ui";
 import { MdInbox } from "react-icons/md";
-
-import { Button } from "../../shadcn-ui/button";
 
 export function Inbox(): React.JSX.Element {
   return (

@@ -1,20 +1,12 @@
+import { Button } from "@appkit/ui";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@appkit/ui";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@appkit/ui";
+import { Input } from "@appkit/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-
-import { Button } from "@/components/shadcn-ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/shadcn-ui/card";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/shadcn-ui/field";
-import { Input } from "@/components/shadcn-ui/input";
 
 const formSchema = z
   .object({

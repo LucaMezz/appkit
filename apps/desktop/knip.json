@@ -13,7 +13,6 @@
     "forge.env.d.ts",
     "global.d.ts",
     "reset.d.ts",
-    "renderer/src/components/shadcn-ui/**",
     "renderer/src/types/**/*.d.ts",
     "renderer/src/utils/get-error-message.ts",
     "renderer/postcss.config.js"
@@ -25,7 +24,6 @@
     "ts-node",
     "@tailwindcss/postcss",
     "postcss",
-    "@typescript/native-preview",
     "@testing-library/react",
     "clsx",
     "tailwind-merge"

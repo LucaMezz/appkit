@@ -1,7 +1,6 @@
+import { Button } from "@appkit/ui";
 import { HiOutlineMinus } from "react-icons/hi";
 import { HiOutlineSquare2Stack, HiXMark } from "react-icons/hi2";
-
-import { Button } from "@/components/shadcn-ui/button";
 
 export const WindowsWindowControls = () => {
   return (

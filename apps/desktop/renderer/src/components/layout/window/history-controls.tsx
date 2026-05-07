@@ -1,9 +1,8 @@
+import { Button } from "@appkit/ui";
+import { Kbd, KbdGroup } from "@appkit/ui";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@appkit/ui";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-
-import { Button } from "../../shadcn-ui/button";
-import { Kbd, KbdGroup } from "../../shadcn-ui/kbd";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../../shadcn-ui/tooltip";
 
 export function HistoryControls() {
   const navigate = useNavigate();

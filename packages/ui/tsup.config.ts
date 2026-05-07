@@ -7,6 +7,22 @@ export default defineConfig({
   target: "es2020",
 
   dts: false,
+  splitting: false,
+  sourcemap: true,
 
   tsconfig: "./tsconfig.json",
+
+  external: [
+    "react",
+    "react-dom",
+    "react/jsx-runtime",
+    "react/jsx-dev-runtime",
+    "radix-ui",
+    "lucide-react",
+    "class-variance-authority",
+    "clsx",
+    "tailwind-merge",
+  ],
+
+  skipNodeModulesBundle: true,
 });

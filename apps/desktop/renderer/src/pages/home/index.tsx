@@ -1,7 +1,6 @@
+import { Button } from "@appkit/ui";
 // import { useId, useRef } from "react";
 import { Link } from "react-router-dom";
-
-import { Button } from "@/components/shadcn-ui/button";
 // import { Input } from "@/components/shadcn-ui/input";
 // import { getErrorMessage } from "@/utils/get-error-message";
 

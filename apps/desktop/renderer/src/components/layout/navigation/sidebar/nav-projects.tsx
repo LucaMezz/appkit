@@ -1,14 +1,12 @@
 "use client";
 
-import { Folder, Forward, MoreHorizontal, Trash2, type LucideIcon } from "lucide-react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/shadcn-ui/dropdown-menu";
+} from "@appkit/ui";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -17,7 +15,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/shadcn-ui/sidebar";
+} from "@appkit/ui";
+import { Folder, Forward, MoreHorizontal, Trash2, type LucideIcon } from "lucide-react";
 
 export function NavProjects({
   projects,

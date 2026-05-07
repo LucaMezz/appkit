@@ -1,11 +1,11 @@
+import { Separator } from "@appkit/ui";
+import { TooltipProvider } from "@appkit/ui";
 import { Outlet } from "react-router-dom";
 
 import { WindowControls } from "@/components/layout/window/controls/controls";
 import { HistoryControls } from "@/components/layout/window/history-controls";
 import { Inbox } from "@/components/layout/window/inbox";
 import { TitleBar } from "@/components/layout/window/title-bar";
-import { Separator } from "@/components/shadcn-ui/separator";
-import { TooltipProvider } from "@/components/shadcn-ui/tooltip";
 
 export function Layout(): React.JSX.Element {
   return (
