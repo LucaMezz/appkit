@@ -228,7 +228,7 @@ importers:
         specifier: ^42.0.0
         version: 42.0.0
       happy-dom:
-        specifier: ^20.8.8
+        specifier: ^20.9.0
         version: 20.9.0
       knip:
         specifier: ^6.12.1
