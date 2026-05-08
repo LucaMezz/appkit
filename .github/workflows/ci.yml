@@ -47,9 +47,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Important:
-      # Build first so type-aware linting/checks can resolve workspace package exports
-      # such as @appkit/core, @appkit/ui, and @appkit/api-client.
       - name: Build workspace packages
         run: pnpm build
 
@@ -145,9 +142,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Make sure shared workspace packages are built before Electron Forge packages desktop.
       - name: Build desktop dependencies
-        run: turbo run build --filter=@appkit/desktop^
+        run: pnpm exec turbo run build --filter=@appkit/desktop^
 
       - name: Package desktop app
         run: pnpm --filter @appkit/desktop make
