@@ -22,5 +22,8 @@
     "dev": "tsup src/index.ts --format esm,cjs --watch",
     "typecheck": "tsgo --noEmit",
     "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@appkit/core": "workspace:*"
   }
 }

@@ -305,7 +305,11 @@ importers:
         specifier: ^5
         version: 5.4.5
 
-  packages/api-client: {}
+  packages/api-client:
+    dependencies:
+      '@appkit/core':
+        specifier: workspace:*
+        version: link:../core
 
   packages/core:
     dependencies:

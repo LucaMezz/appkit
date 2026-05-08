@@ -1,6 +1,9 @@
 import "@/styles/globals.css";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
+import { GuestOnlyRoute } from "@/components/layout/auth/guest-only-route";
+import { ProtectedRoute } from "@/components/layout/auth/protected-route";
+
 import { About } from "./about";
 import { Login } from "./auth/login";
 import { SignUp } from "./auth/sign-up";
@@ -26,25 +29,35 @@ const router = createHashRouter([
         element: <About />,
       },
       {
-        path: "dashboard",
-        element: <DashboardLayout />,
+        element: <ProtectedRoute />,
         children: [
           {
-            index: true,
-            element: <Dashboard />,
+            path: "dashboard",
+            element: <DashboardLayout />,
+            children: [
+              {
+                index: true,
+                element: <Dashboard />,
+              },
+            ],
           },
         ],
       },
       {
-        path: "auth",
+        element: <GuestOnlyRoute />,
         children: [
           {
-            path: "login",
-            element: <Login />,
-          },
-          {
-            path: "sign-up",
-            element: <SignUp />,
+            path: "auth",
+            children: [
+              {
+                path: "login",
+                element: <Login />,
+              },
+              {
+                path: "sign-up",
+                element: <SignUp />,
+              },
+            ],
           },
         ],
       },

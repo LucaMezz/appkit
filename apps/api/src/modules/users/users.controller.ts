@@ -10,3 +10,12 @@ export const listUsers: RequestHandler = async (_req, res, next) => {
     next(error);
   }
 };
+
+export const registerUser: RequestHandler = async (req, res, next) => {
+  try {
+    const user = await usersService.register(req.body);
+    res.json({ data: user });
+  } catch (error) {
+    next(error);
+  }
+};

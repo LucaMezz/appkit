@@ -22,7 +22,7 @@ export default defineConfig({
       "use-sync-external-store/shim/with-selector",
       "use-sync-external-store/shim/with-selector.js",
     ],
-    exclude: ["@appkit/ui"],
+    exclude: ["@appkit/ui", "@appkit/api-client"],
   },
 
   server: {

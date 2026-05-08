@@ -1,3 +1,4 @@
+import { signOut } from "@appkit/api-client";
 import { Avatar, AvatarFallback, AvatarImage } from "@appkit/ui";
 import {
   DropdownMenu,
@@ -10,6 +11,7 @@ import {
 } from "@appkit/ui";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@appkit/ui";
 import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function NavUser({
   user,
@@ -21,6 +23,23 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    const result = await signOut({
+      apiBaseUrl: "http://localhost:4000",
+      redirectTo: "/",
+    });
+
+    if (!result.success) {
+      console.error(result.message);
+      return;
+    }
+
+    navigate(result.redirectTo, {
+      replace: true,
+    });
+  };
 
   return (
     <SidebarMenu>
@@ -83,7 +102,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
               <LogOut />
               Log out
             </DropdownMenuItem>

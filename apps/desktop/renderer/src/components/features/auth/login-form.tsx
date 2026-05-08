@@ -22,7 +22,8 @@ export function LoginForm() {
 
   async function onSubmit(data: z.infer<typeof loginSchema>) {
     const result = await signInWithCredentials(data.email, data.password, {
-      callbackUrl: "http://localhost:5173/dashboard",
+      apiBaseUrl: "http://localhost:4000",
+      redirectTo: "/dashboard",
     });
 
     if (!result.success) {
@@ -30,7 +31,7 @@ export function LoginForm() {
       return;
     }
 
-    await navigate(result.redirectTo);
+    navigate(result.redirectTo);
   }
 
   return (

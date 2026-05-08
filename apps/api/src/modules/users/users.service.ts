@@ -1,7 +1,48 @@
+import { registerSchema } from "@appkit/core";
+import { eq } from "drizzle-orm";
+
 import { db } from "@/db";
 import { users } from "@/db/schema";
+import { hashPassword } from "@/utils/password";
 
 export const usersService = {
+  async register(input: unknown) {
+    const result = registerSchema.safeParse(input);
+
+    if (!result.success) {
+      throw new Error("Invalid registration input");
+    }
+
+    const { name, email, password } = result.data;
+
+    const existingUser = await db.query.users.findFirst({
+      where: eq(users.email, email),
+    });
+
+    if (existingUser) {
+      throw new Error("Email is already in use");
+    }
+
+    const passwordHash = await hashPassword(password);
+
+    const [user] = await db
+      .insert(users)
+      .values({
+        name,
+        email,
+        passwordHash,
+      })
+      .returning({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        image: users.image,
+        emailVerified: users.emailVerified,
+      });
+
+    return user;
+  },
+
   list() {
     return db.select().from(users);
   },
