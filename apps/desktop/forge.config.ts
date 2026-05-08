@@ -37,7 +37,7 @@ const config: ForgeConfig = {
       noMsi: true,
     }),
 
-    new MakerZIP({}, ["darwin"]),
+    new MakerZIP({}, ["darwin", "win32"]),
 
     new MakerRpm({
       options: {

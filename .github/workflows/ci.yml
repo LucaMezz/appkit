@@ -155,8 +155,5 @@ jobs:
         with:
           name: desktop-${{ matrix.os }}
           path: |
-            apps/desktop/out/make/**/*.dmg
-            apps/desktop/out/make/**/*.exe
-            apps/desktop/out/make/**/*.zip
-            apps/desktop/out/make/**/*.msi
+            apps/desktop/out/make/**
           retention-days: 5
