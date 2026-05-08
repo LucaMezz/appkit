@@ -1,8 +1,8 @@
-import "@/styles/globals.css";
+import "#styles/globals.css";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
-import { GuestOnlyRoute } from "@/components/layout/auth/guest-only-route";
-import { ProtectedRoute } from "@/components/layout/auth/protected-route";
+import { GuestOnlyRoute } from "#components/layout/auth/guest-only-route";
+import { ProtectedRoute } from "#components/layout/auth/protected-route";
 
 import { About } from "./about";
 import { Login } from "./auth/login";

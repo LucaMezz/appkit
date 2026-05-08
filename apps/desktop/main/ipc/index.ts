@@ -1,4 +1,5 @@
-import { IPC_CHANNELS } from "../../shared/ipc/types";
+import { IPC_CHANNELS } from "#shared/ipc/types";
+
 import { closeWindow } from "./handlers/window/close";
 import { maximizeWindow } from "./handlers/window/maximize";
 import { minimizeWindow } from "./handlers/window/minimize";

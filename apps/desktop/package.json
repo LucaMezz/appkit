@@ -4,6 +4,16 @@
   "description": "Electron desktop application boilerplate",
   "author": "Luca Mezzavilla",
   "main": ".vite/build/index.js",
+  "imports": {
+    "#main/*": "./main/*.ts",
+    "#preload/*": "./preload/*.ts",
+    "#shared/*": "./shared/*.ts",
+    "#renderer/*": "./renderer/*.tsx",
+    "#components/*": "./renderer/src/components/*.tsx",
+    "#hooks/*": "./renderer/src/hooks/*.ts",
+    "#types/*": "./renderer/src/types/*.ts",
+    "#styles/*": "./renderer/src/styles/*"
+  },
   "scripts": {
     "typecheck": "tsgo --noEmit",
     "dev": "electron-forge start",
@@ -67,7 +77,6 @@
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "vite": "^7.2.6",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.1"
   },
   "optionalDependencies": {

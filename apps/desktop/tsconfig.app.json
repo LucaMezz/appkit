@@ -3,9 +3,7 @@
   "compilerOptions": {
     "types": ["vitest/importMeta", "vitest/globals"],
     "verbatimModuleSyntax": false,
-    "paths": {
-      "@/*": ["./renderer/src/*"]
-    },
+    "resolvePackageJsonImports": true,
     "moduleResolution": "bundler"
   },
   "exclude": ["forge.config.ts"]

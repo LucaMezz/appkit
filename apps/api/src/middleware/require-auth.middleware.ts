@@ -1,7 +1,7 @@
 import { getSession } from "@auth/express";
 import type { NextFunction, Request, Response } from "express";
 
-import { expressAuthConfig } from "@/lib/auth.config";
+import { expressAuthConfig } from "#api/lib/auth.config";
 
 export async function requireAuth(req: Request, res: Response, next: NextFunction) {
   const session = res.locals.session ?? (await getSession(req, expressAuthConfig));

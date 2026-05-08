@@ -1,9 +1,9 @@
 import { registerSchema } from "@appkit/core";
 import { eq } from "drizzle-orm";
 
-import { db } from "@/db";
-import { users } from "@/db/schema";
-import { hashPassword } from "@/utils/password";
+import { db } from "#api/db/index";
+import { users } from "#api/db/schema/index";
+import { hashPassword } from "#api/utils/password";
 
 export const usersService = {
   async register(input: unknown) {

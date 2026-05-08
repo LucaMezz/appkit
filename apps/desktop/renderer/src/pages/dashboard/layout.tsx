@@ -2,8 +2,8 @@ import { Separator } from "@appkit/ui";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@appkit/ui";
 import { Outlet } from "react-router-dom";
 
-import { AppBreadcrumbs } from "@/components/layout/navigation/app-breadcrumbs";
-import { AppSidebar } from "@/components/layout/navigation/sidebar/app-sidebar";
+import { AppBreadcrumbs } from "#components/layout/navigation/app-breadcrumbs";
+import { AppSidebar } from "#components/layout/navigation/sidebar/app-sidebar";
 
 export function DashboardLayout(): React.JSX.Element {
   return (

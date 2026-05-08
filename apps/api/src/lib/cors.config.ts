@@ -1,6 +1,6 @@
 import cors from "cors";
 
-import { ALLOWED_ORIGINS } from "@/utils/origins";
+import { ALLOWED_ORIGINS } from "#api/utils/origins";
 
 export const corsConfig = cors({
   origin(origin, callback) {

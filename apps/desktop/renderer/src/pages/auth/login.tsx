@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/features/auth/login-form";
+import { LoginForm } from "#components/features/auth/login-form";
 
 export function Login(): React.JSX.Element {
   return (

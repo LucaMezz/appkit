@@ -1,4 +1,4 @@
-import { SignUpForm } from "@/components/features/auth/sign-up-form";
+import { SignUpForm } from "#components/features/auth/sign-up-form";
 
 export function SignUp(): React.JSX.Element {
   return (

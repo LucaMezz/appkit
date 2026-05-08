@@ -3,25 +3,25 @@ import { PanelLeftIcon } from "lucide-react";
 import { Slot } from "radix-ui";
 import * as React from "react";
 
-import { Button } from "@/components/shadcn-ui/button";
-import { Input } from "@/components/shadcn-ui/input";
-import { Separator } from "@/components/shadcn-ui/separator";
+import { Button } from "#components/shadcn-ui/button";
+import { Input } from "#components/shadcn-ui/input";
+import { Separator } from "#components/shadcn-ui/separator";
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/shadcn-ui/sheet";
-import { Skeleton } from "@/components/shadcn-ui/skeleton";
+} from "#components/shadcn-ui/sheet";
+import { Skeleton } from "#components/shadcn-ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/shadcn-ui/tooltip";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/utils/cn";
+} from "#components/shadcn-ui/tooltip";
+import { useIsMobile } from "#hooks/use-mobile";
+import { cn } from "#utils/cn";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

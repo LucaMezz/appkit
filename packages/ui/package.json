@@ -11,6 +11,12 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "imports": {
+    "#components/*": "./src/components/*.tsx",
+    "#lib/*": "./src/lib/*.ts",
+    "#hooks/*": "./src/hooks/*.ts",
+    "#utils/*": "./src/utils/*.ts"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

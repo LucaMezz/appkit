@@ -1,8 +1,8 @@
 import { Button } from "@appkit/ui";
 // import { useId, useRef } from "react";
 import { Link } from "react-router-dom";
-// import { Input } from "@/components/shadcn-ui/input";
-// import { getErrorMessage } from "@/utils/get-error-message";
+// import { Input } from "#components/shadcn-ui/input";
+// import { getErrorMessage } from "#utils/get-error-message";
 
 // interface RegisterUserState {
 //   error: string | null;

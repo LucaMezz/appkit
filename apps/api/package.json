@@ -5,6 +5,9 @@
   "description": "Express API server for AppKit",
   "type": "module",
   "main": "./dist/server.js",
+  "imports": {
+    "#api/*": "./src/*.ts"
+  },
   "scripts": {
     "dev": "tsx watch --clear-screen=false src/server.ts",
     "build": "tsup src/server.ts --format esm --clean --sourcemap",

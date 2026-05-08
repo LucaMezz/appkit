@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 
-import { IPC_CHANNELS, IpcChannel } from "../shared/ipc/types";
+import { IPC_CHANNELS, IpcChannel } from "#shared/ipc/types";
 
 export type AllowedChannel = IpcChannel;
 

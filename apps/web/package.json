@@ -2,6 +2,9 @@
   "name": "@appkit/web",
   "version": "0.1.0",
   "private": true,
+  "imports": {
+    "#app/*": "./app/*.tsx"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -2,10 +2,10 @@ import { ExpressAuth } from "@auth/express";
 import express from "express";
 import helmet from "helmet";
 
-import { errorMiddleware } from "@/middleware/error.middleware";
-import { notFoundMiddleware } from "@/middleware/not-found.middleware";
-import { healthRoutes } from "@/modules/health/health.routes";
-import { usersRoutes } from "@/modules/users/users.routes";
+import { errorMiddleware } from "#api/middleware/error.middleware";
+import { notFoundMiddleware } from "#api/middleware/not-found.middleware";
+import { healthRoutes } from "#api/modules/health/health.routes";
+import { usersRoutes } from "#api/modules/users/users.routes";
 
 import { expressAuthConfig } from "./lib/auth.config";
 import { corsConfig } from "./lib/cors.config";

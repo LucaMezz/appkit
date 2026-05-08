@@ -4,11 +4,11 @@ import { ExpressAuthConfig } from "@auth/express";
 // src/lib/auth/auth.config.ts
 import Credentials from "@auth/express/providers/credentials";
 
-import { db } from "@/db";
-import { accounts, sessions, users, verificationTokens } from "@/db/schema";
-import { usersService } from "@/modules/users/users.service";
-import { ALLOWED_ORIGINS } from "@/utils/origins";
-import { verifyPassword } from "@/utils/password";
+import { db } from "#api/db/index";
+import { accounts, sessions, users, verificationTokens } from "#api/db/schema/index";
+import { usersService } from "#api/modules/users/users.service";
+import { ALLOWED_ORIGINS } from "#api/utils/origins";
+import { verifyPassword } from "#api/utils/password";
 
 export const credentialsProvider = Credentials({
   credentials: {
