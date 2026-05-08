@@ -50,6 +50,9 @@ jobs:
       - name: Lint dependency versions
         run: pnpm deps:lint
 
+      - name: Lint dependency architecture
+        run: pnpm deps:arch
+
       - name: Build workspace packages
         run: pnpm build
 

@@ -31,5 +31,6 @@
     "node-abi",
     "@testing-library/react"
   ],
+  "ignoreBinaries": ["tsgo"],
   "ignoreExportsUsedInFile": true
 }
