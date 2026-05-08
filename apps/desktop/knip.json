@@ -1,5 +1,5 @@
 {
-  "$schema": "../../node_modules/knip/schema.json",
+  "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": [
     "main/index.ts",
     "preload/index.ts",
@@ -20,16 +20,16 @@
   "ignoreDependencies": [
     "@electron-forge/plugin-auto-unpack-natives",
     "@total-typescript/ts-reset",
-    "node-abi",
-    "ts-node",
-    "@tailwindcss/postcss",
-    "postcss",
-    "@testing-library/react",
-    "clsx",
-    "tailwind-merge",
     "@tailwindcss/typography",
+    "@tailwindcss/postcss",
     "tailwindcss",
-    "tw-animate-css"
+    "tailwind-merge",
+    "tw-animate-css",
+    "postcss",
+    "clsx",
+    "ts-node",
+    "node-abi",
+    "@testing-library/react"
   ],
   "ignoreExportsUsedInFile": true
 }

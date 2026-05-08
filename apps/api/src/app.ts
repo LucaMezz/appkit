@@ -10,6 +10,7 @@ import { usersRoutes } from "@/modules/users/users.routes";
 import { expressAuthConfig } from "./lib/auth.config";
 import { corsConfig } from "./lib/cors.config";
 import { morganConfig } from "./lib/morgan.config";
+import { requireAuth } from "./middleware/require-auth.middleware";
 import { rootRoutes } from "./modules/root/root.routes";
 
 export const app = express();
@@ -26,7 +27,7 @@ const authConfig = expressAuthConfig;
 app.use("/", rootRoutes);
 app.use("/auth", ExpressAuth(authConfig));
 app.use("/health", healthRoutes);
-app.use("/users", usersRoutes);
+app.use("/users", requireAuth, usersRoutes);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

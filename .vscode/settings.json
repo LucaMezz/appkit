@@ -1,10 +1,11 @@
 {
   "eslint.enable": false,
   "prettier.enable": true,
-  "biome.enabled": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {
-    "source.fixAll.biome": "explicit"
+    "source.format.oxc": "always",
+    "source.fixAll.oxc": "always"
   }
 }

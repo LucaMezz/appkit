@@ -40,3 +40,6 @@ database/
 
 # pnpm local store
 .pnpm-store/
+
+# Turborepo
+.turbo

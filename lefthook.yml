@@ -8,7 +8,7 @@ pre-commit:
 
     knip:
       glob: "*.{ts,tsx,js,jsx}"
-      run: pnpm run knip:desktop
+      run: pnpm run knip
 
 pre-push:
   parallel: true
@@ -23,4 +23,4 @@ pre-push:
 
     similarity:
       glob: "*.{ts,tsx}"
-      run: C:/Users/mezza/.cargo/bin/similarity-ts ./src --threshold 0.9 --no-types --fail-on-duplicates && C:/Users/mezza/.cargo/bin/similarity-ts ./src --types-only --threshold 0.97 --fail-on-duplicates
+      run: similarity-ts ./src --threshold 0.9 --no-types --fail-on-duplicates && similarity-ts ./src --types-only --threshold 0.97 --fail-on-duplicates

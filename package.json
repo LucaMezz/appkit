@@ -17,19 +17,20 @@
     "docker:build": "docker compose build",
     "docker:logs:api": "docker compose logs -f api",
     "api:docker": "docker compose up api",
-    "dev:api": "pnpm --filter @appkit/api dev",
-    "dev:desktop": "pnpm --filter @appkit/desktop dev",
-    "dev:web": "pnpm --filter @appkit/web dev",
-    "build": "pnpm -r build",
-    "test": "pnpm -r test",
-    "test:run": "pnpm -r test:run",
+    "dev": "turbo run dev",
+    "dev:api": "turbo run dev --filter=@appkit/api",
+    "dev:web": "turbo run dev --filter=@appkit/web",
+    "dev:desktop": "turbo run build --filter=@appkit/desktop^ && pnpm --filter @appkit/desktop dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "test:run": "turbo run test:run",
+    "typecheck": "turbo run typecheck",
+    "knip": "turbo run knip",
+    "package": "turbo run package",
     "check": "pnpm run format && pnpm run lint && pnpm run typecheck",
     "lint": "oxlint --type-aware --type-check --ignore-pattern '**/*.config.ts'",
     "format": "oxfmt",
-    "typecheck": "pnpm -r typecheck",
-    "knip:desktop": "pnpm --filter @appkit/desktop knip",
-    "knip": "pnpm -r knip",
-    "package": "pnpm -r package"
+    "knip:desktop": "pnpm --filter @appkit/desktop knip"
   },
   "dependencies": {
     "tslib": "^2.8.1"
@@ -39,6 +40,8 @@
     "oxfmt": "^0.48.0",
     "oxlint": "^1.57.0",
     "oxlint-tsgolint": "^0.22.1",
+    "turbo": "^2.9.10",
     "typescript": "^6.0.3"
-  }
+  },
+  "packageManager": "pnpm@10.33.2"
 }
