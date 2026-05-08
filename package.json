@@ -33,7 +33,10 @@
     "knip:desktop": "pnpm --filter @appkit/desktop knip",
     "deps:lint": "syncpack lint",
     "deps:fix": "syncpack fix",
-    "deps:format": "syncpack format"
+    "deps:format": "syncpack format",
+    "commit": "cross-env NODE_OPTIONS=\"--experimental-transform-types --disable-warning=ExperimentalWarning\" czg",
+    "commit:retry": "cross-env NODE_OPTIONS=\"--experimental-transform-types --disable-warning=ExperimentalWarning\" czg --retry",
+    "commit:amend": "git commit --amend"
   },
   "dependencies": {
     "syncpack": "^15.0.0",
@@ -43,12 +46,20 @@
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
     "@typescript/native-preview": "7.0.0-dev.20260507.1",
+    "cross-env": "^10.1.0",
+    "cz-git": "^1.13.0",
+    "czg": "^1.13.0",
     "lefthook": "^2.1.4",
     "oxfmt": "^0.48.0",
     "oxlint": "^1.57.0",
     "oxlint-tsgolint": "^0.22.1",
     "turbo": "^2.9.10",
     "typescript": "^6.0.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
   },
   "packageManager": "pnpm@10.33.2"
 }

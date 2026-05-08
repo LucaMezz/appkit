@@ -24,6 +24,15 @@ importers:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260507.1
         version: 7.0.0-dev.20260507.1
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
+      cz-git:
+        specifier: ^1.13.0
+        version: 1.13.0
+      czg:
+        specifier: ^1.13.0
+        version: 1.13.0
       lefthook:
         specifier: ^2.1.4
         version: 2.1.6
@@ -3772,6 +3781,15 @@ packages:
 
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
+
+  cz-git@1.13.0:
+    resolution: {integrity: sha512-oTxNSypCvhfHJF7KmnO8lSDup4lYa/s6bbF1700vyONepDIMTcMMXQweSxE/7ANIm7hcv1ckz4HLitZNM02fCw==}
+    engines: {node: '>=v12.20.0'}
+
+  czg@1.13.0:
+    resolution: {integrity: sha512-Y2f2gBpnCa3wJbBGic0mfNJt9zGbWKtrBlJFMclDNUyipvCgn0As2WPHaAtBkBSMlZgzORHRfwAP96C5lrCIYA==}
+    engines: {node: '>=v12.20.0'}
+    hasBin: true
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -9602,6 +9620,10 @@ snapshots:
   cssesc@3.0.0: {}
 
   csstype@3.2.3: {}
+
+  cz-git@1.13.0: {}
+
+  czg@1.13.0: {}
 
   debug@2.6.9:
     dependencies:
