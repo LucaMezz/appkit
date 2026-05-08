@@ -1,16 +1,14 @@
-import { readFileSync } from "node:fs";
 import path from "node:path";
 
-import { type ServerType, serve } from "@hono/node-server";
-import { serveStatic } from "@hono/node-server/serve-static";
 import { app, BrowserWindow, dialog, ipcMain, Menu } from "electron";
 import started from "electron-squirrel-startup";
-import { Hono } from "hono";
 
 import { ipcMainListeners } from "./ipc";
 
+declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string | undefined;
+declare const MAIN_WINDOW_VITE_NAME: string;
+
 const CONFIG = {
-  HONO_PORT: 3000,
   WINDOW: {
     WIDTH: 800,
     HEIGHT: 600,
@@ -20,7 +18,6 @@ const CONFIG = {
 } as const;
 
 let mainWindow: BrowserWindow | null = null;
-let honoServer: ServerType | null = null;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -34,10 +31,14 @@ app
       initializeApp();
     } catch (error) {
       console.error("Failed to initialize application:", error);
+
       dialog.showErrorBox(
         "Initialization Error",
-        `Failed to start the application: ${error instanceof Error ? error.message : String(error)}`,
+        `Failed to start the application: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
       );
+
       app.quit();
     }
   })
@@ -47,12 +48,12 @@ app
   });
 
 function initializeApp(): void {
-  setupStaticFileServer();
   registerIpcMainListeners();
+  createWindow();
 
   app.on("activate", () => {
-    // On OS X it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
+    // On macOS it's common to re-create a window when the dock icon is clicked
+    // and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
@@ -74,22 +75,14 @@ app.on("before-quit", () => {
 });
 
 function cleanup(): void {
-  if (honoServer) {
-    honoServer.close((err) => {
-      if (err) {
-        console.error("Error closing Hono server:", err);
-      }
-    });
-    honoServer = null;
-  }
-
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.close();
   }
+
   mainWindow = null;
 }
 
-function createWindow() {
+function createWindow(): void {
   mainWindow = new BrowserWindow({
     width: CONFIG.WINDOW.WIDTH,
     height: CONFIG.WINDOW.HEIGHT,
@@ -111,6 +104,21 @@ function createWindow() {
     mainWindow = null;
   });
 
+  mainWindow.webContents.on(
+    "did-fail-load",
+    (_event, errorCode, errorDescription, validatedURL) => {
+      console.error("Renderer failed to load:", {
+        errorCode,
+        errorDescription,
+        validatedURL,
+      });
+    },
+  );
+
+  mainWindow.webContents.on("render-process-gone", (_event, details) => {
+    console.error("Renderer process gone:", details);
+  });
+
   loadApplication(mainWindow);
 
   if (process.env.NODE_ENV === "development") {
@@ -119,65 +127,36 @@ function createWindow() {
 }
 
 function loadApplication(window: BrowserWindow): void {
-  const appUrl = MAIN_WINDOW_VITE_DEV_SERVER_URL
-    ? MAIN_WINDOW_VITE_DEV_SERVER_URL
-    : `http://localhost:${CONFIG.HONO_PORT}`;
+  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+    window.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL).catch((error) => {
+      console.error("Failed to load development renderer:", error);
 
-  window.loadURL(appUrl).catch((error) => {
-    console.error("Failed to load application:", error);
-    dialog.showErrorBox("Loading Error", "Failed to load the application. Please try restarting.");
-  });
-}
-
-function setupStaticFileServer(): void {
-  if (!MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    try {
-      const hono = new Hono();
-
-      const distPath = path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}`);
-
-      hono.use("/*", serveStatic({ root: distPath }));
-
-      hono.get("*", (c) => {
-        try {
-          const html = readFileSync(path.join(distPath, "index.html"), "utf-8");
-          return c.html(html);
-        } catch (error) {
-          console.error("Failed to read index.html:", error);
-          return c.text("Failed to load application", 500);
-        }
-      });
-
-      honoServer = serve(
-        {
-          fetch: hono.fetch,
-          port: CONFIG.HONO_PORT,
-        },
-        () => {
-          console.info(`Hono server started on port ${CONFIG.HONO_PORT}`);
-          createWindow();
-        },
+      dialog.showErrorBox(
+        "Loading Error",
+        "Failed to load the development renderer. Please try restarting.",
       );
+    });
 
-      if (honoServer) {
-        honoServer.on("error", (error) => {
-          console.error("Hono server error:", error);
-          dialog.showErrorBox(
-            "Server Error",
-            `Failed to start server: ${error instanceof Error ? error.message : String(error)}`,
-          );
-          app.quit();
-        });
-      }
-    } catch (error) {
-      console.error("Failed to setup static file server:", error);
-      throw new Error(
-        `Failed to start server: ${error instanceof Error ? error.message : String(error)}`,
-      );
-    }
-  } else {
-    createWindow();
+    return;
   }
+
+  const rendererPath = path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`);
+
+  console.info("Loading packaged renderer from:", rendererPath);
+
+  window.loadFile(rendererPath).catch((error) => {
+    console.error("Failed to load packaged renderer:", {
+      error,
+      rendererPath,
+      dirname: __dirname,
+      appPath: app.getAppPath(),
+    });
+
+    dialog.showErrorBox(
+      "Loading Error",
+      `Failed to load the packaged renderer from:\n\n${rendererPath}`,
+    );
+  });
 }
 
 function registerIpcMainListeners(): void {
@@ -189,6 +168,7 @@ function registerIpcMainListeners(): void {
     console.info(`Registered ${Object.keys(ipcMainListeners).length} IPC handlers`);
   } catch (error) {
     console.error("Failed to register IPC listeners:", error);
+
     throw new Error(
       `Failed to register IPC listeners: ${error instanceof Error ? error.message : String(error)}`,
     );

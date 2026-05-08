@@ -10,10 +10,17 @@ export default defineConfig({
 
   root: path.resolve(__dirname, "renderer"),
 
+  base: "./",
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "renderer/src"),
     },
+  },
+
+  build: {
+    outDir: path.resolve(__dirname, ".vite/renderer/main_window"),
+    emptyOutDir: true,
   },
 
   optimizeDeps: {
