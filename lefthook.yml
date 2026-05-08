@@ -15,6 +15,10 @@ pre-commit:
       glob: "*.{ts,tsx,js,jsx}"
       run: pnpm run knip
 
+    syncpack:
+      glob: "{**/package.json,pnpm-lock.yaml,pnpm-workspace.yaml,.syncpackrc,.syncpackrc.json}"
+      run: pnpm run deps:lint
+
 pre-push:
   parallel: true
   commands:

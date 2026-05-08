@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      syncpack:
+        specifier: ^15.0.0
+        version: 15.0.0
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
@@ -18,6 +21,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^20.5.3
         version: 20.5.3
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260507.1
+        version: 7.0.0-dev.20260507.1
       lefthook:
         specifier: ^2.1.4
         version: 2.1.6
@@ -86,20 +92,17 @@ importers:
         specifier: ^1.9.10
         version: 1.9.10
       '@types/node':
-        specifier: ^20.19.39
+        specifier: ^20
         version: 20.19.39
       '@types/pg':
         specifier: ^8.20.0
         version: 8.20.0
-      '@typescript/native-preview':
-        specifier: 7.0.0-dev.20260506.1
-        version: 7.0.0-dev.20260506.1
       drizzle-kit:
         specifier: ^0.31.10
         version: 0.31.10
       knip:
-        specifier: ^6.12.0
-        version: 6.12.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
+        specifier: ^6.12.1
+        version: 6.12.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
       tsup:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.14)(tsx@4.21.0)(typescript@6.0.3)(yaml@2.8.4)
@@ -140,7 +143,7 @@ importers:
         specifier: ^5.6.0
         version: 5.6.0(react@19.2.6)
       tailwindcss:
-        specifier: ^4.2.4
+        specifier: ^4
         version: 4.2.4
       tw-animate-css:
         specifier: ^1.4.0
@@ -149,7 +152,7 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2
       zod:
-        specifier: ^3.23.8
+        specifier: ^3.25.76
         version: 3.25.76
     devDependencies:
       '@electron-forge/cli':
@@ -186,7 +189,7 @@ importers:
         specifier: ^4.0.3
         version: 4.0.4
       '@tailwindcss/postcss':
-        specifier: ^4.2.2
+        specifier: ^4
         version: 4.2.4
       '@testing-library/react':
         specifier: ^16.3.2
@@ -201,14 +204,11 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@types/react':
-        specifier: ^19.2.14
+        specifier: ^19
         version: 19.2.14
       '@types/react-dom':
-        specifier: ^19.2.3
+        specifier: ^19
         version: 19.2.3(@types/react@19.2.14)
-      '@typescript/native-preview':
-        specifier: ^7.0.0-dev.20260324.1
-        version: 7.0.0-dev.20260506.1
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -219,8 +219,8 @@ importers:
         specifier: ^20.8.8
         version: 20.9.0
       knip:
-        specifier: ^6.0.5
-        version: 6.12.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
+        specifier: ^6.12.1
+        version: 6.12.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
       lefthook:
         specifier: ^2.1.4
         version: 2.1.6
@@ -272,13 +272,13 @@ importers:
         version: link:../../packages/ui
       next:
         specifier: 16.2.4
-        version: 16.2.4(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 16.2.4(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       react:
-        specifier: 19.2.4
-        version: 19.2.4
+        specifier: ^19.2.4
+        version: 19.2.6
       react-dom:
-        specifier: 19.2.4
-        version: 19.2.4(react@19.2.4)
+        specifier: ^19.2.4
+        version: 19.2.6(react@19.2.6)
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4
@@ -301,9 +301,6 @@ importers:
       tailwindcss:
         specifier: ^4
         version: 4.2.4
-      typescript:
-        specifier: ^5
-        version: 5.4.5
 
   packages/api-client:
     dependencies:
@@ -330,7 +327,7 @@ importers:
   packages/core:
     dependencies:
       zod:
-        specifier: ^3.23.8
+        specifier: ^3.25.76
         version: 3.25.76
     devDependencies:
       '@typescript/native-preview':
@@ -368,10 +365,10 @@ importers:
         version: 3.5.0
     devDependencies:
       '@types/react':
-        specifier: ^19.2.14
+        specifier: ^19
         version: 19.2.14
       '@types/react-dom':
-        specifier: ^19.2.3
+        specifier: ^19
         version: 19.2.3(@types/react@19.2.14)
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260507.1
@@ -386,7 +383,7 @@ importers:
         specifier: ^19.2.4
         version: 19.2.6(react@19.2.6)
       rimraf:
-        specifier: ^6.0.1
+        specifier: ^6.1.3
         version: 6.1.3
       tsup:
         specifier: ^8.5.1
@@ -3205,22 +3202,10 @@ packages:
   '@types/yauzl@2.10.3':
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260506.1':
-    resolution: {integrity: sha512-dAd7qG2J508+4CRSuoEA0EUxViIedQ0D+8xKoZiM0EQHCwww8glWYCo72UTjcRZctS3QbJY3PtGSvo3nzL4oVw==}
-    engines: {node: '>=16.20.0'}
-    cpu: [arm64]
-    os: [darwin]
-
   '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260507.1':
     resolution: {integrity: sha512-2iWAWthp9tWDkgIOITi6GGQkEDQ8Mf+L28B83FR+MvvbLEtHJ5BIZoBOSBgKP5KW+eHlAv1LFUC9dggq1+NO0Q==}
     engines: {node: '>=16.20.0'}
     cpu: [arm64]
-    os: [darwin]
-
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260506.1':
-    resolution: {integrity: sha512-1Q7Elncpuiozvx3HCTgFbSxNz2m2FIkO1QW5f15igcZDG3vMW4QglNflmXosc69bzYI7KfYZuaGX3yGzJkGbfg==}
-    engines: {node: '>=16.20.0'}
-    cpu: [x64]
     os: [darwin]
 
   '@typescript/native-preview-darwin-x64@7.0.0-dev.20260507.1':
@@ -3229,22 +3214,10 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260506.1':
-    resolution: {integrity: sha512-Q1W4DHplR2urmtPwoz9tw6XUGWRNXF+CIXJQ8ZpIZFj/OHgvTw8vkYkKFuaEao3lSjTsR4lQe/wL2Xr5K0hxuA==}
-    engines: {node: '>=16.20.0'}
-    cpu: [arm64]
-    os: [linux]
-
   '@typescript/native-preview-linux-arm64@7.0.0-dev.20260507.1':
     resolution: {integrity: sha512-0F2o8sbpSOHR04ghnhWPFsyuH9uew78v3fc2+tplxAnwZ5Wt72hk6Ka0yG07m8D6Ca0SK/GtTVIq7BfjmNCP8w==}
     engines: {node: '>=16.20.0'}
     cpu: [arm64]
-    os: [linux]
-
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20260506.1':
-    resolution: {integrity: sha512-MfYn1p+aOorZ2Y+7sqLvSoAXPEz/RfKgHfeYO240Udco30B4oapm7Hsq2PsS9Z2Oth/RorGjY0jLP2OhnkY2Ig==}
-    engines: {node: '>=16.20.0'}
-    cpu: [arm]
     os: [linux]
 
   '@typescript/native-preview-linux-arm@7.0.0-dev.20260507.1':
@@ -3253,23 +3226,11 @@ packages:
     cpu: [arm]
     os: [linux]
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20260506.1':
-    resolution: {integrity: sha512-b+sbLBCIchbrGQNbjIvVN2qd+ieqqp/nghi0n2zOAKGPsfd5wG6ceqxWJKADdBDCohsCCGt//rZccUwFugIsyA==}
-    engines: {node: '>=16.20.0'}
-    cpu: [x64]
-    os: [linux]
-
   '@typescript/native-preview-linux-x64@7.0.0-dev.20260507.1':
     resolution: {integrity: sha512-dST5xeuhREr73obBJj4j5Dtf0dEQr6WuUyHIoLaVQCX9PZhWk0Iu2/9jJ0+Gtx7fh3jWGcidNPP1SgmSrXP6Sw==}
     engines: {node: '>=16.20.0'}
     cpu: [x64]
     os: [linux]
-
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260506.1':
-    resolution: {integrity: sha512-l59d8pZjFT7GoWpgCOy6aBcxLSALphA91X4Z/2XHo5HnM0bQ/yJjB7XMeUQZBdk5DZCdZL+sWTfmXLRggm7sFg==}
-    engines: {node: '>=16.20.0'}
-    cpu: [arm64]
-    os: [win32]
 
   '@typescript/native-preview-win32-arm64@7.0.0-dev.20260507.1':
     resolution: {integrity: sha512-21rGqCoY2FgnbY2YQFGoAnaHFs5kagwdCmGdn7GmsdNF7P3zvS1ag56BFRYITZ2xw02xYa0fvbXcIIycysBS1A==}
@@ -3277,22 +3238,11 @@ packages:
     cpu: [arm64]
     os: [win32]
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20260506.1':
-    resolution: {integrity: sha512-dJDLSzaz2xjRYYmTSfcCepZUi3ITjQSJ6Gk5YGplMF57UmZCAGI+ns4Te/V74IJiQigXqTnyEIGorwsOqhW8gQ==}
-    engines: {node: '>=16.20.0'}
-    cpu: [x64]
-    os: [win32]
-
   '@typescript/native-preview-win32-x64@7.0.0-dev.20260507.1':
     resolution: {integrity: sha512-PORjTM6k/7ySuN7qbKKLKPJ5AlSQuZbaDkLsdQglapQySeHcrdjOhFl172U+V954sR+KhrE3ckhuinEH+Vjkug==}
     engines: {node: '>=16.20.0'}
     cpu: [x64]
     os: [win32]
-
-  '@typescript/native-preview@7.0.0-dev.20260506.1':
-    resolution: {integrity: sha512-UcEslgHBaHYPAisVQcyARDfps7nKyugmUyXcsfE1HiHcVuvZ4tBJ5C93sG1FDeHWJ9skGQ68ec+Xsx086geAfg==}
-    engines: {node: '>=16.20.0'}
-    hasBin: true
 
   '@typescript/native-preview@7.0.0-dev.20260507.1':
     resolution: {integrity: sha512-1NCr79LEzPErrYtminofTji5EvFDYwJ2JDQfDhcQyP8XVJF93LZ5jiDXcYE2MgqDvwPUpaHMY8seC28jHrc/ew==}
@@ -4634,11 +4584,6 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
-  knip@6.12.0:
-    resolution: {integrity: sha512-nRg8+DOFcfBD6NjmNzu9+3D35QnEmMsnojJGOHQUqv+70r1aOx99wpSUXvEV7syQVOL5E6tNXXkoyG1Fuz8BWg==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-
   knip@6.12.1:
     resolution: {integrity: sha512-9JRZB1mENe8xNMpP4jJRiFXkRVBHTWzD7YtiLywkO7aKXCefbvI+hA0YDl7H7dPvJt7gcVolgxKgABJQ31NL3w==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -5494,11 +5439,6 @@ packages:
     resolution: {integrity: sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==}
     engines: {node: '>= 0.10'}
 
-  react-dom@19.2.4:
-    resolution: {integrity: sha512-AXJdLo8kgMbimY95O2aKQqsz2iWi9jMgKJhRBAxECE4IFxfcazB2LmzloIoibJI3C12IlY20+KFaLv+71bUJeQ==}
-    peerDependencies:
-      react: ^19.2.4
-
   react-dom@19.2.6:
     resolution: {integrity: sha512-0prMI+hvBbPjsWnxDLxlCGyM8PN6UuWjEUCYmZhO67xIV9Xasa/r/vDnq+Xyq4Lo27g8QSbO5YzARu0D1Sps3g==}
     peerDependencies:
@@ -5564,10 +5504,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  react@19.2.4:
-    resolution: {integrity: sha512-9nfp2hYpCwOjAN+8TZFGhtWEwgvWHXqESH8qT89AT/lWklpLON22Lc8pEtnpsZz7VmawabSU0gCjnj8aC0euHQ==}
-    engines: {node: '>=0.10.0'}
 
   react@19.2.6:
     resolution: {integrity: sha512-sfWGGfavi0xr8Pg0sVsyHMAOziVYKgPLNrS7ig+ivMNb3wbCBw3KxtflsGBAwD3gYQlE/AEZsTLgToRrSCjb0Q==}
@@ -5922,6 +5858,51 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  syncpack-darwin-arm64@15.0.0:
+    resolution: {integrity: sha512-xUIOGuWKHAUWOXRKPAlQ2I2XmyuJpEe25G0Vx2/eQoKakEFj3XpQePqOMJLj6ik71xEHxicdMljIKCxEPurahA==}
+    cpu: [arm64]
+    os: [darwin]
+
+  syncpack-darwin-x64@15.0.0:
+    resolution: {integrity: sha512-tcAZ3rbWgoWaT3jcDVZXqob2wgjmHh0GvxPx5oJ/pJ0b8ul2eSX0fhBoczEjV0v5WnBhueDVAfW/aQK7I8co3A==}
+    cpu: [x64]
+    os: [darwin]
+
+  syncpack-linux-arm64-musl@15.0.0:
+    resolution: {integrity: sha512-hVcSOv0D6eRACrCJHPjPMn1H8ovQpZadYoDUL2cW1oTwN/eWNPo2sDZaO+UONQsrWX0LU1Gq59pbIs3TyltDpQ==}
+    cpu: [arm64]
+    os: [linux]
+
+  syncpack-linux-arm64@15.0.0:
+    resolution: {integrity: sha512-xd3+1bqFI5ym2r1AtJH9MUPxAGB2SPYi6FeP1QmCOdAFsykp2yTYsMg9Qs9g8DwOfMM+nSoJGrE1H/eeldU8+A==}
+    cpu: [arm64]
+    os: [linux]
+
+  syncpack-linux-x64-musl@15.0.0:
+    resolution: {integrity: sha512-MCs1MC9iwqNADthJ8dfbINKHPoWZT49TmmkPvbrbV0/QKHcK4TqckrNrHEo7NFrL6BvLEWdWe/Vbdy7PbDluhw==}
+    cpu: [x64]
+    os: [linux]
+
+  syncpack-linux-x64@15.0.0:
+    resolution: {integrity: sha512-gaThoG8k+2UA5A6FFosoT9mSXf69RTZt68iHxqejxDVVPGuPdtAkf6rXIZWiElhJJ3kQwGW+Zo+e0ZdKviqJMg==}
+    cpu: [x64]
+    os: [linux]
+
+  syncpack-windows-arm64@15.0.0:
+    resolution: {integrity: sha512-hMm9zTYihwP9t86z5FIQ/7Hk1LcXw4SuqxjWy+Nylxwj82DIHr+fLzbSmDFQNiFqwz1gY56FuTGH+UavsWkgXQ==}
+    cpu: [arm64]
+    os: [win32]
+
+  syncpack-windows-x64@15.0.0:
+    resolution: {integrity: sha512-8dvfrgSBwVol2PCJeVyESnTdlxdA0ho1w3/EQCW6ixag6Ov0lw7mfEN9SHDim1TVihpr47wr7KKt9t3Qi6d9qQ==}
+    cpu: [x64]
+    os: [win32]
+
+  syncpack@15.0.0:
+    resolution: {integrity: sha512-8aCVifg97m3hig1dnDwvGSPk6g/SDMzYRDjyL58c7l74gq8BCpUFmJrZZUL/9w6kGrnHxl6HsqUeOVja4ZpqTA==}
+    engines: {node: '>=14.17.0'}
+    hasBin: true
 
   tagged-tag@1.0.0:
     resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
@@ -9056,57 +9037,26 @@ snapshots:
       '@types/node': 20.19.39
     optional: true
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260506.1':
-    optional: true
-
   '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260507.1':
-    optional: true
-
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260506.1':
     optional: true
 
   '@typescript/native-preview-darwin-x64@7.0.0-dev.20260507.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260506.1':
-    optional: true
-
   '@typescript/native-preview-linux-arm64@7.0.0-dev.20260507.1':
-    optional: true
-
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20260506.1':
     optional: true
 
   '@typescript/native-preview-linux-arm@7.0.0-dev.20260507.1':
     optional: true
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20260506.1':
-    optional: true
-
   '@typescript/native-preview-linux-x64@7.0.0-dev.20260507.1':
-    optional: true
-
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260506.1':
     optional: true
 
   '@typescript/native-preview-win32-arm64@7.0.0-dev.20260507.1':
     optional: true
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20260506.1':
-    optional: true
-
   '@typescript/native-preview-win32-x64@7.0.0-dev.20260507.1':
     optional: true
-
-  '@typescript/native-preview@7.0.0-dev.20260506.1':
-    optionalDependencies:
-      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20260506.1
-      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20260506.1
-      '@typescript/native-preview-linux-arm': 7.0.0-dev.20260506.1
-      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20260506.1
-      '@typescript/native-preview-linux-x64': 7.0.0-dev.20260506.1
-      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20260506.1
-      '@typescript/native-preview-win32-x64': 7.0.0-dev.20260506.1
 
   '@typescript/native-preview@7.0.0-dev.20260507.1':
     optionalDependencies:
@@ -10518,26 +10468,6 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  knip@6.12.0(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0):
-    dependencies:
-      fdir: 6.5.0(picomatch@4.0.4)
-      formatly: 0.3.0
-      get-tsconfig: 4.14.0
-      jiti: 2.7.0
-      minimist: 1.2.8
-      oxc-parser: 0.128.0
-      oxc-resolver: 11.19.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
-      picomatch: 4.0.4
-      smol-toml: 1.6.1
-      strip-json-comments: 5.0.3
-      tinyglobby: 0.2.16
-      unbash: 3.0.0
-      yaml: 2.8.4
-      zod: 4.4.3
-    transitivePeerDependencies:
-      - '@emnapi/core'
-      - '@emnapi/runtime'
-
   knip@6.12.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0):
     dependencies:
       fdir: 6.5.0(picomatch@4.0.4)
@@ -10924,16 +10854,16 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next@16.2.4(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+  next@16.2.4(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6):
     dependencies:
       '@next/env': 16.2.4
       '@swc/helpers': 0.5.15
       baseline-browser-mapping: 2.10.27
       caniuse-lite: 1.0.30001792
       postcss: 8.4.31
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
-      styled-jsx: 5.1.6(react@19.2.4)
+      react: 19.2.6
+      react-dom: 19.2.6(react@19.2.6)
+      styled-jsx: 5.1.6(react@19.2.6)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.2.4
       '@next/swc-darwin-x64': 16.2.4
@@ -11466,11 +11396,6 @@ snapshots:
       iconv-lite: 0.7.2
       unpipe: 1.0.0
 
-  react-dom@19.2.4(react@19.2.4):
-    dependencies:
-      react: 19.2.4
-      scheduler: 0.27.0
-
   react-dom@19.2.6(react@19.2.6):
     dependencies:
       react: 19.2.6
@@ -11526,8 +11451,6 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.2.14
-
-  react@19.2.4: {}
 
   react@19.2.6: {}
 
@@ -11913,10 +11836,10 @@ snapshots:
     dependencies:
       escape-string-regexp: 1.0.5
 
-  styled-jsx@5.1.6(react@19.2.4):
+  styled-jsx@5.1.6(react@19.2.6):
     dependencies:
       client-only: 0.0.1
-      react: 19.2.4
+      react: 19.2.6
 
   sucrase@3.35.1:
     dependencies:
@@ -11943,6 +11866,41 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  syncpack-darwin-arm64@15.0.0:
+    optional: true
+
+  syncpack-darwin-x64@15.0.0:
+    optional: true
+
+  syncpack-linux-arm64-musl@15.0.0:
+    optional: true
+
+  syncpack-linux-arm64@15.0.0:
+    optional: true
+
+  syncpack-linux-x64-musl@15.0.0:
+    optional: true
+
+  syncpack-linux-x64@15.0.0:
+    optional: true
+
+  syncpack-windows-arm64@15.0.0:
+    optional: true
+
+  syncpack-windows-x64@15.0.0:
+    optional: true
+
+  syncpack@15.0.0:
+    optionalDependencies:
+      syncpack-darwin-arm64: 15.0.0
+      syncpack-darwin-x64: 15.0.0
+      syncpack-linux-arm64: 15.0.0
+      syncpack-linux-arm64-musl: 15.0.0
+      syncpack-linux-x64: 15.0.0
+      syncpack-linux-x64-musl: 15.0.0
+      syncpack-windows-arm64: 15.0.0
+      syncpack-windows-x64: 15.0.0
 
   tagged-tag@1.0.0:
     optional: true

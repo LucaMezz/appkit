@@ -30,14 +30,19 @@
     "check": "pnpm run format && pnpm run lint && pnpm run typecheck",
     "lint": "oxlint --type-aware --type-check --ignore-pattern '**/*.config.ts'",
     "format": "oxfmt",
-    "knip:desktop": "pnpm --filter @appkit/desktop knip"
+    "knip:desktop": "pnpm --filter @appkit/desktop knip",
+    "deps:lint": "syncpack lint",
+    "deps:fix": "syncpack fix",
+    "deps:format": "syncpack format"
   },
   "dependencies": {
+    "syncpack": "^15.0.0",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
+    "@typescript/native-preview": "7.0.0-dev.20260507.1",
     "lefthook": "^2.1.4",
     "oxfmt": "^0.48.0",
     "oxlint": "^1.57.0",
