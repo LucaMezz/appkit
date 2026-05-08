@@ -10,6 +10,12 @@ export default defineConfig({
 
   root: path.resolve(__dirname, "renderer"),
 
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "renderer/src"),
+    },
+  },
+
   optimizeDeps: {
     include: [
       "react",
