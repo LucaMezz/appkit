@@ -26,38 +26,51 @@ module.exports = {
     },
 
     {
-      name: "api-must-not-import-web-or-desktop",
+      name: "api-must-not-import-other-apps",
       severity: "error",
-      comment: "The API app should not depend on web or desktop app code.",
+      comment: "The API app should not depend on web, desktop, or CLI app code.",
       from: {
         path: "^apps/api/",
       },
       to: {
-        path: "^(apps/web|apps/desktop)/",
+        path: "^(apps/web|apps/desktop|apps/cli)/",
       },
     },
 
     {
-      name: "web-must-not-import-api-or-desktop",
+      name: "web-must-not-import-other-apps",
       severity: "error",
-      comment: "The web app should not depend on API or desktop app code.",
+      comment: "The web app should not depend on API, desktop, or CLI app code.",
       from: {
         path: "^apps/web/",
       },
       to: {
-        path: "^(apps/api|apps/desktop)/",
+        path: "^(apps/api|apps/desktop|apps/cli)/",
       },
     },
 
     {
-      name: "desktop-must-not-import-api-or-web",
+      name: "desktop-must-not-import-other-apps",
       severity: "error",
-      comment: "The desktop app should not depend on API or web app code.",
+      comment: "The desktop app should not depend on API, web, or CLI app code.",
       from: {
         path: "^apps/desktop/",
       },
       to: {
-        path: "^(apps/api|apps/web)/",
+        path: "^(apps/api|apps/web|apps/cli)/",
+      },
+    },
+
+    {
+      name: "cli-must-not-import-other-apps",
+      severity: "error",
+      comment:
+        "The CLI app should communicate through shared packages and APIs, not import other app implementations.",
+      from: {
+        path: "^apps/cli/",
+      },
+      to: {
+        path: "^(apps/api|apps/web|apps/desktop)/",
       },
     },
 
@@ -65,7 +78,7 @@ module.exports = {
       name: "core-must-stay-independent",
       severity: "error",
       comment:
-        "@appkit/core should stay framework-agnostic and must not depend on UI, API client, desktop, web, or API app code.",
+        "@appkit/core should stay framework-agnostic and must not depend on UI, API client, or app code.",
       from: {
         path: "^packages/core/",
       },
@@ -104,6 +117,18 @@ module.exports = {
       comment: "The API app should not depend on React/UI code.",
       from: {
         path: "^apps/api/",
+      },
+      to: {
+        path: "^packages/ui/",
+      },
+    },
+
+    {
+      name: "cli-must-not-import-ui",
+      severity: "error",
+      comment: "The CLI app should stay terminal-focused and must not depend on React/UI code.",
+      from: {
+        path: "^apps/cli/",
       },
       to: {
         path: "^packages/ui/",

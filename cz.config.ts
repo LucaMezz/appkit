@@ -79,7 +79,19 @@ export default defineConfig({
 
     useEmoji: false,
 
-    scopes: ["api", "api-client", "core", "desktop", "web", "ui", "deps", "ci", "config", "repo"],
+    scopes: [
+      "api",
+      "api-client",
+      "core",
+      "cli",
+      "desktop",
+      "web",
+      "ui",
+      "deps",
+      "ci",
+      "config",
+      "repo",
+    ],
 
     allowCustomScopes: true,
     allowEmptyScopes: true,
