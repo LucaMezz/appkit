@@ -2,7 +2,7 @@
 
 `@appkit/ui` is the shared React UI package for the AppKit monorepo.
 
-It contains reusable components, hooks, styling utilities, and global styles that can be shared between the web app and the desktop renderer. The package is built around shadcn/ui-style component primitives and is intended to provide a consistent design foundation across AppKit's frontend targets.
+It contains reusable components, hooks, styling utilities, global styles, and a Storybook component workbench that can be shared between the web app and the desktop renderer. The package is built around shadcn/ui-style component primitives and is intended to provide a consistent design foundation across AppKit's frontend targets.
 
 ## Overview
 
@@ -21,6 +21,7 @@ It should contain UI code that is useful across frontend platforms, especially:
 - Shared styling utilities.
 - Shared global CSS.
 - Component-level styling conventions.
+- Storybook stories and examples for shared components.
 
 It should not contain app-specific route logic, desktop runtime code, backend code, database logic, or API implementation details.
 
@@ -34,7 +35,7 @@ apps/
   desktop/      Desktop renderer that consumes @appkit/ui
 
 packages/
-  ui/           Shared React UI package
+  ui/           Shared React UI package and Storybook workbench
   core/         Shared framework-agnostic logic
   api-client/   Shared API communication helpers
 ```
@@ -45,14 +46,16 @@ The web and desktop apps should import reusable components from `@appkit/ui` ins
 
 ```text
 packages/ui/
+├── .storybook/          # Storybook configuration for isolated UI previews
 ├── src/
-│   ├── components/       # Shared React components
-│   ├── hooks/            # Shared React hooks
-│   ├── styles/           # Shared/global styles
-│   ├── utils/            # Shared UI utilities
-│   └── index.ts          # Public package entry point
+│   ├── components/      # Shared React components and component stories
+│   ├── hooks/           # Shared React hooks
+│   ├── styles/          # Shared/global styles
+│   ├── utils/           # Shared UI utilities
+│   └── index.ts         # Public package entry point
 │
 ├── package.json
+├── components.json
 ├── tsconfig.json
 ├── tsconfig.build.json
 ├── tsup.config.ts
@@ -60,7 +63,129 @@ packages/ui/
 └── README.md
 ```
 
-The exact structure may evolve, but the intent should stay the same: this package owns reusable frontend UI primitives and frontend-only utilities.
+The exact structure may evolve, but the intent should stay the same: this package owns reusable frontend UI primitives, frontend-only utilities, shared styling foundations, and isolated component examples.
+
+## Storybook
+
+`@appkit/ui` includes Storybook for developing, previewing, documenting, and testing shared UI components independently from any consuming application.
+
+Storybook is useful because it allows shared components to be viewed without running the web app or desktop app. This makes it easier to develop components in isolation, review visual states, document variants, and verify that the shared styling foundation works correctly.
+
+Run Storybook from the repository root:
+
+```bash
+pnpm dev:ui
+```
+
+Build the static Storybook site:
+
+```bash
+pnpm build:ui
+```
+
+You can also run the package scripts directly:
+
+```bash
+pnpm --filter @appkit/ui storybook
+pnpm --filter @appkit/ui storybook:build
+```
+
+Storybook is configured under:
+
+```text
+packages/ui/.storybook/
+```
+
+Important files include:
+
+```text
+.storybook/main.ts       Storybook framework, addons, and Vite configuration
+.storybook/preview.ts    Global preview configuration and shared CSS imports
+.storybook/vite-env.d.ts Vite type references for Storybook config/assets
+```
+
+## Story files
+
+Stories should usually live next to the component they document.
+
+Example:
+
+```text
+src/components/shadcn-ui/button.tsx
+src/components/shadcn-ui/button.stories.tsx
+```
+
+Story files are source documentation and should be committed to git.
+
+Generated Storybook output should not be committed. The static Storybook build output is usually:
+
+```text
+storybook-static/
+```
+
+That directory should remain ignored.
+
+## Adding component stories
+
+When adding stories for a shared component:
+
+1. Add the story next to the component.
+2. Use the package's real component source, not duplicated demo components.
+3. Cover common variants, sizes, states, and realistic usage examples.
+4. Prefer examples that demonstrate how the component is expected to be used in AppKit.
+5. Avoid app-specific business flows unless the component is genuinely shared.
+6. Run Storybook locally.
+7. Build Storybook before merging larger UI changes.
+
+Example story structure:
+
+```tsx
+import type { Meta, StoryObj } from "@storybook/react-vite";
+
+import { Button } from "./button";
+
+const meta = {
+  title: "Components/Button",
+  component: Button,
+  parameters: {
+    layout: "centered",
+  },
+  tags: ["autodocs"],
+} satisfies Meta<typeof Button>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    children: "Button",
+  },
+};
+```
+
+Storybook files commonly use default exports for component metadata. This is expected by Storybook's Component Story Format.
+
+## shadcn/ui registry stories
+
+This package may use registry-provided stories for shadcn/ui-style components when they are useful and compatible with AppKit's setup.
+
+When adding registry stories, verify that they are adapted to this package's Storybook framework:
+
+```ts
+import type { Meta, StoryObj } from "@storybook/react-vite";
+```
+
+Avoid importing from framework-specific Storybook packages that do not match this package, such as Next.js-specific Storybook packages.
+
+Registry-generated stories should be reviewed before committing. In particular, check:
+
+- Import paths use this package's component locations.
+- The story uses `@storybook/react-vite` types.
+- Styling matches the shared UI theme.
+- Interaction tests do not conflict with lint/type rules.
+- Unused generated demo files are removed.
+- The stories build successfully in CI.
 
 ## What belongs in this package
 
@@ -78,11 +203,13 @@ Good candidates for `@appkit/ui`:
 - Styling helpers such as `cn`.
 - Shared `globals.css`.
 - Components adapted from or built on shadcn/ui.
+- Stories for shared components.
 
 Examples:
 
 ```text
 src/components/shadcn-ui/button.tsx
+src/components/shadcn-ui/button.stories.tsx
 src/components/shadcn-ui/input.tsx
 src/components/shadcn-ui/card.tsx
 src/hooks/use-mobile.ts
@@ -194,7 +321,7 @@ Recommended conventions:
 
 This package includes shared global styles, including the main `globals.css`.
 
-The global stylesheet is intended to provide the shared styling foundation for frontend apps that consume `@appkit/ui`.
+The global stylesheet is intended to provide the shared styling foundation for frontend apps and Storybook.
 
 Typical responsibilities for global styles include:
 
@@ -244,6 +371,7 @@ Recommended guidelines:
 - Keep web-only styling inside `apps/web` when it is specific to web routing or browser-only UX.
 - Use shared global styles for common theme variables and base styles.
 - Avoid duplicating shadcn/ui primitives across apps.
+- Add or update stories when adding important reusable component variants.
 
 ## Utility functions
 
@@ -301,7 +429,7 @@ Example:
 }
 ```
 
-Development-only React dependencies may still exist for typechecking, local tests, or component development, but runtime ownership belongs to the consuming app.
+Development-only React dependencies may still exist for typechecking, local tests, Storybook, or component development, but runtime ownership belongs to the consuming app.
 
 ## Build output
 
@@ -318,9 +446,39 @@ dist/
 
 The package build should be handled by the package scripts and coordinated by Turborepo.
 
+Storybook's static build output is separate from the package build and is written to:
+
+```text
+storybook-static/
+```
+
 ## Scripts
 
 Run commands from the repository root using pnpm filters.
+
+### Start Storybook
+
+```bash
+pnpm dev:ui
+```
+
+or:
+
+```bash
+pnpm --filter @appkit/ui storybook
+```
+
+### Build Storybook
+
+```bash
+pnpm build:ui
+```
+
+or:
+
+```bash
+pnpm --filter @appkit/ui storybook:build
+```
 
 ### Build the UI package
 
@@ -354,8 +512,10 @@ A typical workflow for changing shared UI components:
 
 ```bash
 pnpm install
+pnpm dev:ui
 pnpm --filter @appkit/ui typecheck
 pnpm --filter @appkit/ui build
+pnpm build:ui
 ```
 
 Then run a consuming app to verify the UI in context:
@@ -378,6 +538,12 @@ pnpm deps:arch
 pnpm check
 pnpm knip
 pnpm test:run
+```
+
+For UI component changes, also run:
+
+```bash
+pnpm build:ui
 ```
 
 ## Using components in apps
@@ -406,13 +572,15 @@ When adding a new reusable component:
 2. Use package-local imports with `#/*`.
 3. Keep app-specific behavior out of the component.
 4. Export the component from `src/index.ts` if it is part of the public UI package API.
-5. Run typecheck and build.
-6. Verify it in at least one consuming app.
+5. Add or update Storybook stories when the component is part of the shared UI surface.
+6. Run typecheck and build.
+7. Verify it in Storybook and at least one consuming app.
 
 Example:
 
 ```text
 src/components/shadcn-ui/badge.tsx
+src/components/shadcn-ui/badge.stories.tsx
 ```
 
 Then export it:
@@ -437,6 +605,7 @@ When adding or modifying shadcn/ui-based components:
 - Avoid importing Electron-specific APIs.
 - Use shared utilities such as `cn` from this package.
 - Export the component from the package entry point when it should be public.
+- Add or update Storybook stories for the component's important states and variants.
 
 If a shadcn/ui component is only relevant to one app, keep it in that app instead of this package.
 
@@ -505,12 +674,14 @@ UI package tests should focus on:
 - Accessibility-critical interactions.
 - Variant behavior.
 - Shared styling assumptions where testable.
+- Storybook interaction tests for component behavior where useful.
 
 As the project grows, useful tests may include:
 
 ```text
 unit tests          utilities and hooks
 component tests     shared components
+storybook tests     story-based interaction checks
 visual tests        optional future enhancement
 e2e tests           app-level flows in consuming apps
 ```
@@ -527,6 +698,7 @@ Recommended practices:
 - Keep focus states visible.
 - Reuse accessible shadcn/ui patterns.
 - Test interactive components with keyboard and screen-reader expectations in mind.
+- Use Storybook's accessibility checks as an early feedback loop for shared components.
 
 Because this package is shared, accessibility improvements benefit both web and desktop clients.
 
@@ -541,6 +713,7 @@ Shared components should be:
 - Platform-neutral.
 - Small enough to understand.
 - Free of app-specific workflows.
+- Documented with useful examples when they are part of the shared UI API.
 
 Avoid building large feature-specific components here unless they are genuinely shared across app targets.
 
@@ -557,6 +730,45 @@ Common causes:
 - Browser-only globals used without guards.
 - Missing shared global CSS import.
 - Package export missing from `src/index.ts`.
+
+### Storybook component appears unstyled
+
+Check that:
+
+- `.storybook/preview.ts` imports the shared `globals.css`.
+- `.storybook/main.ts` configures `@tailwindcss/vite`.
+- The Storybook dev server has been restarted after configuration changes.
+- The component uses classes covered by the shared Tailwind/theme setup.
+
+### Storybook cannot resolve CSS imports
+
+Storybook's Vite environment should include Vite client types.
+
+Check that this file exists:
+
+```text
+.storybook/vite-env.d.ts
+```
+
+with:
+
+```ts
+/// <reference types="vite/client" />
+```
+
+### Registry story references the wrong framework
+
+Some external registry stories may use framework-specific imports such as:
+
+```ts
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+```
+
+For this package, use:
+
+```ts
+import type { Meta, StoryObj } from "@storybook/react-vite";
+```
 
 ### Import from `#/*` fails
 
@@ -602,6 +814,7 @@ pnpm knip
 pnpm check
 pnpm test:run
 pnpm build
+pnpm build:ui
 ```
 
 The package should remain compatible with:
@@ -612,6 +825,7 @@ The package should remain compatible with:
 - Oxlint/oxfmt linting and formatting.
 - TypeScript/tsgo typechecking.
 - Turborepo task orchestration.
+- Storybook static builds.
 - Web and desktop consuming app builds.
 
 ## Design goals
@@ -621,6 +835,7 @@ The package should remain compatible with:
 - **Reusable**: shared by web and desktop frontends.
 - **Consistent**: provides common UI primitives and styling foundations.
 - **Customizable**: built on shadcn/ui-style source components.
+- **Documented**: includes Storybook stories for shared UI examples and component states.
 - **Accessible**: shared components should be accessible by default.
 - **Platform-neutral**: avoids web-only or desktop-only runtime assumptions.
 - **Monorepo-aware**: follows AppKit package boundaries and import conventions.
