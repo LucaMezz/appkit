@@ -140,7 +140,7 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0
       ora:
-        specifier: ^9.0.0
+        specifier: ^9.4.0
         version: 9.4.0
       picocolors:
         specifier: ^1.1.1
