@@ -41,15 +41,16 @@ AppKit combines application frameworks, shared package tooling, and repository q
 
 ### Runtime, apps, and UI
 
-| Tool                                                                                                                           | Purpose                                                                          |
-| ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| [<img src="https://cdn.simpleicons.org/typescript" width="18" alt="TypeScript" /> TypeScript](https://www.typescriptlang.org/) | Primary language for apps, packages, configuration, and shared types.            |
-| [<img src="https://cdn.simpleicons.org/react" width="18" alt="React" /> React](https://react.dev/)                             | Shared UI foundation for the web app and desktop renderer.                       |
-| [<img src="https://cdn.simpleicons.org/nextdotjs" width="18" alt="Next.js" /> Next.js](https://nextjs.org/)                    | Web application framework for `apps/web`.                                        |
-| [<img src="https://cdn.simpleicons.org/electron" width="18" alt="Electron" /> Electron](https://www.electronjs.org/)           | Desktop runtime for `apps/desktop`.                                              |
-| [<img src="https://cdn.simpleicons.org/vite" width="18" alt="Vite" /> Vite](https://vite.dev/)                                 | Fast frontend and Electron renderer build tooling.                               |
-| [<img src="https://cdn.simpleicons.org/tailwindcss" width="18" alt="Tailwind CSS" /> Tailwind CSS](https://tailwindcss.com/)   | Utility-first styling system for shared UI and app interfaces.                   |
-| [<img src="https://cdn.simpleicons.org/shadcnui" width="18" alt="shadcn/ui" /> shadcn/ui](https://ui.shadcn.com/)              | Component patterns used as the basis for reusable UI primitives in `@appkit/ui`. |
+| Tool                                                                                                                           | Purpose                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| [<img src="https://cdn.simpleicons.org/typescript" width="18" alt="TypeScript" /> TypeScript](https://www.typescriptlang.org/) | Primary language for apps, packages, configuration, and shared types.                                    |
+| [<img src="https://cdn.simpleicons.org/react" width="18" alt="React" /> React](https://react.dev/)                             | Shared UI foundation for the web app and desktop renderer.                                               |
+| [<img src="https://cdn.simpleicons.org/nextdotjs" width="18" alt="Next.js" /> Next.js](https://nextjs.org/)                    | Web application framework for `apps/web`.                                                                |
+| [<img src="https://cdn.simpleicons.org/electron" width="18" alt="Electron" /> Electron](https://www.electronjs.org/)           | Desktop runtime for `apps/desktop`.                                                                      |
+| [<img src="https://cdn.simpleicons.org/vite" width="18" alt="Vite" /> Vite](https://vite.dev/)                                 | Fast frontend and Electron renderer build tooling.                                                       |
+| [<img src="https://cdn.simpleicons.org/tailwindcss" width="18" alt="Tailwind CSS" /> Tailwind CSS](https://tailwindcss.com/)   | Utility-first styling system for shared UI and app interfaces.                                           |
+| [<img src="https://cdn.simpleicons.org/shadcnui" width="18" alt="shadcn/ui" /> shadcn/ui](https://ui.shadcn.com/)              | Component patterns used as the basis for reusable UI primitives in `@appkit/ui`.                         |
+| [<img src="https://cdn.simpleicons.org/storybook" width="18" alt="Storybook" /> Storybook](https://storybook.js.org/)          | Isolated component workbench for developing, previewing, and documenting shared `@appkit/ui` components. |
 
 ### Backend and data
 
