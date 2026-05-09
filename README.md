@@ -586,4 +586,6 @@ Because of that origin, the Git history may include earlier boilerplate commits 
 
 ## License
 
-Add license information here.
+This project is licensed under the Apache License 2.0. See [LICENSE](./LICENSE) for details.
+
+This repository originally began as a clone of [`kimizuy/electron-boilerplate`](https://github.com/kimizuy/electron-boilerplate) before being substantially reworked into a cross-platform AppKit monorepo starter kit.
