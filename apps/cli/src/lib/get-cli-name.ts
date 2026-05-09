@@ -1,3 +1,5 @@
+import { cliMetadata } from "./cli-metadata";
+
 export function getCliName() {
-  return "appkit";
+  return cliMetadata.displayName;
 }

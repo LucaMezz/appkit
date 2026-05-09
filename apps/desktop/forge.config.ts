@@ -1,3 +1,4 @@
+import { appMetadata } from "@appkit/core/metadata";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
 import { MakerSquirrel } from "@electron-forge/maker-squirrel";
@@ -7,8 +8,10 @@ import { VitePlugin } from "@electron-forge/plugin-vite";
 import type { ForgeConfig } from "@electron-forge/shared-types";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
 
-const appName = "appkit-desktop";
-const productName = "AppKit";
+const desktopMetadata = appMetadata.apps.desktop;
+
+const appName = desktopMetadata.appName;
+const productName = appMetadata.name;
 
 const config: ForgeConfig = {
   packagerConfig: {
@@ -18,12 +21,10 @@ const config: ForgeConfig = {
     // Keep this unscoped. Squirrel can break when it tries to use
     // the package name "@appkit/desktop" in generated .nuspec paths.
     name: appName,
-    executableName: appName,
+    executableName: desktopMetadata.executableName,
 
-    appBundleId: "com.appkit.desktop",
-    appCategoryType: "public.app-category.developer-tools",
-
-    // extraResource: ["drizzle"],
+    appBundleId: desktopMetadata.bundleId,
+    appCategoryType: desktopMetadata.category,
   },
 
   rebuildConfig: {},
@@ -32,7 +33,7 @@ const config: ForgeConfig = {
     new MakerSquirrel({
       name: appName,
       title: productName,
-      authors: "Luca Mezzavilla",
+      authors: `${appMetadata.author}`,
       setupExe: `${productName}Setup.exe`,
       noMsi: true,
     }),

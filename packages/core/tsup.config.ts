@@ -1,7 +1,10 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: {
+    index: "src/index.ts",
+    "metadata/index": "src/metadata/index.ts",
+  },
   format: ["esm", "cjs"],
   clean: true,
   target: "es2020",

@@ -11,19 +11,24 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "imports": {
-    "#/*": "./src/*"
+    "#metadata/*": "./src/metadata/*"
   },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./metadata": {
+      "types": "./dist/metadata/index.d.ts",
+      "import": "./dist/metadata/index.js",
+      "require": "./dist/metadata/index.cjs"
     }
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:js && pnpm build:types",
-    "build:js": "tsup src/index.ts --format esm,cjs",
+    "build:js": "tsup",
     "build:types": "tsc -p tsconfig.build.json",
-    "dev": "tsup src/index.ts --format esm,cjs --watch",
+    "dev": "tsup --watch",
     "typecheck": "tsgo --noEmit",
     "clean": "rimraf dist",
     "knip": "knip"

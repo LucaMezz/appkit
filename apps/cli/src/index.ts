@@ -1,13 +1,15 @@
 import { Command } from "commander";
 
+import { cliMetadata } from "#lib/cli-metadata";
+
 import { registerCommands } from "./commands";
 
 const program = new Command();
 
 program
-  .name("appkit")
-  .description("Command-line client for interacting with the AppKit backend API.")
-  .version("0.1.0", "-v, --version");
+  .name(cliMetadata.displayName)
+  .description(cliMetadata.description)
+  .version(cliMetadata.version, "-v, --version");
 
 registerCommands(program);
 
