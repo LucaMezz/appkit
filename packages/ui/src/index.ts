@@ -17,5 +17,6 @@ export * from "./components/shadcn-ui/kbd";
 export * from "./components/shadcn-ui/input-group";
 export * from "./components/shadcn-ui/field";
 export * from "./components/shadcn-ui/collapsible";
+export * from "./components/shadcn-ui/popover";
 
 export * from "./hooks/use-mobile";
