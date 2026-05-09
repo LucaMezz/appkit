@@ -1,36 +1,503 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AppKit Web
 
-## Getting Started
+The AppKit web app is the browser-based frontend application for the AppKit monorepo.
 
-First, run the development server:
+It is built with Next.js and is intended to demonstrate how a modern web client can share UI, core logic, and API communication code with a desktop application while still remaining a standalone deployable app.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Overview
+
+`apps/web` is responsible for the browser runtime and web-specific user experience.
+
+It consumes shared workspace packages such as:
+
+- `@appkit/ui`
+- `@appkit/core`
+- `@appkit/api-client`
+
+Web-specific code should remain inside `apps/web`. Code that can also be used by the desktop renderer or other clients should be moved into `packages/*`.
+
+## Role in the monorepo
+
+The web app is one of the deployable application targets in the AppKit starter kit.
+
+```text
+apps/
+  web/          Browser frontend application
+  desktop/      Cross-platform desktop application
+  api/          Shared backend API application
+
+packages/
+  ui/           Shared React UI components
+  core/         Shared framework-agnostic logic
+  api-client/   Shared API communication helpers
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The web app should communicate with the backend through stable API contracts, preferably using helpers from `@appkit/api-client` where appropriate.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+It should not import backend implementation files directly.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Architecture
 
-## Learn More
+The web app follows the Next.js application structure.
 
-To learn more about Next.js, take a look at the following resources:
+```text
+apps/web/
+├── app/               # Next.js app router routes and layouts
+├── public/            # Static assets
+├── package.json
+├── next.config.ts
+├── postcss.config.mjs
+└── README.md
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The exact structure may grow as the application gains routes, features, server actions, API client usage, and shared UI integration.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Key files and folders
 
-## Deploy on Vercel
+### `app/`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The `app/` folder contains the Next.js App Router entry points.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Typical files include:
+
+```text
+app/
+  layout.tsx
+  page.tsx
+```
+
+As the app grows, route groups and nested route folders should live here.
+
+Recommended conventions:
+
+- Keep route files focused on routing and composition.
+- Move reusable UI into components or shared packages.
+- Move cross-platform UI into `@appkit/ui`.
+- Move framework-agnostic logic into `@appkit/core`.
+- Move backend communication helpers into `@appkit/api-client`.
+
+### `public/`
+
+Static assets for the web app.
+
+Use this for files that should be served directly by Next.js, such as images, icons, and other static assets.
+
+### `next.config.ts`
+
+Next.js configuration.
+
+This is the right place for web-specific Next.js options such as:
+
+- Workspace package transpilation.
+- Turbopack or build configuration.
+- Image settings.
+- Redirects or rewrites.
+- Other Next.js runtime/build settings.
+
+### `postcss.config.mjs`
+
+PostCSS configuration used by the web app styling pipeline.
+
+## Dependency boundaries
+
+The web app follows these monorepo boundaries:
+
+- The web app may import from `@appkit/ui`.
+- The web app may import from `@appkit/core`.
+- The web app may import from `@appkit/api-client`.
+- The web app must not import from `apps/api`.
+- The web app must not import from `apps/desktop`.
+- Shared packages must not import from the web app.
+- Source code should not import generated build output such as `.next`, `dist`, `build`, or `out`.
+
+Architecture boundaries are enforced at the repository level with dependency-cruiser:
+
+```bash
+pnpm deps:arch
+```
+
+## Import conventions
+
+### Cross-package imports
+
+Use workspace package names for shared code:
+
+```ts
+import { Button } from "@appkit/ui";
+import { someCoreHelper } from "@appkit/core";
+import { apiClient } from "@appkit/api-client";
+```
+
+### Web-local imports
+
+Web-local source code can use the web app's local import convention.
+
+For example, if the app has local aliases configured:
+
+```ts
+import { SomeWebOnlyComponent } from "#/components/some-web-only-component";
+```
+
+or:
+
+```ts
+import { SomeWebOnlyComponent } from "@/components/some-web-only-component";
+```
+
+Use whichever convention is configured for `apps/web`, but avoid leaking app-local aliases into shared packages.
+
+### Avoid app-to-app imports
+
+Do not import from other apps:
+
+```ts
+// Avoid
+import { serverThing } from "../../api/...";
+import { desktopThing } from "../../desktop/...";
+```
+
+If code is needed by multiple apps, move it into a shared package.
+
+## Shared UI usage
+
+Reusable UI should come from `@appkit/ui`:
+
+```tsx
+import { Button } from "@appkit/ui";
+
+export function Example() {
+  return <Button>Continue</Button>;
+}
+```
+
+Web-only components should stay in `apps/web`.
+
+Use this rule of thumb:
+
+```text
+Reusable across web and desktop?
+  Put it in packages/ui.
+
+Specific to web routing, metadata, server rendering, or web-only UX?
+  Keep it in apps/web.
+```
+
+## Styling
+
+The web app uses the monorepo's frontend styling setup.
+
+Shared component styling should live with `@appkit/ui` when the component is reusable across web and desktop.
+
+Web-only styling should stay in `apps/web`.
+
+Recommended guidelines:
+
+- Prefer shared UI primitives from `@appkit/ui`.
+- Keep route-specific layout and page composition in the web app.
+- Avoid duplicating desktop renderer styles unless they are intentionally platform-specific.
+- Move reusable styling utilities into `@appkit/ui`.
+
+## Scripts
+
+Run commands from the repository root using pnpm filters.
+
+### Start the web app in development
+
+```bash
+pnpm --filter @appkit/web dev
+```
+
+### Build the web app
+
+```bash
+pnpm --filter @appkit/web build
+```
+
+### Typecheck the web app
+
+```bash
+pnpm --filter @appkit/web typecheck
+```
+
+### Run web tests
+
+```bash
+pnpm --filter @appkit/web test:run
+```
+
+### Run Knip for the web app
+
+```bash
+pnpm --filter @appkit/web knip
+```
+
+## Development workflow
+
+A typical local web workflow is:
+
+```bash
+pnpm install
+pnpm --filter @appkit/web dev
+```
+
+Before committing web changes, run:
+
+```bash
+pnpm check
+pnpm knip
+pnpm deps:arch
+pnpm test:run
+```
+
+For web-specific validation:
+
+```bash
+pnpm --filter @appkit/web typecheck
+pnpm --filter @appkit/web build
+```
+
+## Build workflow
+
+The production web build is handled by Next.js:
+
+```bash
+pnpm --filter @appkit/web build
+```
+
+The root build command may also build the web app through Turborepo:
+
+```bash
+pnpm build
+```
+
+A successful production build should verify that:
+
+- Routes compile.
+- TypeScript passes.
+- Shared packages resolve correctly.
+- Next.js can produce optimized output.
+- Workspace package imports are compatible with the web build.
+
+## Next.js and workspace packages
+
+Because the web app consumes internal workspace packages, Next.js may need to transpile those packages.
+
+If using source-based workspace package imports, configure `next.config.ts` with `transpilePackages`:
+
+```ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  transpilePackages: ["@appkit/ui", "@appkit/core", "@appkit/api-client"],
+};
+
+export default nextConfig;
+```
+
+If consuming built package output from `dist`, make sure the shared packages are built before the web app build.
+
+Turborepo can coordinate build ordering through package dependencies and task configuration.
+
+## Routing guidelines
+
+Route files should focus on page composition.
+
+Recommended rules:
+
+- Keep route components readable.
+- Move reusable UI into components or `@appkit/ui`.
+- Move business/domain logic into `@appkit/core` where possible.
+- Move API communication helpers into `@appkit/api-client`.
+- Avoid putting large workflows directly in `page.tsx` or `layout.tsx`.
+
+## Server and client components
+
+When using the Next.js App Router, be deliberate about server and client component boundaries.
+
+Recommended guidelines:
+
+- Use server components by default where possible.
+- Add `"use client"` only where interactivity requires it.
+- Keep client components small and focused.
+- Avoid importing browser-only modules into server components.
+- Avoid importing server-only modules into client components.
+- Keep shared UI compatible with the environments where it is consumed.
+
+## API communication
+
+The web app should communicate with the backend through stable API contracts.
+
+Prefer using `@appkit/api-client` for shared API communication logic:
+
+```ts
+import { apiClient } from "@appkit/api-client";
+```
+
+Avoid duplicating endpoint URLs, request shapes, and response handling across web and desktop clients.
+
+If the API response shape needs to be shared, prefer moving framework-agnostic types or schemas into `@appkit/core`.
+
+## Environment configuration
+
+Web environment variables should be handled deliberately.
+
+Recommended guidelines:
+
+- Keep server-only values private.
+- Only expose browser-safe values through the appropriate public environment variable mechanism.
+- Avoid reading environment variables in many unrelated files.
+- Document required environment variables as the app grows.
+
+## Testing strategy
+
+The web app can support multiple levels of testing:
+
+```text
+unit tests        pure utilities and components
+integration tests route-level or client behavior
+e2e tests         browser flows, added later when needed
+```
+
+At this stage, prioritize small deterministic tests first.
+
+Potential test targets:
+
+- Route rendering.
+- Shared UI integration.
+- API client usage.
+- Web-specific utilities.
+- Form behavior.
+- Auth routing behavior.
+
+## Relationship to `@appkit/ui`
+
+The web app should use `@appkit/ui` for reusable components.
+
+Good:
+
+```ts
+import { Button } from "@appkit/ui";
+```
+
+Avoid deep imports into package internals:
+
+```ts
+// Avoid
+import { Button } from "../../../packages/ui/src/components/button";
+```
+
+If a UI component is only used by the web app and is not useful for desktop, keep it inside `apps/web`.
+
+## Relationship to `@appkit/api-client`
+
+Use `@appkit/api-client` for reusable client-side API communication.
+
+This helps prevent the web and desktop apps from duplicating API request logic.
+
+## Relationship to `@appkit/core`
+
+Use `@appkit/core` for framework-agnostic shared logic, such as:
+
+- Domain types.
+- Pure helpers.
+- Validation schemas.
+- Constants.
+- Shared data transformation logic.
+
+Do not place React components, Next.js route logic, or browser-specific code in `@appkit/core`.
+
+## Common issues
+
+### Next.js reports multiple lockfiles
+
+If Next.js detects multiple lockfiles or workspace files, check whether there are unnecessary workspace files inside `apps/web`.
+
+If needed, configure the Next.js root explicitly in `next.config.ts`.
+
+### Shared package import fails
+
+Check whether the package is listed in `apps/web/package.json` using `workspace:*`.
+
+Example:
+
+```json
+{
+  "dependencies": {
+    "@appkit/ui": "workspace:*"
+  }
+}
+```
+
+Also check whether Next.js needs `transpilePackages` for the shared package.
+
+### App imports backend implementation files
+
+Do not import from `apps/api/src`.
+
+Move shared types or schemas into `@appkit/core`, then import them from there.
+
+### Styling differs from desktop
+
+If the same component should look the same in web and desktop, move it into `@appkit/ui`.
+
+If the styling difference is platform-specific, keep it in the app-specific layer.
+
+### Knip reports root-provided binaries
+
+Some tooling binaries may be intentionally provided from the workspace root. If Knip reports one as unlisted, document and ignore it in the package-level Knip config rather than duplicating tooling dependencies unnecessarily.
+
+## Quality checks
+
+The web app participates in the root quality workflow:
+
+```bash
+pnpm deps:lint
+pnpm deps:arch
+pnpm knip
+pnpm check
+pnpm test:run
+pnpm build
+```
+
+The web app should remain compatible with:
+
+- syncpack dependency consistency.
+- dependency-cruiser architecture rules.
+- Knip unused dependency/export detection.
+- Oxlint/oxfmt linting and formatting.
+- TypeScript typechecking.
+- Turborepo task orchestration.
+- Next.js production builds.
+
+## Design goals
+
+The web app is designed to be:
+
+- **Modern**: built with Next.js and TypeScript.
+- **Shared-code friendly**: consumes shared UI, core logic, and API client packages.
+- **Deployable**: remains a standalone web application target.
+- **Maintainable**: keeps app-specific code separate from reusable packages.
+- **Monorepo-aware**: integrates with Turborepo, pnpm workspaces, Knip, syncpack, dependency-cruiser, Renovate, and CI.
+- **Cross-platform aligned**: shares as much appropriate code as possible with the desktop renderer.
+
+## Non-goals
+
+The web app should not contain backend implementation details, desktop runtime logic, or reusable package internals.
+
+If logic is reusable across platforms, move it into a shared package. If logic is specific to the backend, keep it in `apps/api`. If logic is specific to desktop runtime behavior, keep it in `apps/desktop`.
+
+## Related documentation
+
+See the root README for:
+
+- Full monorepo overview.
+- Workspace structure.
+- Shared package descriptions.
+- Repository-wide tooling.
+- Dependency management.
+- Commit conventions.
+- Architecture rules.
+
+## License
+
+This app is part of the AppKit monorepo and is licensed under the Apache License 2.0. See the root `LICENSE` file for details.
