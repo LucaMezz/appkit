@@ -33,6 +33,14 @@
       "problemMatcher": []
     },
     {
+      "label": "🎨 Start UI Storybook",
+      "type": "shell",
+      "command": "pnpm dev:ui",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
       "label": "⚡ Start API + Web",
       "dependsOn": ["🚀 Start API Dev Server", "🌐 Start Web Dev Server"],
       "dependsOrder": "parallel",
@@ -56,6 +64,13 @@
         "kind": "build",
         "isDefault": true
       },
+      "problemMatcher": []
+    },
+    {
+      "label": "📚 Build UI Storybook",
+      "type": "shell",
+      "command": "pnpm build:ui",
+      "group": "build",
       "problemMatcher": []
     },
     {

@@ -43,3 +43,5 @@ database/
 
 # Turborepo
 .turbo
+*storybook.log
+storybook-static
