@@ -1,5 +1,8 @@
 "use client";
 
+import { ChevronsUpDown, Plus } from "lucide-react";
+import * as React from "react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,10 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@appkit/ui";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@appkit/ui";
-import { ChevronsUpDown, Plus } from "lucide-react";
-import * as React from "react";
+} from "#shadcn/dropdown-menu";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "#shadcn/sidebar";
 
 export function TeamSwitcher({
   teams,

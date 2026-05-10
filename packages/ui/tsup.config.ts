@@ -24,5 +24,9 @@ export default defineConfig({
     "tailwind-merge",
   ],
 
+  esbuildOptions(options) {
+    options.jsx = "automatic";
+  },
+
   skipNodeModulesBundle: true,
 });

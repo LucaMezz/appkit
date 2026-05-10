@@ -1,15 +1,25 @@
-import { registerUser } from "@appkit/api-client";
-import { registerSchema } from "@appkit/core";
-import { Button } from "@appkit/ui";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@appkit/ui";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@appkit/ui";
-import { Input } from "@appkit/ui";
+import { RegisterInput, registerSchema } from "@appkit/core";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import * as z from "zod";
 
-export function SignUpForm() {
-  const form = useForm<z.infer<typeof registerSchema>>({
+import { Button } from "#shadcn/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "#shadcn/card";
+import { Field, FieldError, FieldGroup, FieldLabel } from "#shadcn/field";
+import { Input } from "#shadcn/input";
+
+interface SignUpFormProps {
+  onSubmit: (data: RegisterInput) => Promise<void>;
+}
+
+export function SignUpForm({ onSubmit }: SignUpFormProps) {
+  const form = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
@@ -18,18 +28,6 @@ export function SignUpForm() {
       confirmPassword: "",
     },
   });
-
-  async function onSubmit(data: z.infer<typeof registerSchema>) {
-    const result = await registerUser(data, {
-      apiBaseUrl: "http://localhost:4000",
-    });
-
-    if (!result.success) {
-      console.error(result.message);
-    }
-
-    console.info("successfully registered.");
-  }
 
   return (
     <Card className="w-full sm:max-w-md">
