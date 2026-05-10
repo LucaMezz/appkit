@@ -1,10 +1,18 @@
 import { LoginInput, loginSchema } from "@appkit/core";
-import { Button } from "@appkit/ui";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@appkit/ui";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@appkit/ui";
-import { Input } from "@appkit/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+
+import { Button } from "#shadcn/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "#shadcn/card";
+import { Field, FieldError, FieldGroup, FieldLabel } from "#shadcn/field";
+import { Input } from "#shadcn/input";
 
 interface LoginFormProps {
   onSubmit: (data: LoginInput) => Promise<void>;

@@ -14,6 +14,7 @@
   "types": "./dist/index.d.ts",
   "imports": {
     "#components/*": "./src/components/*.tsx",
+    "#shadcn/*": "./src/components/shadcn-ui/*.tsx",
     "#lib/*": "./src/lib/*.ts",
     "#hooks/*": "./src/hooks/*.ts",
     "#utils/*": "./src/utils/*.ts",

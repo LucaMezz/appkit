@@ -1,6 +1,5 @@
 "use client";
 
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@appkit/ui";
 import {
   AudioWaveform,
   BookOpen,
@@ -14,6 +13,14 @@ import {
   SquareTerminal,
 } from "lucide-react";
 import * as React from "react";
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from "#shadcn/sidebar";
 
 import { NavMain } from "./nav-main";
 import { NavProjects } from "./nav-projects";
