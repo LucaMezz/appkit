@@ -1,8 +1,5 @@
+import { AboutScreen } from "@appkit/ui";
+
 export function About(): React.JSX.Element {
-  return (
-    <>
-      <h1>About</h1>
-      <p>This is a demo page for the Electron Boilerplate project.</p>
-    </>
-  );
+  return <AboutScreen />;
 }

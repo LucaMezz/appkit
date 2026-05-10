@@ -1,11 +1,12 @@
 import path from "node:path";
 
-import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig, searchForWorkspaceRoot } from "vite";
 
 // https://vitejs.dev/config
 // oxlint-disable-next-line import/no-default-export
 export default defineConfig({
-  plugins: [],
+  plugins: [react()],
 
   root: path.resolve(__dirname, "renderer"),
 
@@ -33,7 +34,11 @@ export default defineConfig({
 
   server: {
     fs: {
-      allow: ["../.."],
+      allow: [searchForWorkspaceRoot(__dirname)],
     },
+  },
+
+  esbuild: {
+    jsx: "automatic",
   },
 });

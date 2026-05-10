@@ -1,6 +1,6 @@
 import { signInWithCredentials } from "@appkit/api-client";
 import { LoginInput } from "@appkit/core";
-import { LoginForm } from "@appkit/ui";
+import { LoginScreen } from "@appkit/ui";
 import { useNavigate } from "react-router-dom";
 
 export function Login(): React.JSX.Element {
@@ -20,9 +20,5 @@ export function Login(): React.JSX.Element {
     navigate(result.redirectTo);
   }
 
-  return (
-    <div className="flex items-center justify-center h-full w-full">
-      <LoginForm onSubmit={onSubmit} />
-    </div>
-  );
+  return <LoginScreen onSubmit={onSubmit} />;
 }
