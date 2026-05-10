@@ -1,4 +1,6 @@
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@appkit/ui";
+import { ChevronRight, type LucideIcon } from "lucide-react";
+
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "#shadcn/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -8,8 +10,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@appkit/ui";
-import { ChevronRight, type LucideIcon } from "lucide-react";
+} from "#shadcn/sidebar";
 
 export function NavMain({
   items,
