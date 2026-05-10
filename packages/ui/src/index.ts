@@ -19,4 +19,6 @@ export * from "./components/shadcn-ui/field";
 export * from "./components/shadcn-ui/collapsible";
 export * from "./components/shadcn-ui/popover";
 
+export * from "./components/features";
+
 export * from "./hooks/use-mobile";

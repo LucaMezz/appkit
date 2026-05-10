@@ -1,38 +1,23 @@
-import { signInWithCredentials } from "@appkit/api-client";
-import { loginSchema } from "@appkit/core";
+import { LoginInput, loginSchema } from "@appkit/core";
 import { Button } from "@appkit/ui";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@appkit/ui";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@appkit/ui";
 import { Input } from "@appkit/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import * as z from "zod";
 
-export function LoginForm() {
-  const navigate = useNavigate();
+interface LoginFormProps {
+  onSubmit: (data: LoginInput) => Promise<void>;
+}
 
-  const form = useForm<z.infer<typeof loginSchema>>({
+export function LoginForm({ onSubmit }: LoginFormProps) {
+  const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
-
-  async function onSubmit(data: z.infer<typeof loginSchema>) {
-    const result = await signInWithCredentials(data.email, data.password, {
-      apiBaseUrl: "http://localhost:4000",
-      redirectTo: "/dashboard",
-    });
-
-    if (!result.success) {
-      console.error(result.message);
-      return;
-    }
-
-    navigate(result.redirectTo);
-  }
 
   return (
     <Card className="w-full sm:max-w-md">
