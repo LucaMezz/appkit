@@ -9,9 +9,6 @@
   ],
   "type": "module",
   "sideEffects": false,
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "imports": {
     "#components/*": "./src/components/*.tsx",
     "#shadcn/*": "./src/components/shadcn-ui/*.tsx",
@@ -21,18 +18,14 @@
     "#styles/*": "./src/styles/*"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
+    ".": "./src/index.ts",
     "./globals.css": "./src/styles/globals.css"
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:js && pnpm build:types",
-    "build:js": "tsup src/index.ts --format esm,cjs --external react --external react-dom --external react/jsx-runtime --external react/jsx-dev-runtime",
+    "build:js": "tsup",
     "build:types": "tsc -p tsconfig.build.json",
-    "dev": "tsup src/index.ts --format esm,cjs --watch --external react --external react-dom --external react/jsx-runtime --external react/jsx-dev-runtime",
+    "dev": "tsup --watch",
     "clean": "rimraf dist",
     "typecheck": "tsgo --noEmit",
     "knip": "knip",

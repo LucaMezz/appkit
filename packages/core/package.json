@@ -8,21 +8,12 @@
     "dist"
   ],
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "imports": {
     "#metadata/*": "./src/metadata/*"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./metadata": {
-      "types": "./dist/metadata/index.d.ts",
-      "import": "./dist/metadata/index.js",
-      "require": "./dist/metadata/index.cjs"
-    }
+    ".": "./src/index.ts",
+    "./metadata": "./src/metadata/index.ts"
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:js && pnpm build:types",
