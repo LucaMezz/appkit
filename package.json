@@ -52,7 +52,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
-    "@typescript/native-preview": "7.0.0-dev.20260507.1",
+    "@typescript/native-preview": "7.0.0-dev.20260511.1",
     "cross-env": "^10.1.0",
     "cz-git": "^1.13.0",
     "czg": "^1.13.0",
