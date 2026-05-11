@@ -17,7 +17,7 @@
   },
   "scripts": {
     "dev": "tsx src/index.ts",
-    "build": "tsup src/index.ts --format esm --clean --sourcemap",
+    "build": "tsup",
     "typecheck": "tsgo --noEmit",
     "test": "vitest",
     "test:run": "vitest run",

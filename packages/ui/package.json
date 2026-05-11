@@ -9,9 +9,6 @@
   ],
   "type": "module",
   "sideEffects": false,
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "imports": {
     "#components/*": "./src/components/*.tsx",
     "#shadcn/*": "./src/components/shadcn-ui/*.tsx",
@@ -21,18 +18,14 @@
     "#styles/*": "./src/styles/*"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
+    ".": "./src/index.ts",
     "./globals.css": "./src/styles/globals.css"
   },
   "scripts": {
     "build": "pnpm clean && pnpm build:js && pnpm build:types",
-    "build:js": "tsup src/index.ts --format esm,cjs --external react --external react-dom --external react/jsx-runtime --external react/jsx-dev-runtime",
+    "build:js": "tsup",
     "build:types": "tsc -p tsconfig.build.json",
-    "dev": "tsup src/index.ts --format esm,cjs --watch --external react --external react-dom --external react/jsx-runtime --external react/jsx-dev-runtime",
+    "dev": "tsup --watch",
     "clean": "rimraf dist",
     "typecheck": "tsgo --noEmit",
     "knip": "knip",
@@ -61,15 +54,15 @@
     "@storybook/addon-vitest": "^10.3.6",
     "@storybook/react-vite": "^10.3.6",
     "@tailwindcss/vite": "^4.3.0",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@typescript/native-preview": "7.0.0-dev.20260507.1",
     "@vitest/browser-playwright": "^4.1.5",
     "@vitest/coverage-v8": "^4.1.5",
     "knip": "^6.12.1",
     "playwright": "^1.59.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "rimraf": "^6.1.3",
     "storybook": "^10.3.6",
     "tsup": "^8.5.1",
@@ -78,7 +71,7 @@
     "vitest": "^4.1.5"
   },
   "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
+    "react": ">=18.3.1",
+    "react-dom": ">=18.3.1"
   }
 }

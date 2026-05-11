@@ -33,3 +33,12 @@ export type RegisterUserResult =
       error: "email_taken" | "validation_error" | "unknown";
       message: string;
     };
+
+export type AuthSession = {
+  user?: {
+    id?: string;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
+} | null;
