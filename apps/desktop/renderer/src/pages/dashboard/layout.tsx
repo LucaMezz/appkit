@@ -1,5 +1,5 @@
 import { signOut } from "@appkit/api-client";
-import { DashboardShell, AppSidebarActions } from "@appkit/ui";
+import { DashboardShell, AppSidebarActions } from "@appkit/ui/client";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import { AppBreadcrumbs } from "#components/layout/navigation/app-breadcrumbs";

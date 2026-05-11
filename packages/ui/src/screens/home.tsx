@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
-
 import { Button } from "#shadcn/button";
+import type { Link } from "#types/link";
 
-export function HomeScreen(): React.JSX.Element {
+interface HomeScreenProps {
+  Link: Link;
+}
+
+export function HomeScreen({ Link }: HomeScreenProps): React.JSX.Element {
   return (
     <>
       <h1>Home</h1>
@@ -10,13 +13,13 @@ export function HomeScreen(): React.JSX.Element {
       <section>
         <div className="flex items-center gap-2">
           <Button asChild>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link href="/dashboard">Dashboard</Link>
           </Button>
           <Button asChild>
-            <Link to="/auth/login">Login</Link>
+            <Link href="/auth/login">Login</Link>
           </Button>
           <Button asChild>
-            <Link to="/auth/sign-up">Sign Up</Link>
+            <Link href="/auth/sign-up">Sign Up</Link>
           </Button>
         </div>
       </section>
