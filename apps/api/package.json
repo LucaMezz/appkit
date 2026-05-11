@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "tsx watch --clear-screen=false src/server.ts",
-    "build": "tsup src/server.ts --format esm --clean --sourcemap",
+    "build": "tsup",
     "typecheck": "tsgo --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",

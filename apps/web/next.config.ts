@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  transpilePackages: ["@appkit/ui", "@appkit/core", "@appkit/api-client"],
   reactCompiler: true,
 };
 
