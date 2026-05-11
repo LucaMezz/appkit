@@ -27,15 +27,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <TooltipProvider>
-        <div className="flex flex-col h-screen overflow-hidden">
-          <main className="flex-1 overflow-y-auto">
-            <div className="flex flex-col min-h-0 h-[calc(100vh-33px)] w-full px-4 py-4">
-              <body className="min-h-full flex flex-col">{children}</body>
-            </div>
-          </main>
-        </div>
-      </TooltipProvider>
+      <body className="min-h-full flex flex-col">
+        <TooltipProvider>
+          <div className="flex flex-col h-screen overflow-hidden">
+            <main className="flex-1 overflow-y-auto">
+              <div className="flex flex-col min-h-0 h-[calc(100vh-33px)] w-full px-4 py-4">
+                {children}
+              </div>
+            </main>
+          </div>
+        </TooltipProvider>
+      </body>
     </html>
   );
 }
