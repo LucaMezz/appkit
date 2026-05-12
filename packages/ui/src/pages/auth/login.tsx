@@ -1,7 +1,8 @@
 import { signInWithCredentials } from "@appkit/api-client";
 import { LoginInput } from "@appkit/core";
-import { LoginScreen } from "@appkit/ui";
 import { useNavigate } from "react-router-dom";
+
+import { LoginScreen } from "#screens/auth/login";
 
 export function Login(): React.JSX.Element {
   const navigate = useNavigate();

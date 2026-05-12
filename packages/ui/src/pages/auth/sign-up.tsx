@@ -1,6 +1,7 @@
 import { registerUser } from "@appkit/api-client";
 import { RegisterInput } from "@appkit/core";
-import { SignUpScreen } from "@appkit/ui";
+
+import { SignUpScreen } from "#screens/auth/sign-up";
 
 export function SignUp(): React.JSX.Element {
   async function onSubmit(data: RegisterInput) {
