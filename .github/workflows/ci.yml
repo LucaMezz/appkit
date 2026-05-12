@@ -162,6 +162,9 @@ jobs:
   package-desktop:
     name: Package desktop app
     needs: validate
+    permissions:
+      contents: read
+      packages: write
     runs-on: ${{ matrix.os }}
 
     strategy:
