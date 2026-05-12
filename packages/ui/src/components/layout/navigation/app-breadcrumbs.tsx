@@ -1,3 +1,5 @@
+import { useLocation, Link } from "react-router-dom";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -5,8 +7,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@appkit/ui";
-import { useLocation, Link } from "react-router-dom";
+} from "#shadcn/breadcrumb";
 
 type AppBreadcrumbsProps = {
   /** How many items to show before collapsing */

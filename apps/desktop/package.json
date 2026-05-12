@@ -30,7 +30,6 @@
     "knip": "knip"
   },
   "dependencies": {
-    "@appkit/api-client": "workspace:*",
     "@appkit/core": "workspace:*",
     "@appkit/ui": "workspace:*",
     "@tailwindcss/typography": "^0.5.19",

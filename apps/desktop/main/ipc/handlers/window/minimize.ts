@@ -1,5 +1,6 @@
+import { IpcMainListener } from "#shared/ipc/types";
+
 import { getActiveWindow } from ".";
-import { IpcMainListener } from "../../../../shared/ipc/types";
 
 export const minimizeWindow = (() => {
   const window = getActiveWindow();

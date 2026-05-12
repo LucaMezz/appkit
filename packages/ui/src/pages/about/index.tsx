@@ -1,4 +1,4 @@
-import { AboutScreen } from "@appkit/ui";
+import { AboutScreen } from "#screens/about";
 
 export function About(): React.JSX.Element {
   return <AboutScreen />;

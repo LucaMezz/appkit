@@ -15,7 +15,8 @@
     "#lib/*": "./src/lib/*.ts",
     "#hooks/*": "./src/hooks/*.ts",
     "#utils/*": "./src/utils/*.ts",
-    "#styles/*": "./src/styles/*"
+    "#styles/*": "./src/styles/*",
+    "#screens/*": "./src/screens/*.tsx"
   },
   "exports": {
     ".": "./src/index.ts",
@@ -33,6 +34,7 @@
     "storybook:build": "storybook build"
   },
   "dependencies": {
+    "@appkit/api-client": "workspace:*",
     "@appkit/core": "workspace:*",
     "@hookform/resolvers": "^5.2.2",
     "@tailwindcss/typography": "^0.5.19",
