@@ -415,9 +415,6 @@ importers:
       react-router-dom:
         specifier: ^7.15.0
         version: 7.15.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      zod:
-        specifier: ^3.25.76
-        version: 3.25.76
     devDependencies:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260507.1
@@ -434,9 +431,6 @@ importers:
 
   packages/ui:
     dependencies:
-      '@appkit/core':
-        specifier: workspace:*
-        version: link:../core
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.3.0)
