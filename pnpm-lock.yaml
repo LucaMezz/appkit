@@ -403,6 +403,15 @@ importers:
 
   packages/frontend:
     dependencies:
+      '@appkit/api-client':
+        specifier: workspace:*
+        version: link:../api-client
+      '@appkit/core':
+        specifier: workspace:*
+        version: link:../core
+      '@appkit/ui':
+        specifier: workspace:*
+        version: link:../ui
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.75.0(react@19.2.6))
@@ -412,6 +421,9 @@ importers:
       react-dom:
         specifier: '>=18.3.1'
         version: 19.2.6(react@19.2.6)
+      react-hook-form:
+        specifier: ^7.75.0
+        version: 7.75.0(react@19.2.6)
       react-router-dom:
         specifier: ^7.15.0
         version: 7.15.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -422,9 +434,6 @@ importers:
       knip:
         specifier: ^6.12.1
         version: 6.12.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
-      react-hook-form:
-        specifier: ^7.75.0
-        version: 7.75.0(react@19.2.6)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
