@@ -65,7 +65,7 @@ export const WithInput: Story = {
       <FieldGroup>
         <Field {...args}>
           <FieldLabel htmlFor="username">Username</FieldLabel>
-          <Input id="username" type="text" placeholder="Max Leiter" />
+          <Input id="username" type="text" placeholder="Max Taylor" />
           <FieldDescription>Choose a unique username for your account.</FieldDescription>
         </Field>
       </FieldGroup>

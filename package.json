@@ -23,6 +23,7 @@
     "format": "oxfmt",
     "lint": "oxlint --type-aware --type-check --ignore-pattern '**/*.config.ts'",
     "lint:no-hardcoded-local-urls": "node scripts/check-no-hardcoded-local-urls.mjs",
+    "lint:docker": "docker compose config --quiet",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "test:run": "turbo run test:run",
@@ -44,7 +45,8 @@
     "api:docker": "docker compose up api",
     "commit": "cross-env NODE_OPTIONS=\"--experimental-transform-types --disable-warning=ExperimentalWarning\" czg",
     "commit:retry": "cross-env NODE_OPTIONS=\"--experimental-transform-types --disable-warning=ExperimentalWarning\" czg --retry",
-    "commit:amend": "git commit --amend"
+    "commit:amend": "git commit --amend",
+    "lint:spelling": "cspell ."
   },
   "dependencies": {
     "syncpack": "^15.0.0",
@@ -55,6 +57,7 @@
     "@commitlint/config-conventional": "^20.5.3",
     "@typescript/native-preview": "7.0.0-dev.20260507.1",
     "cross-env": "^10.1.0",
+    "cspell": "^10.0.0",
     "cz-git": "^1.13.0",
     "czg": "^1.13.0",
     "dependency-cruiser": "^17.4.0",
