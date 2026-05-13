@@ -8,5 +8,5 @@
     "skipLibCheck": true,
     "resolvePackageJsonImports": true
   },
-  "include": ["src"]
+  "include": ["src", "../frontend/src/components/auth"]
 }

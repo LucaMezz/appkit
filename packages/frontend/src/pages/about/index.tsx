@@ -1,7 +1,7 @@
-export function AboutScreen(): React.JSX.Element {
+export function About(): React.JSX.Element {
   return (
     <>
-      <h1>About</h1>
+      <h1>Dashboard</h1>
       <p>This is a demo page for the Electron Boilerplate project.</p>
     </>
   );

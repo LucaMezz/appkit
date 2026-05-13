@@ -1,15 +1,15 @@
 import type { ReactNode } from "react";
 import type { RouteObject } from "react-router-dom";
 
-import { GuestOnlyRoute } from "./components/layout/auth/guest-only-route";
-import { ProtectedRoute } from "./components/layout/auth/protected-route";
-import { About } from "./pages/about";
-import { Login } from "./pages/auth/login";
-import { SignUp } from "./pages/auth/sign-up";
-import { Dashboard } from "./pages/dashboard";
-import { DashboardLayout } from "./pages/dashboard/layout";
-import { ErrorBoundary } from "./pages/error-boundary";
-import { Home } from "./pages/home";
+import { About } from "../../frontend/src/pages/about";
+import { Login } from "../../frontend/src/pages/auth/login";
+import { SignUp } from "../../frontend/src/pages/auth/sign-up";
+import { Dashboard } from "../../frontend/src/pages/dashboard";
+import { DashboardLayout } from "../../frontend/src/pages/dashboard/layout";
+import { ErrorBoundary } from "../../frontend/src/pages/error-boundary";
+import { Home } from "../../frontend/src/pages/home";
+import { GuestOnlyRoute } from "./components/auth/guest-only-route";
+import { ProtectedRoute } from "./components/auth/protected-route";
 
 export function createRoutes(rootLayout: ReactNode): RouteObject[] {
   return [

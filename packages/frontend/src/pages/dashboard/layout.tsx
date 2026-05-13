@@ -1,9 +1,8 @@
 import { signOut } from "@appkit/api-client";
+import { DashboardShell } from "@appkit/ui";
+import { AppSidebarActions } from "@appkit/ui";
+import { AppBreadcrumbs } from "@appkit/ui";
 import { Outlet, useNavigate } from "react-router-dom";
-
-import { DashboardShell } from "#components/layout/dashboard/shell";
-import { AppSidebarActions } from "#components/layout/dashboard/sidebar/app-sidebar";
-import { AppBreadcrumbs } from "#components/layout/navigation/app-breadcrumbs";
 
 export function DashboardLayout(): React.JSX.Element {
   const navigate = useNavigate();

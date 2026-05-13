@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@appkit/core": "workspace:*",
+    "@appkit/frontend": "workspace:*",
     "@appkit/ui": "workspace:*",
     "@tailwindcss/typography": "^0.5.19",
     "electron-squirrel-startup": "^1.0.1",

@@ -176,6 +176,9 @@ importers:
       '@appkit/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@appkit/frontend':
+        specifier: workspace:*
+        version: link:../../packages/frontend
       '@appkit/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -310,6 +313,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@appkit/frontend':
+        specifier: workspace:*
+        version: link:../../packages/frontend
       '@appkit/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -403,6 +409,9 @@ importers:
       react-dom:
         specifier: '>=18.3.1'
         version: 19.2.6(react@19.2.6)
+      react-router-dom:
+        specifier: ^7.15.0
+        version: 7.15.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
     devDependencies:
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260507.1

@@ -1,5 +1,5 @@
 import "@appkit/ui/globals.css";
-import { createRoutes } from "@appkit/ui";
+import { createRoutes } from "@appkit/frontend";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
 import { Layout } from "./components/layout";
