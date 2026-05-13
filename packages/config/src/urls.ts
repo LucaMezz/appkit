@@ -1,5 +1,11 @@
 export function trimTrailingSlash(url: string): string {
-  return url.replace(/\/+$/, "");
+  let endIndex = url.length;
+
+  while (endIndex > 0 && url[endIndex - 1] === "/") {
+    endIndex -= 1;
+  }
+
+  return url.slice(0, endIndex);
 }
 
 export function joinUrl(baseUrl: string, path: string): string {
