@@ -46,7 +46,10 @@
     "commit": "cross-env NODE_OPTIONS=\"--experimental-transform-types --disable-warning=ExperimentalWarning\" czg",
     "commit:retry": "cross-env NODE_OPTIONS=\"--experimental-transform-types --disable-warning=ExperimentalWarning\" czg --retry",
     "commit:amend": "git commit --amend",
-    "lint:spelling": "cspell ."
+    "lint:spelling": "cspell .",
+    "verify": "pnpm verify:static && pnpm verify:runtime",
+    "verify:static": "concurrently --kill-others-on-fail -c auto -n deps:lint,deps:arch,spelling,check,knip \"pnpm deps:lint\" \"pnpm deps:arch\" \"pnpm lint:spelling\" \"pnpm check\" \"pnpm knip\"",
+    "verify:runtime": "concurrently --kill-others-on-fail -c auto -n test,build \"pnpm test:run\" \"pnpm build\""
   },
   "dependencies": {
     "syncpack": "^15.0.0",
@@ -56,6 +59,7 @@
     "@commitlint/cli": "^20.5.3",
     "@commitlint/config-conventional": "^20.5.3",
     "@typescript/native-preview": "7.0.0-dev.20260507.1",
+    "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "cspell": "^10.0.0",
     "cz-git": "^1.13.0",
