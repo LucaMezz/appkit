@@ -88,6 +88,27 @@
       "problemMatcher": []
     },
     {
+      "label": "🧪 Verify Workspace",
+      "type": "shell",
+      "command": "pnpm verify",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "🧪 Verify Static Checks",
+      "type": "shell",
+      "command": "pnpm verify:static",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "🧪 Verify Runtime Checks",
+      "type": "shell",
+      "command": "pnpm verify:runtime",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
       "label": "✨ Format Workspace",
       "type": "shell",
       "command": "pnpm format",
@@ -105,6 +126,27 @@
       "label": "🔎 Typecheck Workspace",
       "type": "shell",
       "command": "pnpm typecheck",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "🔤 Spellcheck Workspace",
+      "type": "shell",
+      "command": "pnpm lint:spelling",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "🔗 Check Hardcoded Local URLs",
+      "type": "shell",
+      "command": "pnpm lint:no-hardcoded-local-urls",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "🐳 Validate Docker Compose Config",
+      "type": "shell",
+      "command": "pnpm lint:docker",
       "group": "test",
       "problemMatcher": []
     },
