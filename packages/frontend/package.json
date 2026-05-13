@@ -22,11 +22,13 @@
     "knip": "knip"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "react-router-dom": "^7.15.0"
   },
   "devDependencies": {
     "@typescript/native-preview": "7.0.0-dev.20260507.1",
     "knip": "^6.12.1",
+    "react-hook-form": "^7.75.0",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {

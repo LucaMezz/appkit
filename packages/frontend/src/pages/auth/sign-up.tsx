@@ -1,6 +1,8 @@
 import { registerUser } from "@appkit/api-client";
-import { RegisterInput } from "@appkit/core";
+import { RegisterInput, registerSchema } from "@appkit/core";
 import { SignUpForm } from "@appkit/ui";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 export function SignUp(): React.JSX.Element {
   async function onSubmit(data: RegisterInput) {
@@ -15,9 +17,19 @@ export function SignUp(): React.JSX.Element {
     console.info("successfully registered.");
   }
 
+  const form = useForm<RegisterInput>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
   return (
     <div className="flex items-center justify-center h-full w-full">
-      <SignUpForm onSubmit={onSubmit} />
+      <SignUpForm form={form} onSubmit={onSubmit} />
     </div>
   );
 }

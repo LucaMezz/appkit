@@ -1,6 +1,4 @@
-import { RegisterInput, registerSchema } from "@appkit/core";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, type UseFormReturn } from "react-hook-form";
 
 import { Button } from "#shadcn/button";
 import {
@@ -14,33 +12,37 @@ import {
 import { Field, FieldError, FieldGroup, FieldLabel } from "#shadcn/field";
 import { Input } from "#shadcn/input";
 
-interface SignUpFormProps {
-  onSubmit: (data: RegisterInput) => Promise<void>;
+export interface SignUpFormValues {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
-export function SignUpForm({ onSubmit }: SignUpFormProps) {
-  const form = useForm<RegisterInput>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
+interface SignUpFormProps {
+  form: UseFormReturn<SignUpFormValues>;
+  onSubmit: (data: SignUpFormValues) => Promise<void> | void;
+  cancelHref?: string;
+}
 
+export function SignUpForm({
+  form,
+  onSubmit,
+  cancelHref = "/",
+}: SignUpFormProps): React.JSX.Element {
   return (
     <Card className="w-full sm:max-w-md">
       <CardHeader>
         <CardTitle>Sign Up</CardTitle>
         <CardDescription>Create a new account.</CardDescription>
       </CardHeader>
+
       <CardContent>
         <form id="form-sign-up" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Controller
-              name="name"
               control={form.control}
+              name="name"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-sign-up-name">Name</FieldLabel>
@@ -48,16 +50,18 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
                     {...field}
                     id="form-sign-up-name"
                     aria-invalid={fieldState.invalid}
-                    placeholder=""
+                    placeholder="Your name"
                     autoComplete="name"
+                    type="text"
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}
             />
+
             <Controller
-              name="email"
               control={form.control}
+              name="email"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-sign-up-email">Email</FieldLabel>
@@ -66,15 +70,17 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
                     id="form-sign-up-email"
                     aria-invalid={fieldState.invalid}
                     placeholder="you@example.com"
-                    autoComplete="off"
+                    autoComplete="email"
+                    type="email"
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}
             />
+
             <Controller
-              name="password"
               control={form.control}
+              name="password"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-sign-up-password">Password</FieldLabel>
@@ -84,15 +90,16 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
                     aria-invalid={fieldState.invalid}
                     placeholder="••••••••"
                     type="password"
-                    autoComplete="off"
+                    autoComplete="new-password"
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}
             />
+
             <Controller
-              name="confirmPassword"
               control={form.control}
+              name="confirmPassword"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-sign-up-confirm-password">Confirm Password</FieldLabel>
@@ -102,7 +109,7 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
                     aria-invalid={fieldState.invalid}
                     placeholder="••••••••"
                     type="password"
-                    autoComplete="off"
+                    autoComplete="new-password"
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
@@ -111,13 +118,15 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
           </FieldGroup>
         </form>
       </CardContent>
+
       <CardFooter>
         <Field orientation="horizontal">
-          <Button type="submit" form="form-sign-up">
-            Sign Up
+          <Button type="submit" form="form-sign-up" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? "Creating account..." : "Sign Up"}
           </Button>
+
           <Button asChild variant="outline">
-            <a href="/">Cancel</a>
+            <a href={cancelHref}>Cancel</a>
           </Button>
         </Field>
       </CardFooter>
