@@ -1,11 +1,15 @@
 import path from "node:path";
 
 import react from "@vitejs/plugin-react";
-import { defineConfig, searchForWorkspaceRoot, type Plugin } from "vite";
+import { defineConfig, loadEnv, searchForWorkspaceRoot, type Plugin } from "vite";
+
+import { defaultPorts } from "../../packages/config/src/defaults.ts";
+import { envNames } from "../../packages/config/src/env-names.ts";
 
 const workspaceRoot = searchForWorkspaceRoot(__dirname);
 
 const packageSourceDirs = [
+  path.resolve(workspaceRoot, "packages/config/src"),
   path.resolve(workspaceRoot, "packages/ui/src"),
   path.resolve(workspaceRoot, "packages/api-client/src"),
   path.resolve(workspaceRoot, "packages/core/src"),
@@ -24,67 +28,86 @@ function watchWorkspacePackages(): Plugin {
 
 // https://vitejs.dev/config
 // oxlint-disable-next-line import/no-default-export
-export default defineConfig({
-  plugins: [react(), watchWorkspacePackages()],
+export default defineConfig(({ mode }) => {
+  const rootEnv = loadEnv(mode, workspaceRoot, "");
+  const desktopRendererPort = Number(
+    rootEnv[envNames.desktopRendererPort] ?? defaultPorts.desktopRenderer,
+  );
 
-  root: path.resolve(__dirname, "renderer"),
+  return {
+    envDir: workspaceRoot,
 
-  base: "./",
+    plugins: [react(), watchWorkspacePackages()],
 
-  resolve: {
-    alias: [
-      {
-        find: "@appkit/ui/globals.css",
-        replacement: path.resolve(workspaceRoot, "packages/ui/src/styles/globals.css"),
-      },
-      {
-        find: "@appkit/ui/client",
-        replacement: path.resolve(workspaceRoot, "packages/ui/src/client.ts"),
-      },
-      {
-        find: "@appkit/ui",
-        replacement: path.resolve(workspaceRoot, "packages/ui/src/index.ts"),
-      },
-      {
-        find: "@appkit/api-client",
-        replacement: path.resolve(workspaceRoot, "packages/api-client/src/index.ts"),
-      },
-      {
-        find: "@appkit/core",
-        replacement: path.resolve(workspaceRoot, "packages/core/src/index.ts"),
-      },
-    ],
+    root: path.resolve(__dirname, "renderer"),
 
-    dedupe: ["react", "react-dom"],
-  },
+    base: "./",
 
-  build: {
-    outDir: path.resolve(__dirname, ".vite/renderer/main_window"),
-    emptyOutDir: true,
-  },
+    resolve: {
+      alias: [
+        {
+          find: "@appkit/config/client",
+          replacement: path.resolve(workspaceRoot, "packages/config/src/client.ts"),
+        },
+        {
+          find: "@appkit/config",
+          replacement: path.resolve(workspaceRoot, "packages/config/src/index.ts"),
+        },
+        {
+          find: "@appkit/ui/globals.css",
+          replacement: path.resolve(workspaceRoot, "packages/ui/src/styles/globals.css"),
+        },
+        {
+          find: "@appkit/ui/client",
+          replacement: path.resolve(workspaceRoot, "packages/ui/src/client.ts"),
+        },
+        {
+          find: "@appkit/ui",
+          replacement: path.resolve(workspaceRoot, "packages/ui/src/index.ts"),
+        },
+        {
+          find: "@appkit/api-client",
+          replacement: path.resolve(workspaceRoot, "packages/api-client/src/index.ts"),
+        },
+        {
+          find: "@appkit/core",
+          replacement: path.resolve(workspaceRoot, "packages/core/src/index.ts"),
+        },
+      ],
 
-  optimizeDeps: {
-    include: [
-      "react",
-      "react-dom",
-      "react/jsx-runtime",
-      "react/jsx-dev-runtime",
-
-      "use-sync-external-store/shim",
-      "use-sync-external-store/shim/index.js",
-      "use-sync-external-store/shim/with-selector",
-      "use-sync-external-store/shim/with-selector.js",
-    ],
-    exclude: ["@appkit/ui", "@appkit/api-client", "@appkit/core"],
-  },
-
-  server: {
-    fs: {
-      allow: [workspaceRoot],
+      dedupe: ["react", "react-dom"],
     },
-  },
 
-  esbuild: {
-    jsx: "automatic",
-  },
+    build: {
+      outDir: path.resolve(__dirname, ".vite/renderer/main_window"),
+      emptyOutDir: true,
+    },
+
+    optimizeDeps: {
+      include: [
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+
+        "use-sync-external-store/shim",
+        "use-sync-external-store/shim/index.js",
+        "use-sync-external-store/shim/with-selector",
+        "use-sync-external-store/shim/with-selector.js",
+      ],
+      exclude: ["@appkit/config", "@appkit/ui", "@appkit/api-client", "@appkit/core"],
+    },
+
+    server: {
+      fs: {
+        allow: [workspaceRoot],
+      },
+      port: desktopRendererPort,
+      strictPort: true,
+    },
+
+    esbuild: {
+      jsx: "automatic",
+    },
+  };
 });

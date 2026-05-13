@@ -1,13 +1,15 @@
-import "dotenv/config";
-import { z } from "zod";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const envSchema = z.object({
-  NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-  PORT: z.coerce.number().int().positive().default(4000),
-  DATABASE_URL: z.string().min(1),
-  CORS_ORIGIN: z.string().default("http://localhost:3000,http://localhost:5173"),
+import { parseServerEnv } from "@appkit/config/server";
+import { config as loadDotenv } from "dotenv";
 
-  AUTH_SECRET: z.string().min(1),
+const configDir = path.dirname(fileURLToPath(import.meta.url));
+const workspaceRoot = path.resolve(configDir, "../../../..");
+
+loadDotenv({
+  path: path.resolve(workspaceRoot, ".env"),
+  quiet: true,
 });
 
-export const env = envSchema.parse(process.env);
+export const env = parseServerEnv(process.env);

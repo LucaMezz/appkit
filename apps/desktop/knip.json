@@ -15,7 +15,8 @@
     "reset.d.ts",
     "renderer/src/types/**/*.d.ts",
     "renderer/src/utils/get-error-message.ts",
-    "renderer/postcss.config.js"
+    "renderer/postcss.config.js",
+    "renderer/src/vite-env.d.ts"
   ],
   "ignoreDependencies": [
     "@electron-forge/plugin-auto-unpack-natives",

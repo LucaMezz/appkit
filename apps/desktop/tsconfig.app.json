@@ -4,7 +4,8 @@
     "types": ["vitest/importMeta", "vitest/globals"],
     "verbatimModuleSyntax": false,
     "resolvePackageJsonImports": true,
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true
   },
   "exclude": ["forge.config.ts"]
 }

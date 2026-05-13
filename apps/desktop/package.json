@@ -30,6 +30,7 @@
     "knip": "knip"
   },
   "dependencies": {
+    "@appkit/config": "workspace:*",
     "@appkit/core": "workspace:*",
     "@appkit/frontend": "workspace:*",
     "@appkit/ui": "workspace:*",

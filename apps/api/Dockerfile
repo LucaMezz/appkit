@@ -12,6 +12,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/package.json
 
 # If api depends on shared packages later, copy their package.json files too
+COPY packages/config/package.json ./packages/config/package.json
+COPY packages/core/package.json ./packages/core/package.json
 COPY packages/ui/package.json ./packages/ui/package.json
 
 RUN pnpm install --frozen-lockfile
@@ -34,6 +36,8 @@ WORKDIR /app
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/package.json
+COPY packages/config/package.json ./packages/config/package.json
+COPY packages/core/package.json ./packages/core/package.json
 
 RUN pnpm install --prod --frozen-lockfile --filter @appkit/api
 
@@ -41,6 +45,10 @@ COPY --from=base /app/apps/api/dist ./apps/api/dist
 
 WORKDIR /app/apps/api
 
-EXPOSE 4000
+ARG API_PORT=4000
+ENV API_PORT=$API_PORT
+ENV PORT=$API_PORT
+
+EXPOSE $API_PORT
 
 CMD ["node", "dist/server.js"]

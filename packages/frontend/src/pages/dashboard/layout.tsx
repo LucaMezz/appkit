@@ -4,14 +4,17 @@ import { AppSidebarActions } from "@appkit/ui";
 import { AppBreadcrumbs } from "@appkit/ui";
 import { Outlet, useNavigate } from "react-router-dom";
 
+import { useFrontendRuntimeConfig } from "../../config";
+
 export function DashboardLayout(): React.JSX.Element {
   const navigate = useNavigate();
+  const config = useFrontendRuntimeConfig();
 
   const actions: AppSidebarActions = {
     user: {
       onSignOut: async () => {
         const result = await signOut({
-          apiBaseUrl: "http://localhost:4000",
+          apiBaseUrl: config.apiBaseUrl,
           redirectTo: "/",
         });
 
@@ -20,7 +23,7 @@ export function DashboardLayout(): React.JSX.Element {
           return;
         }
 
-        navigate(result.redirectTo, {
+        void navigate(result.redirectTo, {
           replace: true,
         });
       },

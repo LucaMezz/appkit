@@ -5,12 +5,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
+import { useFrontendRuntimeConfig } from "../../config";
+
 export function Login(): React.JSX.Element {
   const navigate = useNavigate();
+  const config = useFrontendRuntimeConfig();
 
   async function onSubmit(data: LoginInput) {
     const result = await signInWithCredentials(data.email, data.password, {
-      apiBaseUrl: "http://localhost:4000",
+      apiBaseUrl: config.apiBaseUrl,
       redirectTo: "/dashboard",
     });
 
@@ -19,7 +22,7 @@ export function Login(): React.JSX.Element {
       return;
     }
 
-    navigate(result.redirectTo);
+    void navigate(result.redirectTo);
   }
 
   const form = useForm<LoginInput>({
