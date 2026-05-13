@@ -78,24 +78,12 @@ module.exports = {
       name: "core-must-stay-independent",
       severity: "error",
       comment:
-        "@appkit/core should stay framework-agnostic and must not depend on UI, API client, or app code.",
+        "@appkit/core should stay framework-agnostic and must not depend on UI, frontend, API client, or app code.",
       from: {
         path: "^packages/core/",
       },
       to: {
-        path: "^(packages/ui|packages/api-client|apps/)",
-      },
-    },
-
-    {
-      name: "ui-must-not-import-apps",
-      severity: "error",
-      comment: "@appkit/ui should stay reusable and must not depend on deployable apps.",
-      from: {
-        path: "^packages/ui/",
-      },
-      to: {
-        path: "^apps/",
+        path: "^(packages/ui|packages/frontend|packages/api-client|apps)/",
       },
     },
 
@@ -112,26 +100,170 @@ module.exports = {
     },
 
     {
-      name: "api-must-not-import-ui",
+      name: "api-client-must-not-import-ui-or-frontend",
       severity: "error",
-      comment: "The API app should not depend on React/UI code.",
+      comment:
+        "@appkit/api-client should stay transport-focused and must not depend on React UI or frontend application code.",
       from: {
-        path: "^apps/api/",
+        path: "^packages/api-client/",
       },
       to: {
-        path: "^packages/ui/",
+        path: "^(packages/ui|packages/frontend)/",
       },
     },
 
     {
-      name: "cli-must-not-import-ui",
+      name: "ui-must-not-import-apps",
       severity: "error",
-      comment: "The CLI app should stay terminal-focused and must not depend on React/UI code.",
+      comment: "@appkit/ui should stay reusable and must not depend on deployable apps.",
+      from: {
+        path: "^packages/ui/",
+      },
+      to: {
+        path: "^apps/",
+      },
+    },
+
+    {
+      name: "ui-must-not-import-frontend",
+      severity: "error",
+      comment:
+        "@appkit/ui is the reusable design-system layer and must not depend on @appkit/frontend.",
+      from: {
+        path: "^packages/ui/",
+      },
+      to: {
+        path: "^packages/frontend/",
+      },
+    },
+
+    {
+      name: "ui-must-not-import-api-client",
+      severity: "error",
+      comment:
+        "@appkit/ui must stay presentational and must not call API client functions directly. Put API-backed flows in @appkit/frontend.",
+      from: {
+        path: "^packages/ui/",
+      },
+      to: {
+        path: "^packages/api-client/",
+      },
+    },
+
+    {
+      name: "ui-must-not-import-core",
+      severity: "error",
+      comment:
+        "@appkit/ui should avoid app/domain coupling. Put schema-aware or domain-aware logic in @appkit/frontend or @appkit/core consumers.",
+      from: {
+        path: "^packages/ui/",
+      },
+      to: {
+        path: "^packages/core/",
+      },
+    },
+
+    {
+      name: "ui-must-not-import-react-router",
+      severity: "error",
+      comment:
+        "@appkit/ui should not own routing. Route-aware components and navigation flows belong in @appkit/frontend.",
+      from: {
+        path: "^packages/ui/",
+      },
+      to: {
+        dependencyTypes: ["npm"],
+        path: "^react-router-dom$",
+      },
+    },
+
+    {
+      name: "frontend-must-not-import-apps",
+      severity: "error",
+      comment:
+        "@appkit/frontend should be shared across web and desktop and must not depend on app-specific implementation code.",
+      from: {
+        path: "^packages/frontend/",
+      },
+      to: {
+        path: "^apps/",
+      },
+    },
+
+    {
+      name: "frontend-must-not-import-desktop-specific-code",
+      severity: "error",
+      comment:
+        "@appkit/frontend must stay platform-neutral. Electron title bars, window controls, preload APIs, and desktopApi usage belong in apps/desktop.",
+      from: {
+        path: "^packages/frontend/",
+      },
+      to: {
+        path: "^apps/desktop/",
+      },
+    },
+
+    {
+      name: "frontend-must-not-import-web-specific-code",
+      severity: "error",
+      comment:
+        "@appkit/frontend must stay platform-neutral. Browser-host-specific code belongs in apps/web.",
+      from: {
+        path: "^packages/frontend/",
+      },
+      to: {
+        path: "^apps/web/",
+      },
+    },
+
+    {
+      name: "api-must-not-import-ui-or-frontend",
+      severity: "error",
+      comment: "The API app should not depend on React, UI, or frontend application code.",
+      from: {
+        path: "^apps/api/",
+      },
+      to: {
+        path: "^(packages/ui|packages/frontend)/",
+      },
+    },
+
+    {
+      name: "cli-must-not-import-ui-or-frontend",
+      severity: "error",
+      comment:
+        "The CLI app should stay terminal-focused and must not depend on React UI or shared frontend route/page code.",
       from: {
         path: "^apps/cli/",
       },
       to: {
-        path: "^packages/ui/",
+        path: "^(packages/ui|packages/frontend)/",
+      },
+    },
+
+    {
+      name: "web-must-not-import-ui-pages-directly",
+      severity: "error",
+      comment:
+        "The web app should consume shared pages/routes from @appkit/frontend, not page-level code from @appkit/ui.",
+      from: {
+        path: "^apps/web/",
+      },
+      to: {
+        path: "^packages/ui/src/(pages|screens|routes)/",
+      },
+    },
+
+    {
+      name: "desktop-must-not-import-ui-pages-directly",
+      severity: "error",
+      comment:
+        "The desktop app should consume shared pages/routes from @appkit/frontend, not page-level code from @appkit/ui.",
+      from: {
+        path: "^apps/desktop/",
+      },
+      to: {
+        path: "^packages/ui/src/(pages|screens|routes)/",
       },
     },
 

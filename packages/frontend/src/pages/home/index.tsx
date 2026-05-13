@@ -1,8 +1,7 @@
+import { Button } from "@appkit/ui";
 import { Link } from "react-router-dom";
 
-import { Button } from "#shadcn/button";
-
-export function HomeScreen(): React.JSX.Element {
+export function Home(): React.JSX.Element {
   return (
     <>
       <h1>Home</h1>
