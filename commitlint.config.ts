@@ -5,7 +5,26 @@ export default {
     "scope-enum": [
       2,
       "always",
-      ["api", "api-client", "core", "cli", "desktop", "web", "ui", "deps", "ci", "config", "repo"],
+      [
+        "api",
+        "api-client",
+        "cli",
+        "config",
+        "core",
+        "desktop",
+        "frontend",
+        "ui",
+        "web",
+
+        "deps",
+        "ci",
+        "docker",
+        "db",
+        "docs",
+        "repo",
+        "tooling",
+        "vscode",
+      ],
     ],
   },
 };
