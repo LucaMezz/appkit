@@ -10,12 +10,15 @@ import { ErrorBoundary } from "../../frontend/src/pages/error-boundary";
 import { Home } from "../../frontend/src/pages/home";
 import { GuestOnlyRoute } from "./components/auth/guest-only-route";
 import { ProtectedRoute } from "./components/auth/protected-route";
+import { FrontendRuntimeConfigProvider, type FrontendRuntimeConfig } from "./config";
 
-export function createRoutes(rootLayout: ReactNode): RouteObject[] {
+export function createRoutes(rootLayout: ReactNode, config: FrontendRuntimeConfig): RouteObject[] {
   return [
     {
       path: "/",
-      element: rootLayout,
+      element: (
+        <FrontendRuntimeConfigProvider config={config}>{rootLayout}</FrontendRuntimeConfigProvider>
+      ),
       errorElement: <ErrorBoundary />,
       children: [
         {

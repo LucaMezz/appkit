@@ -4,10 +4,14 @@ import { SignUpForm } from "@appkit/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { useFrontendRuntimeConfig } from "../../config";
+
 export function SignUp(): React.JSX.Element {
+  const config = useFrontendRuntimeConfig();
+
   async function onSubmit(data: RegisterInput) {
     const result = await registerUser(data, {
-      apiBaseUrl: "http://localhost:4000",
+      apiBaseUrl: config.apiBaseUrl,
     });
 
     if (!result.success) {

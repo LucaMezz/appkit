@@ -1,9 +1,9 @@
-import { AuthSession } from "./types";
+import { joinUrl } from "@appkit/config/client";
 
-export async function fetchAuthSession(options?: { apiBaseUrl?: string }): Promise<AuthSession> {
-  const apiBaseUrl = options?.apiBaseUrl ?? "http://localhost:4000";
+import { ApiClientOptions, AuthSession } from "./types";
 
-  const response = await fetch(`${apiBaseUrl}/auth/session`, {
+export async function fetchAuthSession(options: ApiClientOptions): Promise<AuthSession> {
+  const response = await fetch(joinUrl(options.apiBaseUrl, "/auth/session"), {
     credentials: "include",
   });
 

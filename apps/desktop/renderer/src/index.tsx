@@ -3,8 +3,11 @@ import { createRoutes } from "@appkit/frontend";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 
 import { Layout } from "./components/layout";
+import { env } from "./config/env";
 
-const routes = createRoutes(<Layout />);
+const routes = createRoutes(<Layout />, {
+  apiBaseUrl: env.apiBaseUrl,
+});
 
 const router = createHashRouter(routes);
 

@@ -1,13 +1,15 @@
-import { SignOutResult } from "./types";
+import { joinUrl } from "@appkit/config/client";
 
-export async function signOut(options?: {
-  apiBaseUrl?: string;
-  redirectTo?: string;
-}): Promise<SignOutResult> {
-  const apiBaseUrl = options?.apiBaseUrl ?? "http://localhost:4000";
-  const redirectTo = options?.redirectTo ?? "/auth/login";
+import { ApiClientOptions, SignOutResult } from "./types";
 
-  const csrfResponse = await fetch(`${apiBaseUrl}/auth/csrf`, {
+export async function signOut(
+  options: ApiClientOptions & {
+    redirectTo?: string;
+  },
+): Promise<SignOutResult> {
+  const redirectTo = options.redirectTo ?? "/auth/login";
+
+  const csrfResponse = await fetch(joinUrl(options.apiBaseUrl, "/auth/csrf"), {
     credentials: "include",
   });
 
@@ -23,7 +25,7 @@ export async function signOut(options?: {
     csrfToken: string;
   };
 
-  await fetch(`${apiBaseUrl}/auth/signout`, {
+  await fetch(joinUrl(options.apiBaseUrl, "/auth/signout"), {
     method: "POST",
     credentials: "include",
     redirect: "manual",
@@ -32,7 +34,7 @@ export async function signOut(options?: {
     },
     body: new URLSearchParams({
       csrfToken,
-      callbackUrl: `${apiBaseUrl}/auth/session`,
+      callbackUrl: joinUrl(options.apiBaseUrl, "/auth/session"),
     }),
   });
 

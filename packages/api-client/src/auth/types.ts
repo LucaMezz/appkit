@@ -1,3 +1,7 @@
+export type ApiClientOptions = {
+  apiBaseUrl: string;
+};
+
 export type SignInResult =
   | { success: true; redirectTo: string }
   | {

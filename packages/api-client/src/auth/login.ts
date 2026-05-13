@@ -1,17 +1,17 @@
-import { SignInResult } from "./types";
+import { joinUrl } from "@appkit/config/client";
+
+import { ApiClientOptions, SignInResult } from "./types";
 
 export async function signInWithCredentials(
   email: string,
   password: string,
-  options?: {
-    apiBaseUrl?: string;
+  options: ApiClientOptions & {
     redirectTo?: string;
   },
 ): Promise<SignInResult> {
-  const apiBaseUrl = options?.apiBaseUrl ?? "http://localhost:4000";
-  const redirectTo = options?.redirectTo ?? "/dashboard";
+  const redirectTo = options.redirectTo ?? "/dashboard";
 
-  const csrfResponse = await fetch(`${apiBaseUrl}/auth/csrf`, {
+  const csrfResponse = await fetch(joinUrl(options.apiBaseUrl, "/auth/csrf"), {
     credentials: "include",
   });
 
@@ -27,8 +27,8 @@ export async function signInWithCredentials(
     csrfToken: string;
   };
 
-  const callbackUrl = `${apiBaseUrl}/auth/session`;
-  await fetch(`${apiBaseUrl}/auth/callback/credentials`, {
+  const callbackUrl = joinUrl(options.apiBaseUrl, "/auth/session");
+  await fetch(joinUrl(options.apiBaseUrl, "/auth/callback/credentials"), {
     method: "POST",
     credentials: "include",
     headers: {
@@ -42,7 +42,7 @@ export async function signInWithCredentials(
     }),
   });
 
-  const sessionResponse = await fetch(`${apiBaseUrl}/auth/session`, {
+  const sessionResponse = await fetch(joinUrl(options.apiBaseUrl, "/auth/session"), {
     credentials: "include",
   });
 

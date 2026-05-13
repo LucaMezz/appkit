@@ -2,6 +2,8 @@ import { fetchAuthSession } from "@appkit/api-client";
 import { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
+import { useFrontendRuntimeConfig } from "../../config";
+
 type AuthState =
   | { status: "loading" }
   | { status: "authenticated" }
@@ -9,6 +11,7 @@ type AuthState =
 
 export function ProtectedRoute() {
   const location = useLocation();
+  const config = useFrontendRuntimeConfig();
 
   const [authState, setAuthState] = useState<AuthState>({
     status: "loading",
@@ -19,7 +22,7 @@ export function ProtectedRoute() {
 
     async function checkSession() {
       const session = await fetchAuthSession({
-        apiBaseUrl: "http://localhost:4000",
+        apiBaseUrl: config.apiBaseUrl,
       });
 
       if (cancelled) return;
@@ -27,12 +30,12 @@ export function ProtectedRoute() {
       setAuthState(session?.user ? { status: "authenticated" } : { status: "unauthenticated" });
     }
 
-    checkSession();
+    void checkSession();
 
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [config.apiBaseUrl]);
 
   if (authState.status === "loading") {
     return <div></div>;
