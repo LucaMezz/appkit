@@ -4,6 +4,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 import { useAuthSession } from "../../components/auth/auth-session-provider";
 import { useFrontendRuntimeConfig } from "../../config";
+import { LoadingScreen } from "../loading";
 
 export function CliLogin(): React.JSX.Element {
   const config = useFrontendRuntimeConfig();
@@ -30,7 +31,7 @@ export function CliLogin(): React.JSX.Element {
   }
 
   if (status === "loading") {
-    return <div />;
+    return <LoadingScreen />;
   }
 
   if (status === "unauthenticated") {

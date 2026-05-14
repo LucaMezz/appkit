@@ -11,6 +11,7 @@ export * from "./sheet";
 export * from "./tooltip";
 export * from "./sidebar";
 export * from "./skeleton";
+export * from "./spinner";
 export * from "./kbd";
 export * from "./input-group";
 export * from "./field";

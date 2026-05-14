@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
+import { LoadingScreen } from "../../pages/loading";
 import { useAuthSession } from "./auth-session-provider";
 
 export function ProtectedRoute() {
@@ -7,7 +8,7 @@ export function ProtectedRoute() {
   const { status } = useAuthSession();
 
   if (status === "loading") {
-    return <div></div>;
+    return <LoadingScreen />;
   }
 
   if (status === "unauthenticated") {

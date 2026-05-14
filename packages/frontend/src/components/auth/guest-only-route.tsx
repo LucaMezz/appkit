@@ -1,12 +1,13 @@
 import { Navigate, Outlet } from "react-router-dom";
 
+import { LoadingScreen } from "../../pages/loading";
 import { useAuthSession } from "./auth-session-provider";
 
 export function GuestOnlyRoute() {
   const { status } = useAuthSession();
 
   if (status === "loading") {
-    return null;
+    return <LoadingScreen />;
   }
 
   if (status === "authenticated") {
