@@ -50,6 +50,10 @@ export default defineConfig(({ mode }) => {
           replacement: path.resolve(workspaceRoot, "packages/config/src/index.ts"),
         },
         {
+          find: "@appkit/frontend/globals.css",
+          replacement: path.resolve(workspaceRoot, "packages/frontend/src/styles/globals.css"),
+        },
+        {
           find: "@appkit/frontend",
           replacement: path.resolve(workspaceRoot, "packages/frontend/src/index.ts"),
         },

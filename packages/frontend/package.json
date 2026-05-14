@@ -15,7 +15,8 @@
     "#utils/*": "./src/utils/*.ts"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./globals.css": "./src/styles/globals.css"
   },
   "scripts": {
     "typecheck": "tsgo --noEmit",

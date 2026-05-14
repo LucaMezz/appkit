@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export function Home(): React.JSX.Element {
   return (
-    <>
+    <div className="space-y-4 p-4">
       <h1>Home</h1>
       <p>Welcome to the Electron Boilerplate app!</p>
       <section>
@@ -19,6 +19,6 @@ export function Home(): React.JSX.Element {
           </Button>
         </div>
       </section>
-    </>
+    </div>
   );
 }
