@@ -2,7 +2,7 @@
 
 The AppKit web app is the browser-based frontend application for the AppKit monorepo.
 
-It is built with Next.js and is intended to demonstrate how a modern web client can share UI, core logic, and API communication code with a desktop application while still remaining a standalone deployable app.
+It is built with Vite, React, and React Router. The app is intentionally thin: it hosts shared frontend routes and flows from `@appkit/frontend`, imports shared UI styles, and provides browser runtime configuration.
 
 ## Overview
 
@@ -11,10 +11,10 @@ It is built with Next.js and is intended to demonstrate how a modern web client 
 It consumes shared workspace packages such as:
 
 - `@appkit/ui`
-- `@appkit/core`
-- `@appkit/api-client`
+- `@appkit/frontend`
+- `@appkit/config`
 
-Web-specific code should remain inside `apps/web`. Code that can also be used by the desktop renderer or other clients should be moved into `packages/*`.
+Web-specific runtime host code should remain inside `apps/web`. Shared route/page/flow code should live in `@appkit/frontend`.
 
 ## Role in the monorepo
 
@@ -28,8 +28,10 @@ apps/
 
 packages/
   ui/           Shared React UI components
+  frontend/     Shared frontend routes/pages/flows
   core/         Shared framework-agnostic logic
   api-client/   Shared API communication helpers
+  config/       Shared config defaults and helpers
 ```
 
 The web app should communicate with the backend through stable API contracts, preferably using helpers from `@appkit/api-client` where appropriate.
@@ -38,61 +40,61 @@ It should not import backend implementation files directly.
 
 ## Architecture
 
-The web app follows the Next.js application structure.
+The web app follows a Vite React host structure.
 
 ```text
 apps/web/
-├── app/               # Next.js app router routes and layouts
+├── src/               # Vite React host entry, layout, env config
 ├── public/            # Static assets
+├── index.html
 ├── package.json
-├── next.config.ts
+├── vite.config.ts
 ├── postcss.config.mjs
 └── README.md
 ```
 
-The exact structure may grow as the application gains routes, features, server actions, API client usage, and shared UI integration.
+Most reusable application screens and routes live in `@appkit/frontend`.
 
 ## Key files and folders
 
-### `app/`
+### `src/`
 
-The `app/` folder contains the Next.js App Router entry points.
+The `src/` folder contains the Vite React app host.
 
-Typical files include:
+Important files include:
 
 ```text
-app/
+src/
+  app.tsx
+  main.tsx
   layout.tsx
-  page.tsx
+  config/env.ts
 ```
-
-As the app grows, route groups and nested route folders should live here.
 
 Recommended conventions:
 
-- Keep route files focused on routing and composition.
-- Move reusable UI into components or shared packages.
+- Keep host code thin.
+- Create routes through `@appkit/frontend`.
 - Move cross-platform UI into `@appkit/ui`.
-- Move framework-agnostic logic into `@appkit/core`.
-- Move backend communication helpers into `@appkit/api-client`.
+- Move shared frontend flows into `@appkit/frontend`.
+- Move config defaults into `@appkit/config`.
 
 ### `public/`
 
 Static assets for the web app.
 
-Use this for files that should be served directly by Next.js, such as images, icons, and other static assets.
+Use this for files that should be served directly by Vite, such as images, icons, and other static assets.
 
-### `next.config.ts`
+### `vite.config.ts`
 
-Next.js configuration.
+Vite configuration.
 
-This is the right place for web-specific Next.js options such as:
+This is the right place for web-specific Vite options such as:
 
 - Workspace package transpilation.
-- Turbopack or build configuration.
-- Image settings.
-- Redirects or rewrites.
-- Other Next.js runtime/build settings.
+- React plugin configuration.
+- Dev server configuration.
+- Build configuration.
 
 ### `postcss.config.mjs`
 
@@ -103,10 +105,12 @@ PostCSS configuration used by the web app styling pipeline.
 The web app follows these monorepo boundaries:
 
 - The web app may import from `@appkit/ui`.
-- The web app may import from `@appkit/core`.
-- The web app may import from `@appkit/api-client`.
+- The web app may import from `@appkit/frontend`.
+- The web app may import from `@appkit/config`.
 - The web app must not import from `apps/api`.
 - The web app must not import from `apps/desktop`.
+- The web app must not import from `apps/cli`.
+- The web app should stay a thin host and avoid direct imports from `@appkit/core` or `@appkit/api-client`.
 - Shared packages must not import from the web app.
 - Source code should not import generated build output such as `.next`, `dist`, `build`, or `out`.
 
@@ -123,9 +127,9 @@ pnpm deps:arch
 Use workspace package names for shared code:
 
 ```ts
+import { createRoutes } from "@appkit/frontend";
+import { defaultPorts } from "@appkit/config/client";
 import { Button } from "@appkit/ui";
-import { someCoreHelper } from "@appkit/core";
-import { apiClient } from "@appkit/api-client";
 ```
 
 ### Web-local imports
@@ -258,7 +262,7 @@ pnpm --filter @appkit/web build
 
 ## Build workflow
 
-The production web build is handled by Next.js:
+The production web build is handled by Vite:
 
 ```bash
 pnpm --filter @appkit/web build
@@ -275,32 +279,12 @@ A successful production build should verify that:
 - Routes compile.
 - TypeScript passes.
 - Shared packages resolve correctly.
-- Next.js can produce optimized output.
+- Vite can produce optimized output.
 - Workspace package imports are compatible with the web build.
-
-## Next.js and workspace packages
-
-Because the web app consumes internal workspace packages, Next.js may need to transpile those packages.
-
-If using source-based workspace package imports, configure `next.config.ts` with `transpilePackages`:
-
-```ts
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  transpilePackages: ["@appkit/ui", "@appkit/core", "@appkit/api-client"],
-};
-
-export default nextConfig;
-```
-
-If consuming built package output from `dist`, make sure the shared packages are built before the web app build.
-
-Turborepo can coordinate build ordering through package dependencies and task configuration.
 
 ## Routing guidelines
 
-Route files should focus on page composition.
+Shared route files should usually live in `@appkit/frontend`.
 
 Recommended rules:
 
@@ -308,29 +292,16 @@ Recommended rules:
 - Move reusable UI into components or `@appkit/ui`.
 - Move business/domain logic into `@appkit/core` where possible.
 - Move API communication helpers into `@appkit/api-client`.
-- Avoid putting large workflows directly in `page.tsx` or `layout.tsx`.
-
-## Server and client components
-
-When using the Next.js App Router, be deliberate about server and client component boundaries.
-
-Recommended guidelines:
-
-- Use server components by default where possible.
-- Add `"use client"` only where interactivity requires it.
-- Keep client components small and focused.
-- Avoid importing browser-only modules into server components.
-- Avoid importing server-only modules into client components.
-- Keep shared UI compatible with the environments where it is consumed.
+- Keep `apps/web` focused on browser host setup.
 
 ## API communication
 
 The web app should communicate with the backend through stable API contracts.
 
-Prefer using `@appkit/api-client` for shared API communication logic:
+Prefer using `@appkit/frontend` flows that call `@appkit/api-client`, or add reusable request helpers to `@appkit/api-client`.
 
 ```ts
-import { apiClient } from "@appkit/api-client";
+import { createRoutes } from "@appkit/frontend";
 ```
 
 Avoid duplicating endpoint URLs, request shapes, and response handling across web and desktop clients.
@@ -404,15 +375,13 @@ Use `@appkit/core` for framework-agnostic shared logic, such as:
 - Constants.
 - Shared data transformation logic.
 
-Do not place React components, Next.js route logic, or browser-specific code in `@appkit/core`.
+Do not place React components, route logic, or browser-specific code in `@appkit/core`.
 
 ## Common issues
 
-### Next.js reports multiple lockfiles
+### Vite cannot resolve a workspace package
 
-If Next.js detects multiple lockfiles or workspace files, check whether there are unnecessary workspace files inside `apps/web`.
-
-If needed, configure the Next.js root explicitly in `next.config.ts`.
+Check that the package is listed in `apps/web/package.json` using `workspace:*` and that the package exports the entry being imported.
 
 ### Shared package import fails
 
@@ -428,7 +397,7 @@ Example:
 }
 ```
 
-Also check whether Next.js needs `transpilePackages` for the shared package.
+Also check whether the package entry point is compatible with Vite's ESM resolution.
 
 ### App imports backend implementation files
 
@@ -467,14 +436,15 @@ The web app should remain compatible with:
 - Oxlint/oxfmt linting and formatting.
 - TypeScript typechecking.
 - Turborepo task orchestration.
-- Next.js production builds.
+- Vite production builds.
 
 ## Design goals
 
 The web app is designed to be:
 
-- **Modern**: built with Next.js and TypeScript.
-- **Shared-code friendly**: consumes shared UI, core logic, and API client packages.
+- **Modern**: built with Vite, React, React Router, and TypeScript.
+- **Thin**: delegates shared routes and flows to `@appkit/frontend`.
+- **Shared-code friendly**: consumes shared UI, frontend, and config packages.
 - **Deployable**: remains a standalone web application target.
 - **Maintainable**: keeps app-specific code separate from reusable packages.
 - **Monorepo-aware**: integrates with Turborepo, pnpm workspaces, Knip, syncpack, dependency-cruiser, Renovate, and CI.
