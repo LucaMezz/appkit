@@ -4,6 +4,7 @@ import type { RouteObject } from "react-router-dom";
 import { About } from "../../frontend/src/pages/about";
 import { Login } from "../../frontend/src/pages/auth/login";
 import { SignUp } from "../../frontend/src/pages/auth/sign-up";
+import { CliLogin } from "../../frontend/src/pages/cli/login";
 import { Dashboard } from "../../frontend/src/pages/dashboard";
 import { DashboardLayout } from "../../frontend/src/pages/dashboard/layout";
 import { ErrorBoundary } from "../../frontend/src/pages/error-boundary";
@@ -28,6 +29,10 @@ export function createRoutes(rootLayout: ReactNode, config: FrontendRuntimeConfi
         {
           path: "about",
           element: <About />,
+        },
+        {
+          path: "cli/login",
+          element: <CliLogin />,
         },
         {
           element: <ProtectedRoute />,

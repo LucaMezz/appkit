@@ -11,7 +11,7 @@ export async function fetchAuthSession(options: ApiClientOptions): Promise<AuthS
     return null;
   }
 
-  const session = await response.json();
+  const session = (await response.json()) as AuthSession;
 
   return session?.user ? session : null;
 }
