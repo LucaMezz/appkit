@@ -1,4 +1,5 @@
 import { Separator } from "@appkit/ui";
+import { ThemeModeToggle } from "@appkit/ui";
 import { TooltipProvider } from "@appkit/ui";
 import { Outlet } from "react-router-dom";
 
@@ -14,7 +15,8 @@ export function Layout(): React.JSX.Element {
         <TitleBar className="flex h-8 items-center border-b shrink-0">
           <div className="w-full h-8 flex items-center justify-between px-2">
             <HistoryControls />
-            <div className="flex items-center h-full gap-2">
+            <div className="flex items-center h-full gap-2" style={{ WebkitAppRegion: "no-drag" }}>
+              <ThemeModeToggle size="icon-titlebar" />
               <Inbox />
               <Separator orientation="vertical" />
             </div>

@@ -10,6 +10,7 @@ const workspaceRoot = searchForWorkspaceRoot(__dirname);
 
 const packageSourceDirs = [
   path.resolve(workspaceRoot, "packages/config/src"),
+  path.resolve(workspaceRoot, "packages/frontend/src"),
   path.resolve(workspaceRoot, "packages/ui/src"),
   path.resolve(workspaceRoot, "packages/api-client/src"),
   path.resolve(workspaceRoot, "packages/core/src"),
@@ -54,6 +55,10 @@ export default defineConfig(({ mode }) => {
           replacement: path.resolve(workspaceRoot, "packages/config/src/index.ts"),
         },
         {
+          find: "@appkit/frontend",
+          replacement: path.resolve(workspaceRoot, "packages/frontend/src/index.ts"),
+        },
+        {
           find: "@appkit/ui/globals.css",
           replacement: path.resolve(workspaceRoot, "packages/ui/src/styles/globals.css"),
         },
@@ -95,7 +100,13 @@ export default defineConfig(({ mode }) => {
         "use-sync-external-store/shim/with-selector",
         "use-sync-external-store/shim/with-selector.js",
       ],
-      exclude: ["@appkit/config", "@appkit/ui", "@appkit/api-client", "@appkit/core"],
+      exclude: [
+        "@appkit/config",
+        "@appkit/frontend",
+        "@appkit/ui",
+        "@appkit/api-client",
+        "@appkit/core",
+      ],
     },
 
     server: {

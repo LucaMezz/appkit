@@ -9,7 +9,7 @@ export const TitleBar = ({ children, className, ...props }: TitleBarProps) => {
   return (
     <div
       className={cn(
-        "w-full border-b border-border bg-background/50 py-4 flex justify-around items-center",
+        "w-full border-b border-border bg-background/50 flex justify-around items-center",
         className,
       )}
       style={{
