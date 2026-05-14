@@ -54,7 +54,9 @@ export async function signInWithCredentials(
     };
   }
 
-  const session = await sessionResponse.json();
+  const session = (await sessionResponse.json()) as {
+    user?: unknown;
+  };
 
   if (!session?.user) {
     return {
