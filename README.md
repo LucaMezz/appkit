@@ -28,9 +28,12 @@ AppKit provides a foundation for building applications that share logic across m
 - A backend API application.
 - A web application.
 - A desktop application.
+- A CLI application.
 - Shared UI components.
 - Shared core logic.
 - A shared API client.
+- Shared frontend flows.
+- Shared runtime configuration.
 - Consistent tooling for builds, checks, dependency management, commit quality, and architecture boundaries.
 
 The goal of this repository is not just to run multiple apps side by side. It is to provide a maintainable monorepo structure where each app and package has a clear purpose, clear boundaries, and predictable workflows.
@@ -45,9 +48,8 @@ AppKit combines application frameworks, shared package tooling, and repository q
 | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
 | [<img src="https://cdn.simpleicons.org/typescript" width="18" alt="TypeScript" /> TypeScript](https://www.typescriptlang.org/) | Primary language for apps, packages, configuration, and shared types.                                    |
 | [<img src="https://cdn.simpleicons.org/react" width="18" alt="React" /> React](https://react.dev/)                             | Shared UI foundation for the web app and desktop renderer.                                               |
-| [<img src="https://cdn.simpleicons.org/nextdotjs" width="18" alt="Next.js" /> Next.js](https://nextjs.org/)                    | Web application framework for `apps/web`.                                                                |
 | [<img src="https://cdn.simpleicons.org/electron" width="18" alt="Electron" /> Electron](https://www.electronjs.org/)           | Desktop runtime for `apps/desktop`.                                                                      |
-| [<img src="https://cdn.simpleicons.org/vite" width="18" alt="Vite" /> Vite](https://vite.dev/)                                 | Fast frontend and Electron renderer build tooling.                                                       |
+| [<img src="https://cdn.simpleicons.org/vite" width="18" alt="Vite" /> Vite](https://vite.dev/)                                 | Fast frontend build tooling for the web app and Electron renderer.                                       |
 | [<img src="https://cdn.simpleicons.org/tailwindcss" width="18" alt="Tailwind CSS" /> Tailwind CSS](https://tailwindcss.com/)   | Utility-first styling system for shared UI and app interfaces.                                           |
 | [<img src="https://cdn.simpleicons.org/shadcnui" width="18" alt="shadcn/ui" /> shadcn/ui](https://ui.shadcn.com/)              | Component patterns used as the basis for reusable UI primitives in `@appkit/ui`.                         |
 | [<img src="https://cdn.simpleicons.org/storybook" width="18" alt="Storybook" /> Storybook](https://storybook.js.org/)          | Isolated component workbench for developing, previewing, and documenting shared `@appkit/ui` components. |
@@ -82,12 +84,15 @@ AppKit combines application frameworks, shared package tooling, and repository q
 .
 ├── apps/
 │   ├── api/          # Backend API application
+│   ├── cli/          # Command-line application
 │   ├── desktop/      # Cross-platform desktop application
 │   └── web/          # Web application
 │
 ├── packages/
 │   ├── api-client/   # Shared client for communicating with the API
+│   ├── config/       # Shared config defaults, env parsing, and URL helpers
 │   ├── core/         # Shared framework-agnostic business/domain logic
+│   ├── frontend/     # Shared frontend routes, pages, guards, and flows
 │   └── ui/           # Shared React UI components built on shadcn-ui
 │
 ├── docs/             # Project documentation
@@ -136,6 +141,14 @@ The desktop app can consume shared packages such as:
 
 Desktop-specific code should stay inside `apps/desktop`. Shared code that can also be used by the web app should live in `packages/*`.
 
+### `apps/cli`
+
+The CLI application is the terminal client for AppKit.
+
+It owns command registration, terminal UX, local CLI config, credential storage abstractions, and browser-based CLI authentication orchestration.
+
+The CLI should communicate with the backend through `@appkit/api-client`. It should not import UI, shared frontend flows, or implementation code from other apps.
+
 ## Shared packages
 
 ### `packages/core`
@@ -151,6 +164,23 @@ This package should remain independent of React, Electron, Express, browser APIs
 - `apps/api`
 - `apps/web`
 - `apps/desktop`
+- `apps/cli`
+
+### `packages/config`
+
+Shared runtime configuration defaults and helpers.
+
+This package owns local port defaults, URL helpers, env var names, server env parsing, and client-safe config exports. Use it instead of hardcoding local URLs, ports, or API base URLs in app/package source code.
+
+Browser-safe code should import from `@appkit/config/client`. Server-only code can import from `@appkit/config/server`.
+
+### `packages/frontend`
+
+Shared React frontend routes, pages, guards, and application flows.
+
+This package lets `apps/web` and the desktop renderer stay thin platform hosts. Shared login pages, dashboard routes, auth guards, and API-backed frontend flows belong here when they can be reused across frontend targets.
+
+`@appkit/frontend` may use `@appkit/ui`, `@appkit/core`, and `@appkit/api-client`, but it must not import deployable app implementation code.
 
 ### `packages/ui`
 
@@ -179,6 +209,9 @@ The monorepo follows these architecture rules:
 - `packages/core` must remain framework-agnostic.
 - `packages/ui` must not import app code or server-only code.
 - `packages/api-client` must not import app code.
+- `packages/frontend` must not import app code.
+- `packages/config` must not import app code or frontend/UI layers.
+- `apps/cli` must not import UI or shared frontend packages.
 - Source code must not import generated build output such as `dist`, `.next`, `.vite`, `build`, or `out`.
 
 These rules are enforced with dependency-cruiser:
@@ -186,6 +219,15 @@ These rules are enforced with dependency-cruiser:
 ```bash
 pnpm deps:arch
 ```
+
+## Community and contribution docs
+
+- [Contributing guide](./CONTRIBUTING.md)
+- [Code of Conduct](./CODE_OF_CONDUCT.md)
+- [Security policy](./SECURITY.md)
+- [Support guide](./SUPPORT.md)
+- [Governance](./GOVERNANCE.md)
+- [CLI authentication](./docs/cli-auth.md)
 
 ## Internal import conventions
 
