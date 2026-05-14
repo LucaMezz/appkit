@@ -1,5 +1,6 @@
 import { joinUrl } from "@appkit/config/client";
 
+import { fetchWithTimeout } from "../request";
 import { ApiClientOptions, SignOutResult } from "./types";
 
 export async function signOut(
@@ -9,7 +10,7 @@ export async function signOut(
 ): Promise<SignOutResult> {
   const redirectTo = options.redirectTo ?? "/auth/login";
 
-  const csrfResponse = await fetch(joinUrl(options.apiBaseUrl, "/auth/csrf"), {
+  const csrfResponse = await fetchWithTimeout(joinUrl(options.apiBaseUrl, "/auth/csrf"), {
     credentials: "include",
   });
 
@@ -25,7 +26,7 @@ export async function signOut(
     csrfToken: string;
   };
 
-  await fetch(joinUrl(options.apiBaseUrl, "/auth/signout"), {
+  const signOutResponse = await fetchWithTimeout(joinUrl(options.apiBaseUrl, "/auth/signout"), {
     method: "POST",
     credentials: "include",
     redirect: "manual",
@@ -37,6 +38,14 @@ export async function signOut(
       callbackUrl: joinUrl(options.apiBaseUrl, "/auth/session"),
     }),
   });
+
+  if (!signOutResponse.ok && signOutResponse.type !== "opaqueredirect") {
+    return {
+      success: false,
+      error: "unknown",
+      message: "Could not complete sign out. Please try again.",
+    };
+  }
 
   return {
     success: true,

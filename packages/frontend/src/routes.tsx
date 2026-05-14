@@ -1,3 +1,4 @@
+import { Toaster } from "@appkit/ui";
 import type { ReactNode } from "react";
 import type { RouteObject } from "react-router-dom";
 
@@ -21,7 +22,10 @@ export function createRoutes(rootLayout: ReactNode, config: FrontendRuntimeConfi
       path: "/",
       element: (
         <FrontendRuntimeConfigProvider config={config}>
-          <AuthSessionProvider>{rootLayout}</AuthSessionProvider>
+          <AuthSessionProvider>
+            {rootLayout}
+            <Toaster richColors />
+          </AuthSessionProvider>
         </FrontendRuntimeConfigProvider>
       ),
       errorElement: <ErrorBoundary />,

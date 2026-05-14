@@ -1,4 +1,5 @@
 import { startCliAuthorization } from "@appkit/api-client";
+import { toast } from "@appkit/ui";
 import { useMemo, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
@@ -58,7 +59,9 @@ export function CliLogin(): React.JSX.Element {
       callbackUrl.searchParams.set("state", result.state);
       window.location.assign(callbackUrl.toString());
     } catch {
-      setError("Could not authorize the CLI. Please try again.");
+      const message = "Could not authorize the CLI. Please try again.";
+      setError(message);
+      toast.error(message);
       setAuthorizing(false);
     }
   }

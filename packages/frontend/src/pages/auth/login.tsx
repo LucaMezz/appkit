@@ -1,6 +1,7 @@
 import { signInWithCredentials } from "@appkit/api-client";
 import { LoginInput, loginSchema } from "@appkit/core";
 import { LoginForm } from "@appkit/ui";
+import { toast } from "@appkit/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -17,17 +18,30 @@ export function Login(): React.JSX.Element {
   const callbackUrl = searchParams.get("callbackUrl");
 
   async function onSubmit(data: LoginInput) {
-    const result = await signInWithCredentials(data.email, data.password, {
-      apiBaseUrl: config.apiBaseUrl,
-      redirectTo: callbackUrl ?? "/dashboard",
-    });
+    let result;
 
-    if (!result.success) {
-      console.error(result.message);
+    try {
+      result = await signInWithCredentials(data.email, data.password, {
+        apiBaseUrl: config.apiBaseUrl,
+        redirectTo: callbackUrl ?? "/dashboard",
+      });
+    } catch {
+      toast.error("Could not reach the server. Please try again.");
       return;
     }
 
-    await refreshSession();
+    if (!result.success) {
+      toast.error(result.message);
+      return;
+    }
+
+    try {
+      await refreshSession();
+    } catch {
+      toast.error("Signed in, but could not refresh your session. Please reload the app.");
+      return;
+    }
+
     void navigate(result.redirectTo);
   }
 

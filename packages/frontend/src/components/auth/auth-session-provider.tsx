@@ -1,4 +1,5 @@
 import { fetchAuthSession, type AuthSession } from "@appkit/api-client";
+import { toast } from "@appkit/ui";
 import {
   createContext,
   useCallback,
@@ -81,7 +82,13 @@ export function AuthSessionProvider({ children }: { children: React.ReactNode })
   const refreshSession = useCallback(async () => {
     loadIdRef.current += 1;
     setStatus("loading");
-    return applySession(await fetchCachedSession(apiBaseUrl, { force: true }));
+
+    try {
+      return applySession(await fetchCachedSession(apiBaseUrl, { force: true }));
+    } catch {
+      toast.error("Could not check your session. Please try again.");
+      return applySession(null);
+    }
   }, [apiBaseUrl, applySession]);
 
   const clearSession = useCallback(() => {
@@ -101,11 +108,18 @@ export function AuthSessionProvider({ children }: { children: React.ReactNode })
     loadIdRef.current = loadId;
     setStatus("loading");
 
-    void fetchCachedSession(apiBaseUrl).then((nextSession) => {
-      if (!cancelled && loadIdRef.current === loadId) {
-        applySession(nextSession);
-      }
-    });
+    void fetchCachedSession(apiBaseUrl)
+      .then((nextSession) => {
+        if (!cancelled && loadIdRef.current === loadId) {
+          applySession(nextSession);
+        }
+      })
+      .catch(() => {
+        if (!cancelled && loadIdRef.current === loadId) {
+          toast.error("Could not check your session. Please try again.");
+          applySession(null);
+        }
+      });
 
     return () => {
       cancelled = true;

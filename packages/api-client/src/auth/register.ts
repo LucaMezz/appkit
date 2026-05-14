@@ -1,13 +1,14 @@
 import { joinUrl } from "@appkit/config/client";
 import { RegisterInput } from "@appkit/core";
 
+import { fetchWithTimeout } from "../request";
 import { ApiClientOptions, RegisterUserResult } from "./types";
 
 export async function registerUser(
   input: RegisterInput,
   options: ApiClientOptions,
 ): Promise<RegisterUserResult> {
-  const response = await fetch(joinUrl(options.apiBaseUrl, "/users"), {
+  const response = await fetchWithTimeout(joinUrl(options.apiBaseUrl, "/users"), {
     method: "POST",
     credentials: "include",
     headers: {

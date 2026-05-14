@@ -16,6 +16,7 @@ import {
   meResponseSchema,
 } from "@appkit/core";
 
+import { fetchWithTimeout } from "../request";
 import { ApiClientOptions } from "./types";
 
 async function postJson<TResponse>(
@@ -27,7 +28,7 @@ async function postJson<TResponse>(
   const headers = new Headers(options?.headers);
   headers.set("Content-Type", "application/json");
 
-  const response = await fetch(url, {
+  const response = await fetchWithTimeout(url, {
     method: "POST",
     credentials: options?.credentials,
     headers,
@@ -82,7 +83,7 @@ export async function getCurrentUser(
   accessToken: string,
   options: ApiClientOptions,
 ): Promise<MeResponse> {
-  const response = await fetch(joinUrl(options.apiBaseUrl, "/auth/me"), {
+  const response = await fetchWithTimeout(joinUrl(options.apiBaseUrl, "/auth/me"), {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

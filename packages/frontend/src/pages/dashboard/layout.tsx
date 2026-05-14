@@ -2,6 +2,7 @@ import { signOut } from "@appkit/api-client";
 import { DashboardShell } from "@appkit/ui";
 import { AppSidebarActions } from "@appkit/ui";
 import { AppBreadcrumbs } from "@appkit/ui";
+import { toast } from "@appkit/ui";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import { useAuthSession } from "../../components/auth/auth-session-provider";
@@ -15,13 +16,20 @@ export function DashboardLayout(): React.JSX.Element {
   const actions: AppSidebarActions = {
     user: {
       onSignOut: async () => {
-        const result = await signOut({
-          apiBaseUrl: config.apiBaseUrl,
-          redirectTo: "/",
-        });
+        let result;
+
+        try {
+          result = await signOut({
+            apiBaseUrl: config.apiBaseUrl,
+            redirectTo: "/",
+          });
+        } catch {
+          toast.error("Could not reach the server. Please try again.");
+          return;
+        }
 
         if (!result.success) {
-          console.error(result.message);
+          toast.error(result.message);
           return;
         }
 
