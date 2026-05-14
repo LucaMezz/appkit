@@ -9,6 +9,7 @@ import { Dashboard } from "#pages/dashboard/index";
 import { DashboardLayout } from "#pages/dashboard/layout";
 import { ErrorBoundary } from "#pages/error-boundary";
 
+import { AuthSessionProvider } from "./components/auth/auth-session-provider";
 import { GuestOnlyRoute } from "./components/auth/guest-only-route";
 import { ProtectedRoute } from "./components/auth/protected-route";
 import { FrontendRuntimeConfigProvider, type FrontendRuntimeConfig } from "./config";
@@ -19,7 +20,9 @@ export function createRoutes(rootLayout: ReactNode, config: FrontendRuntimeConfi
     {
       path: "/",
       element: (
-        <FrontendRuntimeConfigProvider config={config}>{rootLayout}</FrontendRuntimeConfigProvider>
+        <FrontendRuntimeConfigProvider config={config}>
+          <AuthSessionProvider>{rootLayout}</AuthSessionProvider>
+        </FrontendRuntimeConfigProvider>
       ),
       errorElement: <ErrorBoundary />,
       children: [

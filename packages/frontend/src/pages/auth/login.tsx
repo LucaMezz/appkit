@@ -5,12 +5,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
+import { useAuthSession } from "../../components/auth/auth-session-provider";
 import { useFrontendRuntimeConfig } from "../../config";
 
 export function Login(): React.JSX.Element {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const config = useFrontendRuntimeConfig();
+  const { refreshSession } = useAuthSession();
   const callbackUrl = searchParams.get("callbackUrl");
 
   async function onSubmit(data: LoginInput) {
@@ -24,6 +26,7 @@ export function Login(): React.JSX.Element {
       return;
     }
 
+    await refreshSession();
     void navigate(result.redirectTo);
   }
 

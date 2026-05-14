@@ -4,11 +4,13 @@ import { AppSidebarActions } from "@appkit/ui";
 import { AppBreadcrumbs } from "@appkit/ui";
 import { Outlet, useNavigate } from "react-router-dom";
 
+import { useAuthSession } from "../../components/auth/auth-session-provider";
 import { useFrontendRuntimeConfig } from "../../config";
 
 export function DashboardLayout(): React.JSX.Element {
   const navigate = useNavigate();
   const config = useFrontendRuntimeConfig();
+  const { clearSession } = useAuthSession();
 
   const actions: AppSidebarActions = {
     user: {
@@ -23,6 +25,7 @@ export function DashboardLayout(): React.JSX.Element {
           return;
         }
 
+        clearSession();
         void navigate(result.redirectTo, {
           replace: true,
         });
