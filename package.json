@@ -27,7 +27,7 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "test:run": "turbo run test:run",
-    "knip": "turbo run knip",
+    "knip": "turbo run knip --concurrency=2",
     "knip:desktop": "pnpm --filter @appkit/desktop knip",
     "deps:lint": "syncpack lint",
     "deps:fix": "syncpack fix",
