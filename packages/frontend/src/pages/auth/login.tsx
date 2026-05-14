@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
+import loginImageUrl from "../../assets/login-image.png";
 import { useAuthSession } from "../../components/auth/auth-session-provider";
 import { useFrontendRuntimeConfig } from "../../config";
 
@@ -40,7 +41,7 @@ export function Login(): React.JSX.Element {
 
   return (
     <div className="flex items-center justify-center h-full w-full">
-      <LoginForm form={form} onSubmit={onSubmit} />
+      <LoginForm form={form} imageSrc={loginImageUrl} onSubmit={onSubmit} />
     </div>
   );
 }

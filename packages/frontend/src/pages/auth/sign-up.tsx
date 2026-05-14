@@ -4,6 +4,7 @@ import { SignUpForm } from "@appkit/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import signUpImageUrl from "../../assets/sign-up-image.png";
 import { useFrontendRuntimeConfig } from "../../config";
 
 export function SignUp(): React.JSX.Element {
@@ -33,7 +34,7 @@ export function SignUp(): React.JSX.Element {
 
   return (
     <div className="flex items-center justify-center h-full w-full">
-      <SignUpForm form={form} onSubmit={onSubmit} />
+      <SignUpForm form={form} imageSrc={signUpImageUrl} onSubmit={onSubmit} />
     </div>
   );
 }

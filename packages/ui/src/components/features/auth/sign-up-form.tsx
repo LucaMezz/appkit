@@ -31,7 +31,6 @@ interface SignUpFormProps {
 export function SignUpForm({
   form,
   onSubmit,
-  cancelHref = "/",
   loginHref = "/auth/login",
   imageSrc = "/placeholder.svg",
 }: SignUpFormProps): React.JSX.Element {
@@ -196,7 +195,7 @@ export function SignUpForm({
             <img
               src={imageSrc}
               alt="Application preview"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+              className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
         </CardContent>

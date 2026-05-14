@@ -30,7 +30,6 @@ interface LoginFormProps {
 export function LoginForm({
   form,
   onSubmit,
-  cancelHref = "/",
   signUpHref = "/auth/sign-up",
   forgotPasswordHref = "#",
   imageSrc = "/placeholder.svg",
@@ -165,7 +164,7 @@ export function LoginForm({
             <img
               src={imageSrc}
               alt="Application preview"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+              className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
         </CardContent>
