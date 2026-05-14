@@ -17,3 +17,4 @@ export * from "./input-group";
 export * from "./field";
 export * from "./collapsible";
 export * from "./popover";
+export * from "./sonner";
