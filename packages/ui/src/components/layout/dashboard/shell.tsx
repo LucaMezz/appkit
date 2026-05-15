@@ -3,21 +3,23 @@ import type { ReactNode } from "react";
 import { Separator } from "#components/shadcn-ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "#components/shadcn-ui/sidebar";
 
-import { AppSidebar, AppSidebarActions } from "./sidebar";
+import { AppSidebar, AppSidebarActions, AppSidebarUser } from "./sidebar";
 
 interface DashboardShellProps {
   actions: AppSidebarActions;
   breadcrumbs?: ReactNode;
   children: ReactNode;
   className?: string;
+  user?: AppSidebarUser | null;
 }
 
-export function DashboardShell({ actions, breadcrumbs, children }: DashboardShellProps) {
+export function DashboardShell({ actions, breadcrumbs, children, user }: DashboardShellProps) {
   return (
     <SidebarProvider className="flex min-h-0 h-full w-full" defaultOpen>
       <AppSidebar
         className="top-[var(--appkit-dashboard-sidebar-offset,0px)] h-[calc(100svh-var(--appkit-dashboard-sidebar-offset,0px))]"
         actions={actions}
+        user={user}
       />
 
       <SidebarInset className="p-0 m-0">

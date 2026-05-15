@@ -33,11 +33,6 @@ import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
 
 const data = {
-  user: {
-    name: "AppKit User",
-    email: "user@appkit.dev",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
       name: "AppKit",
@@ -215,11 +210,31 @@ export interface AppSidebarActions {
   };
 }
 
-export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  actions: AppSidebarActions;
+export interface AppSidebarUser {
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  initials?: string | null;
 }
 
-export function AppSidebar({ actions, ...props }: AppSidebarProps) {
+export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  actions: AppSidebarActions;
+  user?: AppSidebarUser | null;
+}
+
+function getDisplayUser(user?: AppSidebarUser | null) {
+  const email = user?.email?.trim() || "Signed in";
+  const name = user?.name?.trim() || email;
+
+  return {
+    name,
+    email,
+    avatar: user?.image,
+    initials: user?.initials?.trim() || "U",
+  };
+}
+
+export function AppSidebar({ actions, user, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -230,7 +245,7 @@ export function AppSidebar({ actions, ...props }: AppSidebarProps) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} onSignOut={actions.user.onSignOut} />
+        <NavUser user={getDisplayUser(user)} onSignOut={actions.user.onSignOut} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

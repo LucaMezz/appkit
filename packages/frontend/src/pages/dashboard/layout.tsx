@@ -1,4 +1,5 @@
 import { signOut } from "@appkit/api-client";
+import { getInitials } from "@appkit/core";
 import { DashboardShell } from "@appkit/ui";
 import { AppSidebarActions } from "@appkit/ui";
 import { AppBreadcrumbs } from "@appkit/ui";
@@ -11,7 +12,14 @@ import { useFrontendRuntimeConfig } from "../../config";
 export function DashboardLayout(): React.JSX.Element {
   const navigate = useNavigate();
   const config = useFrontendRuntimeConfig();
-  const { clearSession } = useAuthSession();
+  const { clearSession, user } = useAuthSession();
+  const displayName = user?.name?.trim() || user?.email?.trim();
+  const sidebarUser = user
+    ? {
+        ...user,
+        initials: getInitials(displayName),
+      }
+    : null;
 
   const actions: AppSidebarActions = {
     user: {
@@ -42,7 +50,11 @@ export function DashboardLayout(): React.JSX.Element {
   };
 
   return (
-    <DashboardShell actions={actions} breadcrumbs={<AppBreadcrumbs collapseAfter={3} />}>
+    <DashboardShell
+      actions={actions}
+      breadcrumbs={<AppBreadcrumbs collapseAfter={3} />}
+      user={sidebarUser}
+    >
       <Outlet />
     </DashboardShell>
   );
