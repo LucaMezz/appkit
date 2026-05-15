@@ -1,3 +1,5 @@
+import path from "node:path";
+
 import { appMetadata } from "@appkit/core/metadata";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
@@ -13,6 +15,9 @@ const desktopMetadata = appMetadata.apps.desktop;
 const appName = desktopMetadata.appName;
 const productName = appMetadata.name;
 
+const assetsPath = path.resolve(__dirname, "assets");
+const iconPath = path.resolve(assetsPath, "icon");
+
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
@@ -25,6 +30,18 @@ const config: ForgeConfig = {
 
     appBundleId: desktopMetadata.bundleId,
     appCategoryType: desktopMetadata.category,
+
+    // Important:
+    // Do not include the file extension here.
+    // Electron Packager will use:
+    // - assets/icon.ico on Windows
+    // - assets/icon.icns on macOS
+    // - assets/icon.png on Linux where applicable
+    icon: iconPath,
+
+    // Copies assets into the packaged app resources directory.
+    // Useful if your BrowserWindow also references assets/icon.png at runtime.
+    extraResource: [assetsPath],
   },
 
   rebuildConfig: {},
@@ -35,6 +52,7 @@ const config: ForgeConfig = {
       title: productName,
       authors: `${appMetadata.author}`,
       setupExe: `${productName}Setup.exe`,
+      setupIcon: path.resolve(assetsPath, "icon.ico"),
       noMsi: true,
     }),
 
@@ -44,6 +62,7 @@ const config: ForgeConfig = {
       options: {
         name: appName,
         productName,
+        icon: path.resolve(assetsPath, "icon.png"),
       },
     }),
 
@@ -51,6 +70,7 @@ const config: ForgeConfig = {
       options: {
         name: appName,
         productName,
+        icon: path.resolve(assetsPath, "icon.png"),
       },
     }),
   ],

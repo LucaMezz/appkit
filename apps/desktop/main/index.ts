@@ -8,6 +8,14 @@ import { ipcMainListeners } from "./ipc";
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string | undefined;
 declare const MAIN_WINDOW_VITE_NAME: string;
 
+function getAssetPath(...paths: string[]): string {
+  if (app.isPackaged) {
+    return path.join(process.resourcesPath, "assets", ...paths);
+  }
+
+  return path.join(app.getAppPath(), "assets", ...paths);
+}
+
 const CONFIG = {
   WINDOW: {
     WIDTH: 800,
@@ -83,6 +91,10 @@ function cleanup(): void {
 }
 
 function createWindow(): void {
+  const windowIconPath = getAssetPath("icon.png");
+
+  console.info("Using window icon:", windowIconPath);
+
   mainWindow = new BrowserWindow({
     width: CONFIG.WINDOW.WIDTH,
     height: CONFIG.WINDOW.HEIGHT,
@@ -91,6 +103,7 @@ function createWindow(): void {
     autoHideMenuBar: true,
     titleBarStyle: "hidden",
     frame: false,
+    icon: windowIconPath,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,

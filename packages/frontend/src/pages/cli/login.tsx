@@ -1,18 +1,16 @@
-import { fetchAuthSession, startCliAuthorization } from "@appkit/api-client";
-import { useEffect, useMemo, useState } from "react";
+import { startCliAuthorization } from "@appkit/api-client";
+import { toast } from "@appkit/ui";
+import { useMemo, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
+import { useAuthSession } from "../../components/auth/auth-session-provider";
 import { useFrontendRuntimeConfig } from "../../config";
-
-type AuthState =
-  | { status: "loading" }
-  | { status: "authenticated"; userLabel: string }
-  | { status: "unauthenticated" };
+import { LoadingScreen } from "../loading";
 
 export function CliLogin(): React.JSX.Element {
   const config = useFrontendRuntimeConfig();
   const location = useLocation();
-  const [authState, setAuthState] = useState<AuthState>({ status: "loading" });
+  const { status, user } = useAuthSession();
   const [error, setError] = useState<string | null>(null);
   const [authorizing, setAuthorizing] = useState(false);
 
@@ -21,31 +19,6 @@ export function CliLogin(): React.JSX.Element {
   const codeChallenge = params.get("code_challenge");
   const redirectUri = params.get("redirect_uri");
   const returnPath = `${location.pathname}${location.search}`;
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function checkSession() {
-      const session = await fetchAuthSession({ apiBaseUrl: config.apiBaseUrl });
-
-      if (cancelled) return;
-
-      if (session?.user) {
-        setAuthState({
-          status: "authenticated",
-          userLabel: session.user.email ?? session.user.name ?? "your account",
-        });
-      } else {
-        setAuthState({ status: "unauthenticated" });
-      }
-    }
-
-    void checkSession();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [config.apiBaseUrl]);
 
   if (!state || !codeChallenge || !redirectUri) {
     return (
@@ -58,11 +31,11 @@ export function CliLogin(): React.JSX.Element {
     );
   }
 
-  if (authState.status === "loading") {
-    return <div />;
+  if (status === "loading") {
+    return <LoadingScreen />;
   }
 
-  if (authState.status === "unauthenticated") {
+  if (status === "unauthenticated") {
     return <Navigate to={`/auth/login?callbackUrl=${encodeURIComponent(returnPath)}`} replace />;
   }
 
@@ -86,7 +59,9 @@ export function CliLogin(): React.JSX.Element {
       callbackUrl.searchParams.set("state", result.state);
       window.location.assign(callbackUrl.toString());
     } catch {
-      setError("Could not authorize the CLI. Please try again.");
+      const message = "Could not authorize the CLI. Please try again.";
+      setError(message);
+      toast.error(message);
       setAuthorizing(false);
     }
   }
@@ -97,7 +72,7 @@ export function CliLogin(): React.JSX.Element {
         <div className="space-y-2">
           <h1 className="text-2xl font-semibold">Authorize AppKit CLI?</h1>
           <p className="text-muted-foreground">
-            The AppKit CLI is requesting access to {authState.userLabel}.
+            The AppKit CLI is requesting access to {user?.email ?? user?.name ?? "your account"}.
           </p>
         </div>
 

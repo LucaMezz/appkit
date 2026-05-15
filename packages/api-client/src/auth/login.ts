@@ -1,5 +1,6 @@
 import { joinUrl } from "@appkit/config/client";
 
+import { fetchWithTimeout } from "../request";
 import { ApiClientOptions, SignInResult } from "./types";
 
 export async function signInWithCredentials(
@@ -11,7 +12,7 @@ export async function signInWithCredentials(
 ): Promise<SignInResult> {
   const redirectTo = options.redirectTo ?? "/dashboard";
 
-  const csrfResponse = await fetch(joinUrl(options.apiBaseUrl, "/auth/csrf"), {
+  const csrfResponse = await fetchWithTimeout(joinUrl(options.apiBaseUrl, "/auth/csrf"), {
     credentials: "include",
   });
 
@@ -28,21 +29,32 @@ export async function signInWithCredentials(
   };
 
   const callbackUrl = joinUrl(options.apiBaseUrl, "/auth/session");
-  await fetch(joinUrl(options.apiBaseUrl, "/auth/callback/credentials"), {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+  const credentialsResponse = await fetchWithTimeout(
+    joinUrl(options.apiBaseUrl, "/auth/callback/credentials"),
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        csrfToken,
+        email,
+        password,
+        callbackUrl,
+      }),
     },
-    body: new URLSearchParams({
-      csrfToken,
-      email,
-      password,
-      callbackUrl,
-    }),
-  });
+  );
 
-  const sessionResponse = await fetch(joinUrl(options.apiBaseUrl, "/auth/session"), {
+  if (!credentialsResponse.ok) {
+    return {
+      success: false,
+      error: "unknown",
+      message: "Could not complete sign in. Please try again.",
+    };
+  }
+
+  const sessionResponse = await fetchWithTimeout(joinUrl(options.apiBaseUrl, "/auth/session"), {
     credentials: "include",
   });
 

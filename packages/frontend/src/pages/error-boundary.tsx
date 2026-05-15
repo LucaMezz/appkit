@@ -7,7 +7,7 @@ export function ErrorBoundary(): React.JSX.Element {
   console.error(error);
 
   return (
-    <div id={id}>
+    <div id={id} className="space-y-4 p-4">
       <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
       <p>

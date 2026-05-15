@@ -9,7 +9,7 @@ export function Layout(): React.JSX.Element {
           <ThemeModeToggle />
         </header>
         <main className="flex-1 overflow-y-auto">
-          <div className="flex flex-col min-h-0 h-[calc(100vh-49px)] w-full px-4 py-4">
+          <div className="flex flex-col min-h-0 h-[calc(100vh-49px)] w-full">
             <Outlet />
           </div>
         </main>

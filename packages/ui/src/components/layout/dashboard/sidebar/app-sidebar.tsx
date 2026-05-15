@@ -1,16 +1,21 @@
 "use client";
 
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
+  Boxes,
+  Braces,
+  Building2,
+  CheckCircle2,
+  Code2,
+  Database,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
+  GitBranch,
+  Globe,
+  Layers3,
+  Monitor,
+  Package,
   Settings2,
-  SquareTerminal,
+  ShieldCheck,
+  Terminal,
 } from "lucide-react";
 import * as React from "react";
 
@@ -27,112 +32,129 @@ import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
 
-// This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
-      name: "Acme Inc",
+      name: "AppKit",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      plan: "Template workspace",
     },
     {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
+      name: "Starter app",
+      logo: Boxes,
+      plan: "Local development",
     },
     {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
+      name: "Production app",
+      logo: Building2,
+      plan: "Future product",
     },
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Overview",
       url: "#",
-      icon: SquareTerminal,
+      icon: Layers3,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Template map",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "Readiness chart",
           url: "#",
         },
         {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
+          title: "Quality gates",
           url: "#",
         },
       ],
     },
     {
-      title: "Documentation",
+      title: "Applications",
       url: "#",
-      icon: BookOpen,
+      icon: Monitor,
       items: [
         {
-          title: "Introduction",
+          title: "Web",
           url: "#",
         },
         {
-          title: "Get Started",
+          title: "Desktop",
           url: "#",
         },
         {
-          title: "Tutorials",
+          title: "API",
           url: "#",
         },
         {
-          title: "Changelog",
+          title: "CLI",
           url: "#",
         },
       ],
     },
     {
-      title: "Settings",
+      title: "Shared packages",
       url: "#",
-      icon: Settings2,
+      icon: Package,
       items: [
         {
-          title: "General",
+          title: "UI",
           url: "#",
         },
         {
-          title: "Team",
+          title: "Frontend",
           url: "#",
         },
         {
-          title: "Billing",
+          title: "API client",
           url: "#",
         },
         {
-          title: "Limits",
+          title: "Core",
+          url: "#",
+        },
+        {
+          title: "Config",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Backend",
+      url: "#",
+      icon: Database,
+      items: [
+        {
+          title: "Auth sessions",
+          url: "#",
+        },
+        {
+          title: "CLI authorization",
+          url: "#",
+        },
+        {
+          title: "Database schema",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Tooling",
+      url: "#",
+      icon: CheckCircle2,
+      items: [
+        {
+          title: "Checks",
+          url: "#",
+        },
+        {
+          title: "Architecture",
+          url: "#",
+        },
+        {
+          title: "Dependency health",
           url: "#",
         },
       ],
@@ -140,19 +162,44 @@ const data = {
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Web app",
       url: "#",
-      icon: Frame,
+      icon: Globe,
     },
     {
-      name: "Sales & Marketing",
+      name: "Desktop app",
       url: "#",
-      icon: PieChart,
+      icon: Monitor,
     },
     {
-      name: "Travel",
+      name: "API server",
       url: "#",
-      icon: Map,
+      icon: Braces,
+    },
+    {
+      name: "CLI",
+      url: "#",
+      icon: Terminal,
+    },
+    {
+      name: "Shared packages",
+      url: "#",
+      icon: GitBranch,
+    },
+    {
+      name: "Config",
+      url: "#",
+      icon: Settings2,
+    },
+    {
+      name: "Auth",
+      url: "#",
+      icon: ShieldCheck,
+    },
+    {
+      name: "Code quality",
+      url: "#",
+      icon: Code2,
     },
   ],
 };
@@ -163,11 +210,31 @@ export interface AppSidebarActions {
   };
 }
 
-export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  actions: AppSidebarActions;
+export interface AppSidebarUser {
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  initials?: string | null;
 }
 
-export function AppSidebar({ actions, ...props }: AppSidebarProps) {
+export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  actions: AppSidebarActions;
+  user?: AppSidebarUser | null;
+}
+
+function getDisplayUser(user?: AppSidebarUser | null) {
+  const email = user?.email?.trim() || "Signed in";
+  const name = user?.name?.trim() || email;
+
+  return {
+    name,
+    email,
+    avatar: user?.image,
+    initials: user?.initials?.trim() || "U",
+  };
+}
+
+export function AppSidebar({ actions, user, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -178,7 +245,7 @@ export function AppSidebar({ actions, ...props }: AppSidebarProps) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} onSignOut={actions.user.onSignOut} />
+        <NavUser user={getDisplayUser(user)} onSignOut={actions.user.onSignOut} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

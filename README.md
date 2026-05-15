@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./docs/assets/appkit-logo.png" alt="AppKit logo" width="96" height="96" />
+<img src="./docs/assets/appkit-logo-text-transparent.png" alt="AppKit logo" width="480" height="160" />
 
 # AppKit
 

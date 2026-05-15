@@ -15,7 +15,8 @@
     "#utils/*": "./src/utils/*.ts"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./globals.css": "./src/styles/globals.css"
   },
   "scripts": {
     "typecheck": "tsgo --noEmit",
@@ -26,8 +27,10 @@
     "@appkit/core": "workspace:*",
     "@appkit/ui": "workspace:*",
     "@hookform/resolvers": "^5.2.2",
+    "lucide-react": "^1.14.0",
     "react-hook-form": "^7.75.0",
-    "react-router-dom": "^7.15.0"
+    "react-router-dom": "^7.15.0",
+    "recharts": "3.8.0"
   },
   "devDependencies": {
     "@typescript/native-preview": "7.0.0-dev.20260507.1",

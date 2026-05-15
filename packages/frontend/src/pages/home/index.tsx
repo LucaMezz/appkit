@@ -1,24 +1,18 @@
-import { Button } from "@appkit/ui";
-import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-export function Home(): React.JSX.Element {
-  return (
-    <>
-      <h1>Home</h1>
-      <p>Welcome to the Electron Boilerplate app!</p>
-      <section>
-        <div className="flex items-center gap-2">
-          <Button asChild>
-            <Link to="/dashboard">Dashboard</Link>
-          </Button>
-          <Button asChild>
-            <Link to="/auth/login">Login</Link>
-          </Button>
-          <Button asChild>
-            <Link to="/auth/sign-up">Sign Up</Link>
-          </Button>
-        </div>
-      </section>
-    </>
-  );
+import { useAuthSession } from "../../components/auth/auth-session-provider";
+import { LoadingScreen } from "../loading";
+
+export function RootRedirect() {
+  const { status } = useAuthSession();
+
+  if (status === "loading") {
+    return <LoadingScreen />;
+  }
+
+  if (status === "authenticated") {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <Navigate to="/auth/login" replace />;
 }

@@ -1,37 +1,13 @@
-import { fetchAuthSession } from "@appkit/api-client";
-import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-import { useFrontendRuntimeConfig } from "../../config";
-
-type AuthState = "loading" | "authenticated" | "unauthenticated";
+import { LoadingScreen } from "../../pages/loading";
+import { useAuthSession } from "./auth-session-provider";
 
 export function GuestOnlyRoute() {
-  const config = useFrontendRuntimeConfig();
-  const [status, setStatus] = useState<AuthState>("loading");
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function checkSession() {
-      const session = await fetchAuthSession({
-        apiBaseUrl: config.apiBaseUrl,
-      });
-
-      if (cancelled) return;
-
-      setStatus(session?.user ? "authenticated" : "unauthenticated");
-    }
-
-    void checkSession();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [config.apiBaseUrl]);
+  const { status } = useAuthSession();
 
   if (status === "loading") {
-    return null;
+    return <LoadingScreen />;
   }
 
   if (status === "authenticated") {
