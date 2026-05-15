@@ -1,90 +1,61 @@
-import { Badge } from "@appkit/ui";
-import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@appkit/ui";
-import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
+import { Badge, Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@appkit/ui";
+import { BoxesIcon, CheckCircle2Icon, Layers3Icon, ShieldCheckIcon } from "lucide-react";
+
+const cards = [
+  {
+    label: "Deployable apps",
+    value: "4",
+    detail: "Web, desktop, API, and CLI live as separate workspace apps.",
+    badge: "Cross-platform",
+    icon: BoxesIcon,
+  },
+  {
+    label: "Shared packages",
+    value: "5",
+    detail: "UI, frontend flows, API client, config, and core logic stay reusable.",
+    badge: "Bounded",
+    icon: Layers3Icon,
+  },
+  {
+    label: "Auth foundation",
+    value: "Ready",
+    detail: "Credentials sessions and CLI browser authorization are scaffolded.",
+    badge: "Backend-backed",
+    icon: ShieldCheckIcon,
+  },
+  {
+    label: "Quality gates",
+    value: "7",
+    detail: "Checks cover formatting, linting, tests, builds, deps, and boundaries.",
+    badge: "CI-friendly",
+    icon: CheckCircle2Icon,
+  },
+];
 
 export function SectionCards() {
   return (
-    <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 dark:*:data-[slot=card]:bg-card">
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Total Revenue</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $1,250.00
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
+    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+      {cards.map((card) => (
+        <Card key={card.label} className="@container/card">
+          <CardHeader className="gap-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="space-y-1">
+                <CardDescription>{card.label}</CardDescription>
+                <CardTitle className="text-2xl font-semibold tracking-normal tabular-nums @[250px]/card:text-3xl">
+                  {card.value}
+                </CardTitle>
+              </div>
+              <div className="flex size-9 items-center justify-center rounded-md border bg-muted/50">
+                <card.icon className="size-4 text-muted-foreground" />
+              </div>
+            </div>
+            <Badge variant="outline" className="w-fit">
+              {card.badge}
             </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Trending up this month <IconTrendingUp className="size-4" />
-          </div>
-          <div className="text-muted-foreground">Visitors for the last 6 months</div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>New Customers</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingDown />
-              -20%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this period <IconTrendingDown className="size-4" />
-          </div>
-          <div className="text-muted-foreground">Acquisition needs attention</div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Active Accounts</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            45,678
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +12.5%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Strong user retention <IconTrendingUp className="size-4" />
-          </div>
-          <div className="text-muted-foreground">Engagement exceed targets</div>
-        </CardFooter>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>Growth Rate</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            4.5%
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +4.5%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Steady performance increase <IconTrendingUp className="size-4" />
-          </div>
-          <div className="text-muted-foreground">Meets growth projections</div>
-        </CardFooter>
-      </Card>
+          </CardHeader>
+          <CardFooter className="text-sm text-muted-foreground">{card.detail}</CardFooter>
+        </Card>
+      ))}
     </div>
   );
 }

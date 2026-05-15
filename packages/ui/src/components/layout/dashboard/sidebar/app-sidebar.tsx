@@ -1,16 +1,21 @@
 "use client";
 
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
+  Boxes,
+  Braces,
+  Building2,
+  CheckCircle2,
+  Code2,
+  Database,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
+  GitBranch,
+  Globe,
+  Layers3,
+  Monitor,
+  Package,
   Settings2,
-  SquareTerminal,
+  ShieldCheck,
+  Terminal,
 } from "lucide-react";
 import * as React from "react";
 
@@ -27,112 +32,134 @@ import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
 
-// This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "AppKit User",
+    email: "user@appkit.dev",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
     {
-      name: "Acme Inc",
+      name: "AppKit",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      plan: "Template workspace",
     },
     {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
+      name: "Starter app",
+      logo: Boxes,
+      plan: "Local development",
     },
     {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
+      name: "Production app",
+      logo: Building2,
+      plan: "Future product",
     },
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Overview",
       url: "#",
-      icon: SquareTerminal,
+      icon: Layers3,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Template map",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "Readiness chart",
           url: "#",
         },
         {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
+          title: "Quality gates",
           url: "#",
         },
       ],
     },
     {
-      title: "Documentation",
+      title: "Applications",
       url: "#",
-      icon: BookOpen,
+      icon: Monitor,
       items: [
         {
-          title: "Introduction",
+          title: "Web",
           url: "#",
         },
         {
-          title: "Get Started",
+          title: "Desktop",
           url: "#",
         },
         {
-          title: "Tutorials",
+          title: "API",
           url: "#",
         },
         {
-          title: "Changelog",
+          title: "CLI",
           url: "#",
         },
       ],
     },
     {
-      title: "Settings",
+      title: "Shared packages",
       url: "#",
-      icon: Settings2,
+      icon: Package,
       items: [
         {
-          title: "General",
+          title: "UI",
           url: "#",
         },
         {
-          title: "Team",
+          title: "Frontend",
           url: "#",
         },
         {
-          title: "Billing",
+          title: "API client",
           url: "#",
         },
         {
-          title: "Limits",
+          title: "Core",
+          url: "#",
+        },
+        {
+          title: "Config",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Backend",
+      url: "#",
+      icon: Database,
+      items: [
+        {
+          title: "Auth sessions",
+          url: "#",
+        },
+        {
+          title: "CLI authorization",
+          url: "#",
+        },
+        {
+          title: "Database schema",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Tooling",
+      url: "#",
+      icon: CheckCircle2,
+      items: [
+        {
+          title: "Checks",
+          url: "#",
+        },
+        {
+          title: "Architecture",
+          url: "#",
+        },
+        {
+          title: "Dependency health",
           url: "#",
         },
       ],
@@ -140,19 +167,44 @@ const data = {
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Web app",
       url: "#",
-      icon: Frame,
+      icon: Globe,
     },
     {
-      name: "Sales & Marketing",
+      name: "Desktop app",
       url: "#",
-      icon: PieChart,
+      icon: Monitor,
     },
     {
-      name: "Travel",
+      name: "API server",
       url: "#",
-      icon: Map,
+      icon: Braces,
+    },
+    {
+      name: "CLI",
+      url: "#",
+      icon: Terminal,
+    },
+    {
+      name: "Shared packages",
+      url: "#",
+      icon: GitBranch,
+    },
+    {
+      name: "Config",
+      url: "#",
+      icon: Settings2,
+    },
+    {
+      name: "Auth",
+      url: "#",
+      icon: ShieldCheck,
+    },
+    {
+      name: "Code quality",
+      url: "#",
+      icon: Code2,
     },
   ],
 };
