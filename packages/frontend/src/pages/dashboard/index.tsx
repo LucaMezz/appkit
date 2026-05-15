@@ -1,12 +1,22 @@
-export function Dashboard(): React.JSX.Element {
+import { ChartAreaInteractive } from "#components/charts/chart-area-interactive";
+import { DataTable } from "#components/charts/data-table";
+import { SectionCards } from "#components/charts/section-cards";
+
+import data from "./data.json";
+
+// oxlint-disable-next-line import/no-default-export
+export function Dashboard() {
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
-        <div className="aspect-video rounded-xl bg-muted/50" />
+    <div className="flex flex-1 flex-col">
+      <div className="@container/main flex flex-1 flex-col gap-2">
+        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+          <SectionCards />
+          <div className="px-4 lg:px-6">
+            <ChartAreaInteractive />
+          </div>
+          <DataTable data={data} />
+        </div>
       </div>
-      <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min" />
     </div>
   );
 }
