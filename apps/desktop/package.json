@@ -79,7 +79,7 @@
     "vitest": "^4.1.6"
   },
   "optionalDependencies": {
-    "@rollup/rollup-win32-x64-msvc": "^4.60.3"
+    "@rollup/rollup-win32-x64-msvc": "^4.60.4"
   },
   "engines": {
     "node": ">=22.12.0"
