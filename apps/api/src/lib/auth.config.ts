@@ -39,7 +39,7 @@ export const credentialsProvider = Credentials({
       return null;
     }
 
-    const passwordValid = verifyPassword(user.passwordHash, password);
+    const passwordValid = await verifyPassword(user.passwordHash, password);
 
     if (!passwordValid) {
       return null;

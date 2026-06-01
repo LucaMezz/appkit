@@ -38,6 +38,12 @@ AppKit provides a foundation for building applications that share logic across m
 
 The goal of this repository is not just to run multiple apps side by side. It is to provide a maintainable monorepo structure where each app and package has a clear purpose, clear boundaries, and predictable workflows.
 
+<div align="center">
+
+![AppKit Preview](./docs/assets/appkit-readme-preview.png)
+
+</div>
+
 ## Tech stack
 
 AppKit combines application frameworks, shared package tooling, and repository quality tools to support cross-platform development from a single workspace.
