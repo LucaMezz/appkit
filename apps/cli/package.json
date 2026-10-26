@@ -35,7 +35,7 @@
     "prompts": "^2.4.2"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.19.43",
     "@types/prompts": "^2.4.9",
     "knip": "^6.12.1",
     "rimraf": "^6.1.3",
